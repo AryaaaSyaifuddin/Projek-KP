@@ -217,7 +217,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/pasien">
-              <i class="typcn typcn-device-desktop menu-icon"></i>
+              <i class="typcn typcn-user menu-icon"></i>
               <span class="menu-title">Pasien</span>
             </a>
           </li>

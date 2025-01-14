@@ -17,8 +17,4 @@ class ViewController extends Controller
     public function dashboard(){
         return view("dashboard");
     }
-
-    public function pasien(){
-        return view("pasien_dashboard");
-    }
 }

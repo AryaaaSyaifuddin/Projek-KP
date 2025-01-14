@@ -23204,7 +23204,7 @@ body.avgrund-active {
   top: 17px;
 }
 
-.sidebar .sidebar-legend li:nth-child(2) a:before {
+/* .sidebar .sidebar-legend li:nth-child(2) a:before {
   background: #f2125e;
 }
 
@@ -23214,7 +23214,7 @@ body.avgrund-active {
 
 .sidebar .sidebar-legend li:nth-child(4) a:before {
   background: #2b80ff;
-}
+} */
 
 .sidebar .nav {
   overflow: hidden;
@@ -23336,9 +23336,9 @@ body.avgrund-active {
   color: #fff;
 }
 
-.sidebar .nav .nav-item.active > .nav-link i {
+/* .sidebar .nav .nav-item.active > .nav-link i {
   color: #2b80ff;
-}
+} */
 
 .sidebar .nav:not(.sub-menu) {
   margin-top: 0rem;
