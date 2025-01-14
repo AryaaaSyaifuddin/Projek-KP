@@ -10,7 +10,15 @@ class ViewController extends Controller
         return view("login_form");
     }
 
-    public function register(){
+    public function showRegister(){
         return view("register_form");
+    }
+
+    public function dashboard(){
+        return view("dashboard");
+    }
+
+    public function pasien(){
+        return view("pasien_dashboard");
     }
 }
