@@ -190,7 +190,7 @@
               </div>
               <div class="sidebar-profile-name">
                 <p class="sidebar-name">
-                  Kenneth Osborne
+                    {{ Auth::user()->nama ?? 'Anonim' }}
                 </p>
                 <p class="sidebar-designation">
                   Welcome
@@ -323,8 +323,8 @@
           <div class="content-wrapper">
             <div class="row">
               <div class="col-sm-6">
-                <h3 class="mb-0 font-weight-bold">Kenneth Osborne</h3>
-                <p>Your last login: 21h ago from newzealand.</p>
+                <h3 class="mb-0 font-weight-bold">{{ Auth::user()->nama ?? 'Anonim' }}</h3>
+                <p>Selamat satang di Sistem Manajemen Check Up</p>
               </div>
               <div class="col-sm-6">
                 <div class="d-flex align-items-center justify-content-md-end">
@@ -349,38 +349,36 @@
                 </div>
               </div>
             </div>
-            <button type="button" class="btn btn-outline-primary btn-icon-text" style="margin-top: 15px; padding: 8px 15px;" >
-                <i class="typcn typcn-folder btn-icon-prepend"></i>
+            @php
+                // Variabel kontrol untuk menampilkan tabel atau form
+                $showForm = session('showForm', false);
+            @endphp
+            @if(!$showForm)
+            <!-- Tombol Create -->
+            <button
+                type="button"
+                class="btn btn-outline-primary btn-icon-text"
+                style="margin-top: 15px; padding: 8px 15px;"
+                onclick="window.location='{{ route('showCreateForm') }}'">
                 Create
-              </button>
+            </button>
+
+            <!-- Tabel -->
             <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
                 <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Bordered table</h4>
-                    <p class="card-description">
-                      Add class <code>.table-bordered</code>
-                    </p>
-                    <div class="table-responsive pt-3">
-                      <table class="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th>
-                              #
-                            </th>
-                            <th>
-                              First name
-                            </th>
-                            <th>
-                              Progress
-                            </th>
-                            <th>
-                              Amount
-                            </th>
-                            <th>
-                              Deadline
-                            </th>
-                          </tr>
-                        </thead>
+                    <div class="card-body">
+                        <h4 class="card-title">Data Pasien</h4>
+                        <div class="table-responsive pt-3">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>First name</th>
+                                        <th>Progress</th>
+                                        <th>Amount</th>
+                                        <th>Deadline</th>
+                                    </tr>
+                                </thead>
                         <tbody>
                           <tr>
                             <td>
@@ -521,6 +519,98 @@
                   </div>
                 </div>
               </div>
+              @else
+              <div class="col-12 grid-margin" style="margin-top: 15px;padding: 0px;">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Tambah Data Pasien</h4>
+                        <form class="form-sample">
+                            <p class="card-description">Informasi Pasien</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Nama Lengkap</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="nama" placeholder="Masukkan nama lengkap">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                                        <div class="col-sm-9">
+                                            <input type="date" class="form-control" name="tanggal_lahir">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Jenis Kelamin</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="jenis_kelamin">
+                                                <option value="Laki-laki">Laki-laki</option>
+                                                <option value="Perempuan">Perempuan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Nomor HP</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="nomor_hp" placeholder="Masukkan nomor HP">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Email</label>
+                                        <div class="col-sm-9">
+                                            <input type="email" class="form-control" name="email" placeholder="Masukkan email (opsional)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Pekerjaan</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="informasi_pekerjaan" placeholder="Masukkan informasi pekerjaan">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Alamat</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="alamat" placeholder="Masukkan alamat lengkap" />
+                                        </div>
+                                      </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Nomor Identitas (NIK/KTP)</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="nomor_identitas" placeholder="Masukkan nomor identitas (NIK/KTP)" />
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="id_perawat" value="{{ Auth::id() }}">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <a href="{{ route('cancelForm') }}" class="btn btn-secondary">Batal</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+          @endif
 
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->

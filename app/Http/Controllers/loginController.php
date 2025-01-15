@@ -37,4 +37,16 @@ class LoginController extends Controller
         // Jika login gagal
         return back()->with('error', 'Username atau password salah.');
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout(); // Logout pengguna
+
+        // Hapus session yang tersimpan
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        // Redirect ke halaman login atau lainnya
+        return redirect('/')->with('success', 'Anda berhasil logout.');
+    }
 }

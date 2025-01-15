@@ -134,15 +134,18 @@
                 <span class="nav-profile-name">Evan Morales</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item">
-                <i class="typcn typcn-cog text-primary"></i>
-                Settings
+                <a class="dropdown-item" href="#">
+                    <i class="typcn typcn-cog text-primary"></i>
+                    Settings
                 </a>
-                <a class="dropdown-item">
-                <i class="typcn typcn-power text-primary"></i>
-                Logout
-                </a>
-              </div>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="dropdown-item">
+                        <i class="typcn typcn-power text-primary"></i>
+                        Logout
+                    </button>
+                </form>
+            </div>
             </li>
           </ul>
           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -190,7 +193,7 @@
               </div>
               <div class="sidebar-profile-name">
                 <p class="sidebar-name">
-                  Kenneth Osborne
+                    {{ Auth::user()->nama ?? 'Anonim' }}
                 </p>
                 <p class="sidebar-designation">
                   Welcome
@@ -323,8 +326,8 @@
           <div class="content-wrapper">
             <div class="row">
               <div class="col-sm-6">
-                <h3 class="mb-0 font-weight-bold">Kenneth Osborne</h3>
-                <p>Your last login: 21h ago from newzealand.</p>
+                <h3 class="mb-0 font-weight-bold">{{ Auth::user()->nama ?? 'Anonim' }}</h3>
+                <p>Selamat satang di Sistem Manajemen Check Up</p>
               </div>
               <div class="col-sm-6">
                 <div class="d-flex align-items-center justify-content-md-end">
