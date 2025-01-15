@@ -361,7 +361,15 @@
                 style="margin-top: 15px; padding: 8px 15px;"
                 onclick="window.location='{{ route('showCreateForm') }}'">
                 Create
+                <i class="typcn typcn-folder btn-icon-prepend"></i>
             </button>
+            <button
+                type="button"
+                class="btn btn-outline-secondary btn-icon-text"
+                style="margin-top: 15px; padding: 8px 15px;">
+                Edit
+                <i class="typcn typcn-edit  btn-icon-append"></i>
+              </button>
 
             <!-- Tabel -->
             <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
@@ -373,251 +381,141 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>First name</th>
-                                        <th>Progress</th>
-                                        <th>Amount</th>
-                                        <th>Deadline</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Lahir</th>
+                                        <th>Jenis Kelamin</th>
+                                        <th>Nomor HP</th>
+                                        <th>Email</th>
+                                        <th>Pekerjaan</th>
+                                        <th>Alamat</th>
+                                        <th>Nomor Identitas</th>
+                                        <th>Perawat</th>
                                     </tr>
                                 </thead>
-                        <tbody>
-                          <tr>
-                            <td>
-                              1
-                            </td>
-                            <td>
-                              Herman Beck
-                            </td>
-                            <td>
-                              <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </td>
-                            <td>
-                              $ 77.99
-                            </td>
-                            <td>
-                              May 15, 2015
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              2
-                            </td>
-                            <td>
-                              Messsy Adam
-                            </td>
-                            <td>
-                              <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </td>
-                            <td>
-                              $245.30
-                            </td>
-                            <td>
-                              July 1, 2015
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              3
-                            </td>
-                            <td>
-                              John Richards
-                            </td>
-                            <td>
-                              <div class="progress">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </td>
-                            <td>
-                              $138.00
-                            </td>
-                            <td>
-                              Apr 12, 2015
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              4
-                            </td>
-                            <td>
-                              Peter Meggik
-                            </td>
-                            <td>
-                              <div class="progress">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </td>
-                            <td>
-                              $ 77.99
-                            </td>
-                            <td>
-                              May 15, 2015
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              5
-                            </td>
-                            <td>
-                              Edward
-                            </td>
-                            <td>
-                              <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </td>
-                            <td>
-                              $ 160.25
-                            </td>
-                            <td>
-                              May 03, 2015
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              6
-                            </td>
-                            <td>
-                              John Doe
-                            </td>
-                            <td>
-                              <div class="progress">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </td>
-                            <td>
-                              $ 123.21
-                            </td>
-                            <td>
-                              April 05, 2015
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              7
-                            </td>
-                            <td>
-                              Henry Tom
-                            </td>
-                            <td>
-                              <div class="progress">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </td>
-                            <td>
-                              $ 150.00
-                            </td>
-                            <td>
-                              June 16, 2015
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                                <tbody>
+                                    @foreach ($dataPasien as $index => $pasien)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $pasien->nama_panjang }}</td>
+                                            <td>{{ $pasien->tanggal_lahir }}</td>
+                                            <td>{{ $pasien->jenis_kelamin }}</td>
+                                            <td>{{ $pasien->nomor_hp }}</td>
+                                            <td>{{ $pasien->email }}</td>
+                                            <td>{{ $pasien->pekerjaan }}</td>
+                                            <td>{{ $pasien->alamat }}</td>
+                                            <td>{{ $pasien->nomor_identitas }}</td>
+                                            <td>{{ $pasien->id_perawat }}</td> <!-- Pastikan relasi ada -->
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
+            </div>
               @else
               <div class="col-12 grid-margin" style="margin-top: 15px;padding: 0px;">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Tambah Data Pasien</h4>
-                        <form class="form-sample">
+                        <!-- Form menggunakan method POST untuk kirim data ke server -->
+                        <form method="POST" action="{{ route('pasien.store') }}" class="form-sample">
+                            @csrf
                             <p class="card-description">Informasi Pasien</p>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nama Lengkap</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nama" placeholder="Masukkan nama lengkap">
+                                <form method="POST" action="{{ route('pasien.store') }}">
+                                    @csrf
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Nama Lengkap</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="nama_panjang" placeholder="Masukkan nama lengkap">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
-                                        <div class="col-sm-9">
-                                            <input type="date" class="form-control" name="tanggal_lahir">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Jenis Kelamin</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" name="jenis_kelamin">
-                                                <option value="Laki-laki">Laki-laki</option>
-                                                <option value="Perempuan">Perempuan</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nomor HP</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nomor_hp" placeholder="Masukkan nomor HP">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Email</label>
-                                        <div class="col-sm-9">
-                                            <input type="email" class="form-control" name="email" placeholder="Masukkan email (opsional)">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Pekerjaan</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="informasi_pekerjaan" placeholder="Masukkan informasi pekerjaan">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Alamat</label>
-                                        <div class="col-sm-9">
-                                          <input type="text" class="form-control" name="alamat" placeholder="Masukkan alamat lengkap" />
-                                        </div>
-                                      </div>
-                                </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nomor Identitas (NIK/KTP)</label>
-                                        <div class="col-sm-9">
-                                          <input type="text" class="form-control" name="nomor_identitas" placeholder="Masukkan nomor identitas (NIK/KTP)" />
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                                            <div class="col-sm-9">
+                                                <input type="date" class="form-control" name="tanggal_lahir">
+                                            </div>
                                         </div>
-                                      </div>
-                                </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Jenis Kelamin</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" name="jenis_kelamin">
+                                                    <option value="Laki-laki">Laki-laki</option>
+                                                    <option value="Perempuan">Perempuan</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Nomor HP</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="nomor_hp" placeholder="Masukkan nomor HP">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Email</label>
+                                            <div class="col-sm-9">
+                                                <input type="email" class="form-control" name="email" placeholder="Masukkan email (opsional)">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Pekerjaan</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="informasi_pekerjaan" placeholder="Masukkan informasi pekerjaan">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Alamat</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="alamat" placeholder="Masukkan alamat lengkap">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Nomor Identitas (NIK/KTP)</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="nomor_identitas" placeholder="Masukkan nomor identitas (NIK/KTP)">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" name="id_perawat" value="{{ Auth::user()->id_user }}">
+
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <a href="{{ route('cancelForm') }}" class="btn btn-secondary">Back to tabel</a>
+                                </form>
                             </div>
-                            <input type="hidden" name="id_perawat" value="{{ Auth::id() }}">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                            <a href="{{ route('cancelForm') }}" class="btn btn-secondary">Batal</a>
-                        </form>
                     </div>
                 </div>
             </div>
-
           @endif
 
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">
-              <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com</a> 2020</span>
-              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Free <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard </a>templates from Bootstrapdash.com</span>
+              <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">Team Kerja Praktik</a> 2025</span>
             </div>
           </footer>
           <!-- partial -->

@@ -25,5 +25,6 @@ Route::middleware([PerawatMiddleware::class])->group(function () {
         Route::get('/pasien', [pasienController::class, 'dashboardPasien']);
         Route::get('/pasien/create-form', [pasienController::class, 'showCreateForm'])->middleware(LoginMiddleware::class)->name('showCreateForm');
         Route::get('/pasien/cancel-form', [pasienController::class, 'cancelForm'])->middleware(LoginMiddleware::class)->name('cancelForm');
-        Route::get('/pasien-create', [pasienController::class, 'dashboardPasien'])->middleware(LoginMiddleware::class);
+        Route::post('/pasien', [PasienController::class, 'store'])->name('pasien.store');
+
 });

@@ -55,4 +55,9 @@ class Users extends Authenticatable
             }
         });
     }
+
+    public function pasien()
+    {
+        return $this->hasMany(Pasien::class, 'id_perawat', 'id_user');
+    }   
 }

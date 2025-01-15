@@ -9,7 +9,7 @@ class PerawatMiddleware
 {
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role === 'Perawat') {
+        if (Auth::check() && Auth::user()->role === 'perawat') {
             return $next($request); // Lanjutkan request jika admin
         }
 
