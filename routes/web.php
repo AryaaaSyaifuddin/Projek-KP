@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\adminController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\pasienController;
 use App\Http\Middleware\PerawatMiddleware;
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -11,20 +13,73 @@ USE App\Http\Middleware\LoginMiddleware;
 
 // Login Route
 Route::get("/", [ViewController::class,"showlogin"])->name('login');
+
 Route::post("/", [loginController::class, 'loginPost'])->name('login.post');
+
 Route::post('/logout', [loginController::class, 'logout'])->name('logout');
+
 // Register Route
 Route::get("/register", [ViewController::class,"showRegister"]);
+
 Route::post('/register', [RegisterController::class, 'registerPost'])->name('register.post');
 
-
+// Middleware Perawat
 Route::middleware([PerawatMiddleware::class])->group(function () {
-        // Tampilan Dashboard
-        Route::get('/dashboard', [ViewController::class, 'dashboard'])->middleware(LoginMiddleware::class);
-        // Tabel Pasien
-        Route::get('/pasien', [pasienController::class, 'dashboardPasien']);
-        Route::get('/pasien/create-form', [pasienController::class, 'showCreateForm'])->middleware(LoginMiddleware::class)->name('showCreateForm');
-        Route::get('/pasien/cancel-form', [pasienController::class, 'cancelForm'])->middleware(LoginMiddleware::class)->name('cancelForm');
-        Route::post('/pasien', [PasienController::class, 'store'])->name('pasien.store');
+
+    Route::get('/dashboard', [viewController::class, 'dashboard']);
+
+    Route::get('/pasien', [PasienController::class, 'dashboardPasien'])->name('dashboardPasien');
+
+    // Route untuk menampilkan form create
+    Route::get('/pasien/create', [PasienController::class, 'showCreateForm'])->name('showCreateForm');
+
+    // Route untuk edit data pasien
+    Route::get('/pasien/edit/{id}', [PasienController::class, 'edit'])->name('pasien.edit');
+
+    // Route untuk menyimpan data pasien baru
+    Route::post('/pasien', [PasienController::class, 'store'])->name('pasien.store');
+
+    // Route untuk update data pasien
+    Route::put('/pasien/update/{id}', [PasienController::class, 'update'])->name('pasien.update');
+
+    // Route untuk membatalkan form (kembali ke tabel)
+    Route::get('/pasien/cancel', [PasienController::class, 'cancelForm'])->name('cancelForm');
+
+    // Route untuk hapus data pasien
+    Route::delete('/pasien/{id_pasien}', [PasienController::class, 'destroy'])->name('pasien.destroy');
+
+    // Route untuk jadwal
+    Route::get('/jadwal-pemeriksaan', [ViewController::class, 'dashboardJadwal']);
+
+    // =====================================================================================================================================================================
+
+    // Route untuk dashboard akun ( akun )
+    Route::get('/akun', [adminController::class, 'dashboardAkun'])->name('dashboardAkun')->middleware(AdminMiddleware::class);
+
+    // Menampilkan form create akun
+    Route::get('/akun/create', [adminController::class, 'showCreateFormAkun'])->name('showCreateFormAkun')->middleware(AdminMiddleware::class);
+
+    // Menampilkan form edit akun
+    Route::get('/akun/edit/{id}', [adminController::class, 'edit'])->name('editAkun')->middleware(AdminMiddleware::class);
+
+    // Menyimpan data akun baru
+    Route::post('/akun', [adminController::class, 'store'])->name('storeAkun')->middleware(AdminMiddleware::class);
+
+    // Mengupdate data akun
+    Route::put('/akun/update/{id}', [adminController::class, 'update'])->name('akun.update')->middleware(AdminMiddleware::class);
+
+    // Membatalkan form dan kembali ke tabel
+    Route::get('/akun/cancel', [adminController::class, 'cancelForm'])->name('cancelFormAkun')->middleware(AdminMiddleware::class);
+
+    // Menghapus data akun
+    Route::delete('/akun/{id}', [adminController::class, 'destroy'])->name('destroyAkun')->middleware(AdminMiddleware::class);
 
 });
+
+
+// Route::middleware([AdminMiddleware::class])->group(function () {
+
+
+
+
+

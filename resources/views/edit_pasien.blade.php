@@ -13,7 +13,7 @@
     <!-- plugin css for this page -->
     <!-- End plugin css for this page -->
     <!-- inject:css -->
-    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="{{ asset('css/vertical-layout-light/style.css') }}">
     <!-- endinject -->
     <link rel="shortcut icon" href="img/favicon.jpg" />
   </head>
@@ -210,13 +210,13 @@
             </div>
             <p class="sidebar-menu-title">Dashboard menu</p>
           </li>
-          @if(Auth::user()->role === 'admin')
           <li class="nav-item">
             <a class="nav-link" href="/dashboard">
               <i class="typcn typcn-device-desktop menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
+          @if(Auth::user()->role === 'admin')
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="typcn typcn-user-add-outline menu-icon"></i>
@@ -230,11 +230,12 @@
               </ul>
             </div>
           </li>
+            @endif
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="typcn typcn-user-outline menu-icon"></i>
+              <i class="typcn typcn-user menu-icon"></i>
               <span class="menu-title">Pasien</span>
-              <i class="menu-arrow"></i>
+              <i class="typcn typcn-chevron-right menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
@@ -243,32 +244,117 @@
               </ul>
             </div>
           </li>
-        @endif
-
-        @if (Auth::user()->role === 'perawat')
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard">
-              <i class="typcn typcn-device-desktop menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="typcn typcn-user-outline menu-icon"></i>
-              <span class="menu-title">Pasien</span>
-              <i class="menu-arrow"></i>
+              <i class="typcn typcn-briefcase menu-icon"></i>
+              <span class="menu-title">UI Elements</span>
+              <i class="typcn typcn-chevron-right menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/pasien">Data Pasien</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/jadwal-pemeriksaan">Detail Jadwal</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
               </ul>
             </div>
           </li>
-          @endif
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+              <i class="typcn typcn-film menu-icon"></i>
+              <span class="menu-title">Form elements</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="form-elements">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+              <i class="typcn typcn-chart-pie-outline menu-icon"></i>
+              <span class="menu-title">Charts</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="charts">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+              <i class="typcn typcn-th-small-outline menu-icon"></i>
+              <span class="menu-title">Tables</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="tables">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Basic table</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+              <i class="typcn typcn-compass menu-icon"></i>
+              <span class="menu-title">Icons</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="icons">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Mdi icons</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="typcn typcn-user-add-outline menu-icon"></i>
+              <span class="menu-title">User Pages</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
+              <i class="typcn typcn-globe-outline menu-icon"></i>
+              <span class="menu-title">Error pages</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="error">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/documentation/documentation.html">
+              <i class="typcn typcn-document-text menu-icon"></i>
+              <span class="menu-title">Documentation</span>
+            </a>
+          </li>
+        </ul>
 
       </nav>
-        <!-- partial -->
+      @if (session('success'))
+                <script>
+                Swal.fire({
+                    title: 'Success!',
+                    text: '{{ session("success") }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+                </script>
+            @endif
+
+      <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="row">
@@ -299,214 +385,90 @@
                 </div>
               </div>
             </div>
-            @php
-                // Variabel kontrol untuk menampilkan form atau tabel
-                $showForm = session('showForm', true); // Default true (form create)
-                $pasien = session('pasien', null); // Data pasien untuk edit
-            @endphp
 
-        @if($showForm === true)
-            <!-- Tombol Create -->
-            <button
-                type="button"
-                class="btn btn-outline-primary btn-icon-text"
-                style="padding: 8px 15px;"
-                onclick="window.location='{{ route('showCreateForm') }}'">
-                Create
-                <i class="typcn typcn-folder btn-icon-prepend"></i>
-            </button>
-
-            <!-- Tabel -->
-            <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Data Pasien</h4>
-                        <div class="table-responsive pt-3">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Nama</th>
-                                        <th>Tanggal Lahir</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Nomor HP</th>
-                                        <th>Email</th>
-                                        <th>Pekerjaan</th>
-                                        <th>Alamat</th>
-                                        <th>Nomor Identitas</th>
-                                        <th>Perawat</th>
-                                        <th>Jadwal Pemeriksaan</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($dataPasien as $index => $pasien)
-                                        <tr>
-                                            <td>{{ $pasien->id_pasien}}</td>
-                                            <td>{{ $pasien->nama_panjang }}</td>
-                                            <td>{{ $pasien->tanggal_lahir }}</td>
-                                            <td>{{ $pasien->jenis_kelamin }}</td>
-                                            <td>{{ $pasien->nomor_hp }}</td>
-                                            <td>{{ $pasien->email }}</td>
-                                            <td>{{ $pasien->pekerjaan }}</td>
-                                            <td>{{ $pasien->alamat }}</td>
-                                            <td>{{ $pasien->nomor_identitas }}</td>
-                                            <td>{{ $pasien->id_perawat }}</td>
-                                            <td>
-                                                {{ \Carbon\Carbon::parse($pasien->tanggal_pemeriksaan)->format('d-m-Y') }}
-                                                {{ $pasien->waktu_pemeriksaan }}
-                                            </td>
-                                            <td style="min-width: 190px">
-                                                <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px;">
-                                                    Edit
-                                                    <i class="typcn typcn-edit btn-icon-append"></i>
-                                                </a>
-
-                                                <form action="{{ route('pasien.destroy', $pasien->id_pasien) }}" method="POST" style="display:inline;" id="delete-form-{{ $pasien->id_pasien }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px;" onclick="confirmDelete({{ $pasien->id_pasien }})">
-                                                        Delete
-                                                        <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @else
-            @if (session('success'))
-                <script>
-                Swal.fire({
-                    title: 'Success!',
-                    text: '{{ session("success") }}',
-                    icon: 'success',
-                    confirmButtonText: 'OK',
-                    timer: 3000,
-                    timerProgressBar: true,
-                });
-                </script>
-            @endif
-            <!-- Tampilan Form Create -->
             <div class="col-12 grid-margin" style="margin-top: 15px;padding: 0px;">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Tambah Data Pasien</h4>
+                        <h4 class="card-title">Edit Data Pasien</h4>
                         <!-- Form menggunakan method POST untuk kirim data ke server -->
-                        <form method="POST" action="{{ route('pasien.store') }}" class="form-sample">
+                        <form method="POST" action="{{ route('pasien.update', $pasien->id_pasien) }}">
                             @csrf
-                            <p class="card-description">Informasi Pasien</p>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nama Lengkap</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nama_panjang" placeholder="Masukkan nama lengkap" required>
-                                        </div>
-                                    </div>
-                                </div>
+                            @method('PUT')
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
-                                        <div class="col-sm-9">
-                                            <input type="date" class="form-control" name="tanggal_lahir" required>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Nama Lengkap -->
+                            <div class="form-group">
+                                <label for="nama_panjang">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="nama_panjang" name="nama_panjang" value="{{ $pasien->nama_panjang }}">
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Jenis Kelamin</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" name="jenis_kelamin" required>
-                                                <option value="Laki-laki">Laki-laki</option>
-                                                <option value="Perempuan">Perempuan</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Tanggal Lahir -->
+                            <div class="form-group">
+                                <label for="tanggal_lahir">Tanggal Lahir</label>
+                                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{ $pasien->tanggal_lahir }}">
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nomor HP</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nomor_hp" placeholder="Masukkan nomor HP" required>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Jenis Kelamin -->
+                            <div class="form-group">
+                                <label for="jenis_kelamin">Jenis Kelamin</label>
+                                <select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
+                                    <option value="Laki-laki" {{ $pasien->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                    <option value="Perempuan" {{ $pasien->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                </select>
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Email</label>
-                                        <div class="col-sm-9">
-                                            <input type="email" class="form-control" name="email" placeholder="Masukkan email (opsional)">
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Nomor HP -->
+                            <div class="form-group">
+                                <label for="nomor_hp">Nomor HP</label>
+                                <input type="text" class="form-control" id="nomor_hp" name="nomor_hp" value="{{ $pasien->nomor_hp }}">
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Pekerjaan</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="pekerjaan" placeholder="Masukkan pekerjaan">
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Email -->
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ $pasien->email }}">
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Alamat</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="alamat" placeholder="Masukkan alamat lengkap">
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Pekerjaan -->
+                            <div class="form-group">
+                                <label for="pekerjaan">Pekerjaan</label>
+                                <input type="text" class="form-control" id="pekerjaan" name="pekerjaan" value="{{ $pasien->pekerjaan }}">
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nomor Identitas (NIK/KTP)</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nomor_identitas" placeholder="Masukkan nomor identitas (NIK/KTP)" required>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Alamat -->
+                            <div class="form-group">
+                                <label for="alamat">Alamat</label>
+                                <textarea class="form-control" id="alamat" name="alamat">{{ $pasien->alamat }}</textarea>
+                            </div>
 
-                                <!-- Input Tanggal Pemeriksaan -->
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Tanggal Pemeriksaan</label>
-                                        <div class="col-sm-9">
-                                            <input type="date" class="form-control" name="tanggal_pemeriksaan" required>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Nomor Identitas -->
+                            <div class="form-group">
+                                <label for="nomor_identitas">Nomor Identitas</label>
+                                <input type="text" class="form-control" id="nomor_identitas" name="nomor_identitas" value="{{ $pasien->nomor_identitas }}">
+                            </div>
 
-                                <!-- Input Waktu Pemeriksaan -->
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Waktu Pemeriksaan</label>
-                                        <div class="col-sm-9">
-                                            <input type="time" class="form-control" name="waktu_pemeriksaan" required>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Tanggal Pemeriksaan -->
+                            <div class="form-group">
+                                <label for="tanggal_pemeriksaan">Tanggal Pemeriksaan</label>
+                                <input type="date" class="form-control" id="tanggal_pemeriksaan" name="tanggal_pemeriksaan" value="{{ $pasien->tanggal_pemeriksaan }}">
+                            </div>
 
-                                <input type="hidden" name="id_perawat" value="{{ Auth::user()->id_user }}">
+                            <!-- Input Waktu Pemeriksaan -->
+                            <div class="form-group">
+                                <label for="waktu_pemeriksaan">Waktu Pemeriksaan</label>
+                                <input type="time" class="form-control" id="waktu_pemeriksaan" name="waktu_pemeriksaan" value="{{ $pasien->waktu_pemeriksaan }}">
+                            </div>
 
-                                <button type="submit" class="btn btn-primary" style="margin-right: 2%;">Simpan</button>
+                            <!-- Submit Button -->
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" style="margin-right: 1%">Simpan</button>
                                 <a href="{{ route('cancelForm') }}" class="btn btn-secondary">Batal</a>
                             </div>
                         </form>
+
+
                     </div>
                 </div>
             </div>
-        @endif
 
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
@@ -521,23 +483,6 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
-
-    <script>
-        function confirmDelete(id) {
-            Swal.fire({
-                title: 'Apakah Anda yakin?',
-                text: "Data ini akan dihapus!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, hapus!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('delete-form-' + id).submit();
-                }
-            });
-        }
-    </script>
     <!-- container-scroller -->
     <!-- base:js -->
     <script src="vendors/js/vendor.bundle.base.js"></script>

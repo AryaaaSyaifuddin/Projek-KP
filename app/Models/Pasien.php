@@ -22,6 +22,8 @@ class Pasien extends Model
         'alamat',
         'nomor_identitas',
         'id_perawat',
+        'tanggal_pemeriksaan',
+        'waktu_pemeriksaan',
     ];
 
     // Relasi ke model User

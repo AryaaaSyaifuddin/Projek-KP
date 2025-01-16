@@ -8,6 +8,7 @@
     <!-- base:css -->
     <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- endinject -->
     <!-- plugin css for this page -->
@@ -18,6 +19,19 @@
     <link rel="shortcut icon" href="img/favicon.jpg" />
   </head>
   <body>
+
+            @if (session('success'))
+                <script>
+                Swal.fire({
+                    title: 'Success!',
+                    text: '{{ session("success") }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+                </script>
+            @endif
 
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
@@ -135,15 +149,18 @@
                 <span class="nav-profile-name">Evan Morales</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item">
+            <a class="dropdown-item" href="#">
                 <i class="typcn typcn-cog text-primary"></i>
                 Settings
-                </a>
-                <a class="dropdown-item">
-                <i class="typcn typcn-power text-primary"></i>
-                Logout
-                </a>
-              </div>
+            </a>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="dropdown-item">
+                    <i class="typcn typcn-power text-primary"></i>
+                    Logout
+                </button>
+            </form>
+        </div>
             </li>
           </ul>
           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -225,7 +242,7 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Data Account </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/akun"> Data Account </a></li>
                 <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
               </ul>
             </div>
@@ -299,19 +316,20 @@
                 </div>
               </div>
             </div>
+
             @php
                 // Variabel kontrol untuk menampilkan form atau tabel
                 $showForm = session('showForm', true); // Default true (form create)
-                $pasien = session('pasien', null); // Data pasien untuk edit
+                $user = session('user', null); // Data user untuk edit
             @endphp
 
-        @if($showForm === true)
+            @if($showForm === true)
             <!-- Tombol Create -->
             <button
                 type="button"
                 class="btn btn-outline-primary btn-icon-text"
                 style="padding: 8px 15px;"
-                onclick="window.location='{{ route('showCreateForm') }}'">
+                onclick="window.location='{{ route('showCreateFormAkun') }}'">
                 Create
                 <i class="typcn typcn-folder btn-icon-prepend"></i>
             </button>
@@ -320,52 +338,41 @@
             <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Data Pasien</h4>
+                        <h4 class="card-title">Data Users</h4>
                         <div class="table-responsive pt-3">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
                                         <th>Nama</th>
-                                        <th>Tanggal Lahir</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Nomor HP</th>
+                                        <th>Role</th>
+                                        <th>Username</th>
                                         <th>Email</th>
-                                        <th>Pekerjaan</th>
-                                        <th>Alamat</th>
-                                        <th>Nomor Identitas</th>
-                                        <th>Perawat</th>
-                                        <th>Jadwal Pemeriksaan</th>
+                                        <th>No HP</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($dataPasien as $index => $pasien)
+                                    @foreach ($dataUsers as $index => $user)
                                         <tr>
-                                            <td>{{ $pasien->id_pasien}}</td>
-                                            <td>{{ $pasien->nama_panjang }}</td>
-                                            <td>{{ $pasien->tanggal_lahir }}</td>
-                                            <td>{{ $pasien->jenis_kelamin }}</td>
-                                            <td>{{ $pasien->nomor_hp }}</td>
-                                            <td>{{ $pasien->email }}</td>
-                                            <td>{{ $pasien->pekerjaan }}</td>
-                                            <td>{{ $pasien->alamat }}</td>
-                                            <td>{{ $pasien->nomor_identitas }}</td>
-                                            <td>{{ $pasien->id_perawat }}</td>
-                                            <td>
-                                                {{ \Carbon\Carbon::parse($pasien->tanggal_pemeriksaan)->format('d-m-Y') }}
-                                                {{ $pasien->waktu_pemeriksaan }}
-                                            </td>
+                                            <td>{{ $user->id_user }}</td>
+                                            <td>{{ $user->nama }}</td>
+                                            <td>{{ $user->role }}</td>
+                                            <td>{{ $user->username }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->no_hp }}</td>
+                                            <td>{{ $user->status }}</td>
                                             <td style="min-width: 190px">
-                                                <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px;">
+                                                <a href="{{ route('editAkun', $user->id_user) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px;">
                                                     Edit
                                                     <i class="typcn typcn-edit btn-icon-append"></i>
                                                 </a>
 
-                                                <form action="{{ route('pasien.destroy', $pasien->id_pasien) }}" method="POST" style="display:inline;" id="delete-form-{{ $pasien->id_pasien }}">
+                                                <form action="{{ route('destroyAkun', $user->id_user) }}" method="POST" style="display:inline;" id="delete-form-{{ $user->id_user }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px;" onclick="confirmDelete({{ $pasien->id_pasien }})">
+                                                    <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px;" onclick="confirmDelete({{ $user->id_user }})">
                                                         Delete
                                                         <i class="typcn typcn-delete-outline btn-icon-append"></i>
                                                     </button>
@@ -379,54 +386,45 @@
                     </div>
                 </div>
             </div>
-        @else
-            @if (session('success'))
-                <script>
-                Swal.fire({
-                    title: 'Success!',
-                    text: '{{ session("success") }}',
-                    icon: 'success',
-                    confirmButtonText: 'OK',
-                    timer: 3000,
-                    timerProgressBar: true,
-                });
-                </script>
-            @endif
+            @else
+                @if (session('success'))
+                    <script>
+                    Swal.fire({
+                        title: 'Success!',
+                        text: '{{ session("success") }}',
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
+                    </script>
+                @endif
             <!-- Tampilan Form Create -->
             <div class="col-12 grid-margin" style="margin-top: 15px;padding: 0px;">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Tambah Data Pasien</h4>
-                        <!-- Form menggunakan method POST untuk kirim data ke server -->
-                        <form method="POST" action="{{ route('pasien.store') }}" class="form-sample">
+                        <h4 class="card-title">Tambah Data User</h4>
+                        <form method="POST" action="{{ route('storeAkun') }}" class="form-sample">
                             @csrf
-                            <p class="card-description">Informasi Pasien</p>
+                            <p class="card-description">Informasi User</p>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nama Lengkap</label>
+                                        <label class="col-sm-3 col-form-label">Nama</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nama_panjang" placeholder="Masukkan nama lengkap" required>
+                                            <input type="text" class="form-control" name="nama" placeholder="Masukkan nama" required>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                                        <label class="col-sm-3 col-form-label">Role</label>
                                         <div class="col-sm-9">
-                                            <input type="date" class="form-control" name="tanggal_lahir" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Jenis Kelamin</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" name="jenis_kelamin" required>
-                                                <option value="Laki-laki">Laki-laki</option>
-                                                <option value="Perempuan">Perempuan</option>
+                                            <select class="form-control" name="role" required>
+                                                <option value="admin">Admin</option>
+                                                <option value="perawat">Perawat</option>
+                                                <option value="dokter">Dokter</option>
                                             </select>
                                         </div>
                                     </div>
@@ -434,9 +432,9 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nomor HP</label>
+                                        <label class="col-sm-3 col-form-label">Username</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nomor_hp" placeholder="Masukkan nomor HP" required>
+                                            <input type="text" class="form-control" name="username" placeholder="Masukkan username" required>
                                         </div>
                                     </div>
                                 </div>
@@ -445,74 +443,47 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Email</label>
                                         <div class="col-sm-9">
-                                            <input type="email" class="form-control" name="email" placeholder="Masukkan email (opsional)">
+                                            <input type="email" class="form-control" name="email" placeholder="Masukkan email" required>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Pekerjaan</label>
+                                        <label class="col-sm-3 col-form-label">No HP</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="pekerjaan" placeholder="Masukkan pekerjaan">
+                                            <input type="text" class="form-control" name="no_hp" placeholder="Masukkan nomor HP" required>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Alamat</label>
+                                        <label class="col-sm-3 col-form-label">Password</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="alamat" placeholder="Masukkan alamat lengkap">
+                                            <input type="password" class="form-control" name="password" placeholder="Masukkan password" required>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nomor Identitas (NIK/KTP)</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nomor_identitas" placeholder="Masukkan nomor identitas (NIK/KTP)" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Input Tanggal Pemeriksaan -->
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Tanggal Pemeriksaan</label>
-                                        <div class="col-sm-9">
-                                            <input type="date" class="form-control" name="tanggal_pemeriksaan" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Input Waktu Pemeriksaan -->
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Waktu Pemeriksaan</label>
-                                        <div class="col-sm-9">
-                                            <input type="time" class="form-control" name="waktu_pemeriksaan" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <input type="hidden" name="id_perawat" value="{{ Auth::user()->id_user }}">
 
                                 <button type="submit" class="btn btn-primary" style="margin-right: 2%;">Simpan</button>
-                                <a href="{{ route('cancelForm') }}" class="btn btn-secondary">Batal</a>
+                                <a href="{{ route('cancelFormAkun') }}" class="btn btn-secondary">Batal</a>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-        @endif
+            @endif
+
+
+
 
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">
-              <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">Team Kerja Praktik</a> 2025</span>
+              <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com</a> 2020</span>
+              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Free <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard </a>templates from Bootstrapdash.com</span>
             </div>
           </footer>
           <!-- partial -->
@@ -521,23 +492,6 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
-
-    <script>
-        function confirmDelete(id) {
-            Swal.fire({
-                title: 'Apakah Anda yakin?',
-                text: "Data ini akan dihapus!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, hapus!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('delete-form-' + id).submit();
-                }
-            });
-        }
-    </script>
     <!-- container-scroller -->
     <!-- base:js -->
     <script src="vendors/js/vendor.bundle.base.js"></script>

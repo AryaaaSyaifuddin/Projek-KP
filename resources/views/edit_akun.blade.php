@@ -13,7 +13,7 @@
     <!-- plugin css for this page -->
     <!-- End plugin css for this page -->
     <!-- inject:css -->
-    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="{{ asset('css/vertical-layout-light/style.css') }}">
     <!-- endinject -->
     <link rel="shortcut icon" href="img/favicon.jpg" />
   </head>
@@ -225,7 +225,7 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Data Account </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/akun"> Data Account </a></li>
                 <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
               </ul>
             </div>
@@ -266,9 +266,21 @@
             </div>
           </li>
           @endif
-
       </nav>
-        <!-- partial -->
+      @if (session('success'))
+                <script>
+                Swal.fire({
+                    title: 'Success!',
+                    text: '{{ session("success") }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+                </script>
+            @endif
+
+      <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="row">
@@ -299,214 +311,74 @@
                 </div>
               </div>
             </div>
-            @php
-                // Variabel kontrol untuk menampilkan form atau tabel
-                $showForm = session('showForm', true); // Default true (form create)
-                $pasien = session('pasien', null); // Data pasien untuk edit
-            @endphp
 
-        @if($showForm === true)
-            <!-- Tombol Create -->
-            <button
-                type="button"
-                class="btn btn-outline-primary btn-icon-text"
-                style="padding: 8px 15px;"
-                onclick="window.location='{{ route('showCreateForm') }}'">
-                Create
-                <i class="typcn typcn-folder btn-icon-prepend"></i>
-            </button>
-
-            <!-- Tabel -->
-            <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
+            <div class="col-12 grid-margin" style="margin-top: 15px; padding: 0px;">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Data Pasien</h4>
-                        <div class="table-responsive pt-3">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Nama</th>
-                                        <th>Tanggal Lahir</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Nomor HP</th>
-                                        <th>Email</th>
-                                        <th>Pekerjaan</th>
-                                        <th>Alamat</th>
-                                        <th>Nomor Identitas</th>
-                                        <th>Perawat</th>
-                                        <th>Jadwal Pemeriksaan</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($dataPasien as $index => $pasien)
-                                        <tr>
-                                            <td>{{ $pasien->id_pasien}}</td>
-                                            <td>{{ $pasien->nama_panjang }}</td>
-                                            <td>{{ $pasien->tanggal_lahir }}</td>
-                                            <td>{{ $pasien->jenis_kelamin }}</td>
-                                            <td>{{ $pasien->nomor_hp }}</td>
-                                            <td>{{ $pasien->email }}</td>
-                                            <td>{{ $pasien->pekerjaan }}</td>
-                                            <td>{{ $pasien->alamat }}</td>
-                                            <td>{{ $pasien->nomor_identitas }}</td>
-                                            <td>{{ $pasien->id_perawat }}</td>
-                                            <td>
-                                                {{ \Carbon\Carbon::parse($pasien->tanggal_pemeriksaan)->format('d-m-Y') }}
-                                                {{ $pasien->waktu_pemeriksaan }}
-                                            </td>
-                                            <td style="min-width: 190px">
-                                                <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px;">
-                                                    Edit
-                                                    <i class="typcn typcn-edit btn-icon-append"></i>
-                                                </a>
-
-                                                <form action="{{ route('pasien.destroy', $pasien->id_pasien) }}" method="POST" style="display:inline;" id="delete-form-{{ $pasien->id_pasien }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px;" onclick="confirmDelete({{ $pasien->id_pasien }})">
-                                                        Delete
-                                                        <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @else
-            @if (session('success'))
-                <script>
-                Swal.fire({
-                    title: 'Success!',
-                    text: '{{ session("success") }}',
-                    icon: 'success',
-                    confirmButtonText: 'OK',
-                    timer: 3000,
-                    timerProgressBar: true,
-                });
-                </script>
-            @endif
-            <!-- Tampilan Form Create -->
-            <div class="col-12 grid-margin" style="margin-top: 15px;padding: 0px;">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Tambah Data Pasien</h4>
-                        <!-- Form menggunakan method POST untuk kirim data ke server -->
-                        <form method="POST" action="{{ route('pasien.store') }}" class="form-sample">
+                        <h4 class="card-title">Edit Data Akun</h4>
+                        <!-- Form menggunakan method POST untuk mengirim data ke server -->
+                        <form method="POST" action="{{ route('akun.update', $akun->id_user) }}">
                             @csrf
-                            <p class="card-description">Informasi Pasien</p>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nama Lengkap</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nama_panjang" placeholder="Masukkan nama lengkap" required>
-                                        </div>
-                                    </div>
-                                </div>
+                            @method('PUT')
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
-                                        <div class="col-sm-9">
-                                            <input type="date" class="form-control" name="tanggal_lahir" required>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Nama -->
+                            <div class="form-group">
+                                <label for="nama">Nama</label>
+                                <input type="text" class="form-control" id="nama" name="nama" value="{{ $akun->nama }}">
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Jenis Kelamin</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" name="jenis_kelamin" required>
-                                                <option value="Laki-laki">Laki-laki</option>
-                                                <option value="Perempuan">Perempuan</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Role -->
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <select class="form-control" id="role" name="role">
+                                    <option value="admin" {{ $akun->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                                    <option value="user" {{ $akun->role == 'user' ? 'selected' : '' }}>User</option>
+                                </select>
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nomor HP</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nomor_hp" placeholder="Masukkan nomor HP" required>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Username -->
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" value="{{ $akun->username }}">
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Email</label>
-                                        <div class="col-sm-9">
-                                            <input type="email" class="form-control" name="email" placeholder="Masukkan email (opsional)">
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Password -->
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password baru jika ingin mengubah">
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Pekerjaan</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="pekerjaan" placeholder="Masukkan pekerjaan">
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Email -->
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ $akun->email }}">
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Alamat</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="alamat" placeholder="Masukkan alamat lengkap">
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Nomor HP -->
+                            <div class="form-group">
+                                <label for="no_hp">Nomor HP</label>
+                                <input type="text" class="form-control" id="no_hp" name="no_hp" value="{{ $akun->no_hp }}">
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nomor Identitas (NIK/KTP)</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nomor_identitas" placeholder="Masukkan nomor identitas (NIK/KTP)" required>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Input Status -->
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select class="form-control" id="status" name="status">
+                                    <option value="sudah diverifikasi" {{ $akun->status == 'sudah diverifikasi' ? 'selected' : '' }}>Sudah Diverifikasi</option>
+                                    <option value="belum diverifikasi" {{ $akun->status == 'belum diverifikasi' ? 'selected' : '' }}>Belum Diverifikasi</option>
+                                </select>
+                            </div>
 
-                                <!-- Input Tanggal Pemeriksaan -->
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Tanggal Pemeriksaan</label>
-                                        <div class="col-sm-9">
-                                            <input type="date" class="form-control" name="tanggal_pemeriksaan" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Input Waktu Pemeriksaan -->
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Waktu Pemeriksaan</label>
-                                        <div class="col-sm-9">
-                                            <input type="time" class="form-control" name="waktu_pemeriksaan" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <input type="hidden" name="id_perawat" value="{{ Auth::user()->id_user }}">
-
-                                <button type="submit" class="btn btn-primary" style="margin-right: 2%;">Simpan</button>
+                            <!-- Submit Button -->
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" style="margin-right: 1%;">Simpan</button>
                                 <a href="{{ route('cancelForm') }}" class="btn btn-secondary">Batal</a>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-        @endif
+
 
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
@@ -521,23 +393,6 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
-
-    <script>
-        function confirmDelete(id) {
-            Swal.fire({
-                title: 'Apakah Anda yakin?',
-                text: "Data ini akan dihapus!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, hapus!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('delete-form-' + id).submit();
-                }
-            });
-        }
-    </script>
     <!-- container-scroller -->
     <!-- base:js -->
     <script src="vendors/js/vendor.bundle.base.js"></script>
