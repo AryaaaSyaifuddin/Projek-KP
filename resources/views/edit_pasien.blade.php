@@ -7,7 +7,9 @@
     <title>Dashboard</title>
     <!-- base:css -->
     <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="{{ asset('vendors/typicons.font/font/typicons.css') }}">
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- endinject -->
     <!-- plugin css for this page -->
@@ -15,6 +17,7 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('css/vertical-layout-light/style.css') }}">
     <!-- endinject -->
+    <link rel="shortcut icon" href="{{ asset('img/favicon.jpg') }}">
     <link rel="shortcut icon" href="img/favicon.jpg" />
   </head>
   <body>
@@ -47,12 +50,12 @@
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo" href="index.html"><img src="img/favicon.jpg" alt="logo" style="width:100%"/></a>
-          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="img/logo-mini.svg" alt="logo"/></a>
-          <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
-            <span class="typcn typcn-th-menu"></span>
-          </button>
-        </div>
+            <a class="navbar-brand brand-logo" href="index.html"><img src="{{ asset('img/favicon.jpg') }}" alt="logo" style="width:100%"/></a>
+            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{ asset('img/logo-mini.svg') }}" alt="logo"/></a>
+            <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
+              <span class="typcn typcn-th-menu"></span>
+            </button>
+          </div>
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item d-none d-lg-flex  mr-2">
@@ -210,7 +213,7 @@
           <li class="nav-item">
             <div class="d-flex sidebar-profile">
               <div class="sidebar-profile-image">
-                <img src="img/me.jpg" alt="image">
+                <img src="{{ asset('img/me.jpg') }}" alt="image">
                 <span class="sidebar-status-indicator"></span>
               </div>
               <div class="sidebar-profile-name">
@@ -418,7 +421,6 @@
                     </div>
                 </div>
             </div>
-
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
@@ -433,6 +435,14 @@
       <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
+    <script src="{{ asset('js/off-canvas.js') }}"></script>
+    <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
+    <script src="{{ asset('js/template.js') }}"></script>
+    <script src="{{ asset('js/settings.js') }}"></script>
+    <script src="{{ asset('js/todolist.js') }}"></script>
+    <!-- endinject -->
     <!-- base:js -->
     <script src="vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->

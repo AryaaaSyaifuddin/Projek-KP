@@ -351,6 +351,23 @@
                 <i class="typcn typcn-folder btn-icon-prepend"></i>
             </button>
 
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="{{ route('search') }}" method="GET" class="form-inline mb-3">
+                        <input
+                            type="text"
+                            name="search"
+                            class="form-control"
+                            placeholder="Cari berdasarkan nama atau email"
+                            value="{{ request('search') }}"
+                            style="margin-right: 10px;"
+                        >
+                        <button type="submit" class="btn btn-outline-primary">Search</button>
+                    </form>
+                </div>
+            </div>
+
+
             <!-- Tabel -->
             <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
                 <div class="card">

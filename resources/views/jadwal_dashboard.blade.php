@@ -330,7 +330,7 @@
             @endphp
 
         @if($showForm === true)
-            <!-- Tombol Create -->
+            {{-- <!-- Tombol Create -->
             <button
                 type="button"
                 class="btn btn-outline-primary btn-icon-text"
@@ -338,7 +338,7 @@
                 onclick="window.location='{{ route('showCreateForm') }}'">
                 Create
                 <i class="typcn typcn-folder btn-icon-prepend"></i>
-            </button>
+            </button> --}}
 
             <!-- Tabel -->
             <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
