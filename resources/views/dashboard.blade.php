@@ -8,6 +8,7 @@
     <!-- base:css -->
     <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- endinject -->
     <!-- plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -18,18 +19,31 @@
   </head>
   <body>
 
-            @if (session('success'))
-                <script>
-                Swal.fire({
-                    title: 'Success!',
-                    text: '{{ session("success") }}',
-                    icon: 'success',
-                    confirmButtonText: 'OK',
-                    timer: 3000,
-                    timerProgressBar: true,
-                });
-                </script>
-            @endif
+    @if (session('error'))
+   <script>
+      Swal.fire({
+         title: 'Error!',
+         text: '{{ session("error") }}',
+         icon: 'error',
+         confirmButtonText: 'OK',
+         timer: 3000,
+         timerProgressBar: true,
+      });
+   </script>
+   @endif
+
+   @if (session('success'))
+   <script>
+      Swal.fire({
+         title: 'Success!',
+         text: '{{ session("success") }}',
+         icon: 'success',
+         confirmButtonText: 'OK',
+         timer: 3000,
+         timerProgressBar: true,
+      });
+   </script>
+   @endif
 
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
@@ -240,8 +254,7 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/akun"> Data Account </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/akun"> Data Account </a></li>
               </ul>
             </div>
           </li>
@@ -314,7 +327,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="row">
               <div class="col-xl-3 d-flex grid-margin stretch-card">
                 <div class="card">

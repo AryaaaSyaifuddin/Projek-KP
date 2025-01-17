@@ -8,25 +8,40 @@ use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\Auth\RegisterController;
-USE App\Http\Middleware\LoginMiddleware;
+use App\Http\Middleware\RedirectIfLoggedIn;
 
+
+    // Login Route
 
 // Login Route
-Route::get("/", [ViewController::class,"showlogin"])->name('login');
+Route::get("/", [ViewController::class, "showlogin"])
+    ->name('login')
+    ->middleware(RedirectIfLoggedIn::class);
 
-Route::post("/", [loginController::class, 'loginPost'])->name('login.post');
-
-Route::post('/logout', [loginController::class, 'logout'])->name('logout');
+Route::post("/", [loginController::class, 'loginPost'])
+    ->name('login.post')
+    ->middleware(RedirectIfLoggedIn::class);
 
 // Register Route
-Route::get("/register", [ViewController::class,"showRegister"]);
+Route::get("/register", [ViewController::class, "showRegister"])
+    ->middleware(RedirectIfLoggedIn::class);
 
-Route::post('/register', [RegisterController::class, 'registerPost'])->name('register.post');
+Route::post('/register', [RegisterController::class, 'registerPost'])
+    ->name('register.post')
+    ->middleware(RedirectIfLoggedIn::class);
+
+// ================================================================================================================================================
 
 // Middleware Perawat
 Route::middleware([PerawatMiddleware::class])->group(function () {
 
+    // ============================================================================================================================================
+
+    Route::post('/logout', [loginController::class, 'logout'])->name('logout');
+
     Route::get('/dashboard', [viewController::class, 'dashboard']);
+
+    // ============================================================================================================================================
 
     Route::get('/pasien', [PasienController::class, 'dashboardPasien'])->name('dashboardPasien');
 
@@ -51,7 +66,7 @@ Route::middleware([PerawatMiddleware::class])->group(function () {
     // Route untuk jadwal
     Route::get('/jadwal-pemeriksaan', [ViewController::class, 'dashboardJadwal']);
 
-    // =====================================================================================================================================================================
+    // ===========================================================================================================================================
 
     // Route untuk dashboard akun ( akun )
     Route::get('/akun', [adminController::class, 'dashboardAkun'])->name('dashboardAkun')->middleware(AdminMiddleware::class);
@@ -73,6 +88,8 @@ Route::middleware([PerawatMiddleware::class])->group(function () {
 
     // Menghapus data akun
     Route::delete('/akun/{id}', [adminController::class, 'destroy'])->name('destroyAkun')->middleware(AdminMiddleware::class);
+
+    // ============================================================================================================================================
 
 });
 

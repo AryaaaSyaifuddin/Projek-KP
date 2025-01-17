@@ -18,13 +18,37 @@
     <link rel="shortcut icon" href="img/favicon.jpg" />
   </head>
   <body>
+    @if (session('error'))
+   <script>
+      Swal.fire({
+         title: 'Error!',
+         text: '{{ session("error") }}',
+         icon: 'error',
+         confirmButtonText: 'OK',
+         timer: 3000,
+         timerProgressBar: true,
+      });
+   </script>
+   @endif
 
+   @if (session('success'))
+   <script>
+      Swal.fire({
+         title: 'Success!',
+         text: '{{ session("success") }}',
+         icon: 'success',
+         confirmButtonText: 'OK',
+         timer: 3000,
+         timerProgressBar: true,
+      });
+   </script>
+   @endif
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo" href="index.html"><img src="img/favicon.jpg" alt="logo" style="width:100%"/></a>
-          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="img/logo-mini.svg" alt="logo"/></a>
+          <a class="navbar-brand brand-logo" href="index.html"><img src="{{ asset('img/favicon.jpg') }}" alt="logo" style="width:100%"/></a>
+          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{ asset('img/logo-mini.svg') }}" alt="logo"/></a>
           <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
             <span class="typcn typcn-th-menu"></span>
           </button>
@@ -186,7 +210,7 @@
           <li class="nav-item">
             <div class="d-flex sidebar-profile">
               <div class="sidebar-profile-image">
-                <img src="img/me.jpg" alt="image">
+                <img src="{{ asset('img/me.jpg') }}" alt="image">
                 <span class="sidebar-status-indicator"></span>
               </div>
               <div class="sidebar-profile-name">
@@ -226,7 +250,6 @@
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/akun"> Data Account </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
               </ul>
             </div>
           </li>
@@ -378,7 +401,6 @@
                     </div>
                 </div>
             </div>
-
 
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->

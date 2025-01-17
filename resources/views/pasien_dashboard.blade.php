@@ -18,7 +18,31 @@
     <link rel="shortcut icon" href="img/favicon.jpg" />
   </head>
   <body>
+    @if (session('error'))
+   <script>
+      Swal.fire({
+         title: 'Error!',
+         text: '{{ session("error") }}',
+         icon: 'error',
+         confirmButtonText: 'OK',
+         timer: 3000,
+         timerProgressBar: true,
+      });
+   </script>
+   @endif
 
+   @if (session('success'))
+   <script>
+      Swal.fire({
+         title: 'Success!',
+         text: '{{ session("success") }}',
+         icon: 'success',
+         confirmButtonText: 'OK',
+         timer: 3000,
+         timerProgressBar: true,
+      });
+   </script>
+   @endif
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -225,8 +249,7 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Data Account </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/akun"> Data Account </a></li>
               </ul>
             </div>
           </li>
@@ -266,7 +289,19 @@
             </div>
           </li>
           @endif
-
+      </nav>
+      @if (session('success'))
+                <script>
+                Swal.fire({
+                    title: 'Success!',
+                    text: '{{ session("success") }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+                </script>
+            @endif
       </nav>
         <!-- partial -->
         <div class="main-panel">
