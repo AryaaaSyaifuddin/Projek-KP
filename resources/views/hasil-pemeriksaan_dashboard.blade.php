@@ -8,7 +8,6 @@
     <!-- base:css -->
     <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- endinject -->
     <!-- plugin css for this page -->
@@ -44,17 +43,16 @@
       });
    </script>
    @endif
-
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo" href="index.html"><img src="img/favicon.jpg" alt="logo" style="width:100%"/></a>
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="img/logo-mini.svg" alt="logo"/></a>
-            <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
-              <span class="typcn typcn-th-menu"></span>
-            </button>
-          </div>
+          <a class="navbar-brand brand-logo" href="index.html"><img src="img/favicon.jpg" alt="logo" style="width:100%"/></a>
+          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="img/logo-mini.svg" alt="logo"/></a>
+          <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
+            <span class="typcn typcn-th-menu"></span>
+          </button>
+        </div>
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item d-none d-lg-flex  mr-2">
@@ -161,18 +159,15 @@
                 <span class="nav-profile-name">Evan Morales</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-            <a class="dropdown-item" href="#">
+                <a class="dropdown-item">
                 <i class="typcn typcn-cog text-primary"></i>
                 Settings
-            </a>
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="dropdown-item">
-                    <i class="typcn typcn-power text-primary"></i>
-                    Logout
-                </button>
-            </form>
-        </div>
+                </a>
+                <a class="dropdown-item">
+                <i class="typcn typcn-power text-primary"></i>
+                Logout
+                </a>
+              </div>
             </li>
           </ul>
           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -254,7 +249,7 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="/akun"> Data Account </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/akun"> Data Account </a></li>
               </ul>
             </div>
           </li>
@@ -320,7 +315,19 @@
             </div>
           </li>
           @endif
-
+      </nav>
+      @if (session('success'))
+                <script>
+                Swal.fire({
+                    title: 'Success!',
+                    text: '{{ session("success") }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+                </script>
+            @endif
       </nav>
         <!-- partial -->
         <div class="main-panel">
@@ -353,63 +360,150 @@
                 </div>
               </div>
             </div>
-
             @php
                 // Variabel kontrol untuk menampilkan form atau tabel
                 $showForm = session('showForm', true); // Default true (form create)
-                $user = session('user', null); // Data user untuk edit
+                $pasien = session('pasien', null); // Data pasien untuk edit
             @endphp
 
-            @if($showForm === true)
+        @if($showForm === true)
             <!-- Tombol Create -->
-            <button
+            <div class="button-action">
+
+                {{-- <button
                 type="button"
                 class="btn btn-outline-primary btn-icon-text"
                 style="padding: 8px 15px;"
-                onclick="window.location='{{ route('showCreateFormAkun') }}'">
+                onclick="window.location='{{ route('showCreateForm') }}'">
                 Create
                 <i class="typcn typcn-folder btn-icon-prepend"></i>
-            </button>
+                </button> --}}
 
-            <!-- Tabel -->
+                <!-- Tabel -->
+                <div class="form-group" style="margin: 20px 0; display: flex; justify-content: space-between;">
+                        <button
+                    type="button"
+                    class="btn btn-outline-primary btn-icon-text"
+                    style="padding: 8px 15px; min-width: 8%;"
+                    onclick="window.location='{{ route('showCreateForm') }}'">
+                    Create
+                    <i class="typcn typcn-folder btn-icon-prepend"></i>
+                    </button>
+                    <input
+                    type="text"
+                    id="searchInput"
+                    class="form-control"
+                    style="max-width: 40%;"
+                    placeholder="Cari pasien berdasarkan nama, nomor HP, atau lainnya..."
+                    onkeyup="filterTable()">
+                </div>
+
+        </div>
             <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Data Users</h4>
+                        <h4 class="card-title">Data Pasien</h4>
                         <div class="table-responsive pt-3">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="dataTable">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Nama</th>
-                                        <th>Role</th>
-                                        <th>Username</th>
-                                        <th>Email</th>
-                                        <th>No HP</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>Id Pasien</th>
+                                        <th>Id Perawat</th>
+                                        <th>Gender</th>
+                                        <th>Height</th>
+                                        <th>Weight</th>
+                                        <th>Sistolik</th>
+                                        <th>Diastolik</th>
+                                        <th>Age</th>
+                                        <th>BMI</th>
+                                        <th>BMI Category</th>
+                                        <th>Hipertensi Kategori</th>
+                                        <th>Tuberkulosis</th>
+                                        <th>Penyakit Jantung</th>
+                                        <th>Hipertensi</th>
+                                        <th>Diabetes Melitus</th>
+                                        <th>Gangguan Jiwa</th>
+                                        <th>Trauma pada Kepala</th>
+                                        <th>Hepatitis</th>
+                                        <th>Spirometri</th>
+                                        <th>Treadmill</th>
+                                        <th>Audiometri</th>
+                                        <th>Nadi (kali/menit)</th>
+                                        <th>Frekuensi Napas (kali/menit)</th>
+                                        <th>Tingkatan Kesadaran</th>
+                                        <th>Buta Warna</th>
+                                        <th>Jantung</th>
+                                        <th>Foto Thorax</th>
+                                        <th>Hemoglobin</th>
+                                        <th>Leukosit</th>
+                                        <th>Eritrosit</th>
+                                        <th>LED</th>
+                                        <th>Eosinofil</th>
+                                        <th>Basofil</th>
+                                        <th>Neutrofil</th>
+                                        <th>Lymphosit</th>
+                                        <th>Monosit</th>
+                                        <th>Trombosit</th>
+                                        <th>Hematokrit</th>
+                                        <th>MCV</th>
+                                        <th>MCH</th>
+                                        <th>S G O T</th>
+                                        <th>S G P T</th>
+                                        <th>B U N</th>
+                                        <th>Kreatinin</th>
+                                        <th>Asam Urat</th>
+                                        <th>Kolesterol Total</th>
+                                        <th>Trigliserida</th>
+                                        <th>Kolesterol HDL (Direct)</th>
+                                        <th>Kolesterol LDL (Direct)</th>
+                                        <th>Gula Darah Puasa (BSN)</th>
+                                        <th>Gula Darah 2 Jam PP</th>
+                                        <th>HBs Ag Kuantitatif</th>
+                                        <th>pH pada Urine</th>
+                                        <th>Berat Jenis pada Urine</th>
+                                        <th>Nitrite pada Urine</th>
+                                        <th>Protein pada Urine</th>
+                                        <th>Reduksi pada Urine</th>
+                                        <th>Ketone pada Urine</th>
+                                        <th>Urobilinogen pada Urine</th>
+                                        <th>Billirubin pada Urine</th>
+                                        <th>Eritrosit pada Urine</th>
+                                        <th>Leukosit pada Urine</th>
+                                        <th>Silinder pada Urine</th>
+                                        <th>Kristal pada Urine</th>
+                                        <th>Yeast pada Urine</th>
+                                        <th>Bakteri pada Urine</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach ($dataUsers as $index => $user)
+
+                                {{-- <tbody>
+                                    @foreach ($dataPasien as $index => $pasien)
                                         <tr>
-                                            <td>{{ $user->id_user }}</td>
-                                            <td>{{ $user->nama }}</td>
-                                            <td>{{ $user->role }}</td>
-                                            <td>{{ $user->username }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ $user->no_hp }}</td>
-                                            <td>{{ $user->status }}</td>
+                                            <td>{{ $pasien->id_pasien }}</td>
+                                            <td>{{ $pasien->nama_panjang }}</td>
+                                            <td>{{ $pasien->tanggal_lahir }}</td>
+                                            <td>{{ $pasien->jenis_kelamin }}</td>
+                                            <td>{{ $pasien->nomor_hp }}</td>
+                                            <td>{{ $pasien->email }}</td>
+                                            <td>{{ $pasien->pekerjaan }}</td>
+                                            <td>{{ $pasien->alamat }}</td>
+                                            <td>{{ $pasien->nomor_identitas }}</td>
+                                            <td>{{ $pasien->id_perawat }}</td>
+                                            <td>
+                                                {{ \Carbon\Carbon::parse($pasien->tanggal_pemeriksaan)->format('d-m-Y') }}
+                                                {{ $pasien->waktu_pemeriksaan }}
+                                            </td>
                                             <td style="min-width: 190px">
-                                                <a href="{{ route('editAkun', $user->id_user) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px;">
+                                                <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px;">
                                                     Edit
                                                     <i class="typcn typcn-edit btn-icon-append"></i>
                                                 </a>
 
-                                                <form action="{{ route('destroyAkun', $user->id_user) }}" method="POST" style="display:inline;" id="delete-form-{{ $user->id_user }}">
+                                                <form action="{{ route('pasien.destroy', $pasien->id_pasien) }}" method="POST" style="display:inline;" id="delete-form-{{ $pasien->id_pasien }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px;" onclick="confirmDelete({{ $user->id_user }})">
+                                                    <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px;" onclick="confirmDelete({{ $pasien->id_pasien }})">
                                                         Delete
                                                         <i class="typcn typcn-delete-outline btn-icon-append"></i>
                                                     </button>
@@ -417,51 +511,60 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                </tbody>
+                                </tbody> --}}
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-            @else
-                @if (session('success'))
-                    <script>
-                    Swal.fire({
-                        title: 'Success!',
-                        text: '{{ session("success") }}',
-                        icon: 'success',
-                        confirmButtonText: 'OK',
-                        timer: 3000,
-                        timerProgressBar: true,
-                    });
-                    </script>
-                @endif
+        @else
+            @if (session('success'))
+                <script>
+                Swal.fire({
+                    title: 'Success!',
+                    text: '{{ session("success") }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+                </script>
+            @endif
             <!-- Tampilan Form Create -->
             <div class="col-12 grid-margin" style="margin-top: 15px;padding: 0px;">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Tambah Data User</h4>
-                        <form method="POST" action="{{ route('storeAkun') }}" class="form-sample">
+                        <h4 class="card-title">Tambah Data Pasien</h4>
+                        <!-- Form menggunakan method POST untuk kirim data ke server -->
+                        <form method="POST" action="{{ route('pasien.store') }}" class="form-sample">
                             @csrf
-                            <p class="card-description">Informasi User</p>
+                            <p class="card-description">Informasi Pasien</p>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nama</label>
+                                        <label class="col-sm-3 col-form-label">Nama Lengkap</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nama" placeholder="Masukkan nama" required>
+                                            <input type="text" class="form-control" name="nama_panjang" placeholder="Masukkan nama lengkap" required>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Role</label>
+                                        <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" name="role" required>
-                                                <option value="admin">Admin</option>
-                                                <option value="perawat">Perawat</option>
-                                                <option value="dokter">Dokter</option>
+                                            <input type="date" class="form-control" name="tanggal_lahir" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Jenis Kelamin</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="jenis_kelamin" required>
+                                                <option value="Laki-laki">Laki-laki</option>
+                                                <option value="Perempuan">Perempuan</option>
                                             </select>
                                         </div>
                                     </div>
@@ -469,9 +572,9 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Username</label>
+                                        <label class="col-sm-3 col-form-label">Nomor HP</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="username" placeholder="Masukkan username" required>
+                                            <input type="text" class="form-control" name="nomor_hp" placeholder="Masukkan nomor HP" required>
                                         </div>
                                     </div>
                                 </div>
@@ -480,47 +583,74 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Email</label>
                                         <div class="col-sm-9">
-                                            <input type="email" class="form-control" name="email" placeholder="Masukkan email" required>
+                                            <input type="email" class="form-control" name="email" placeholder="Masukkan email (opsional)">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">No HP</label>
+                                        <label class="col-sm-3 col-form-label">Pekerjaan</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="no_hp" placeholder="Masukkan nomor HP" required>
+                                            <input type="text" class="form-control" name="pekerjaan" placeholder="Masukkan pekerjaan">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Password</label>
+                                        <label class="col-sm-3 col-form-label">Alamat</label>
                                         <div class="col-sm-9">
-                                            <input type="password" class="form-control" name="password" placeholder="Masukkan password" required>
+                                            <input type="text" class="form-control" name="alamat" placeholder="Masukkan alamat lengkap">
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Nomor Identitas (NIK/KTP)</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="nomor_identitas" placeholder="Masukkan nomor identitas (NIK/KTP)" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Input Tanggal Pemeriksaan -->
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Tanggal Pemeriksaan</label>
+                                        <div class="col-sm-9">
+                                            <input type="date" class="form-control" name="tanggal_pemeriksaan" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Input Waktu Pemeriksaan -->
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Waktu Pemeriksaan</label>
+                                        <div class="col-sm-9">
+                                            <input type="time" class="form-control" name="waktu_pemeriksaan" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" name="id_perawat" value="{{ Auth::user()->id_user }}">
 
                                 <button type="submit" class="btn btn-primary" style="margin-right: 2%;">Simpan</button>
-                                <a href="{{ route('cancelFormAkun') }}" class="btn btn-secondary">Batal</a>
+                                <a href="{{ route('cancelForm') }}" class="btn btn-secondary">Batal</a>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            @endif
-
-
-
+        @endif
 
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">
-              <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com</a> 2020</span>
-              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Free <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard </a>templates from Bootstrapdash.com</span>
+              <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">Team Kerja Praktik</a> 2025</span>
             </div>
           </footer>
           <!-- partial -->
@@ -529,6 +659,23 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Data ini akan dihapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
+    </script>
     <!-- container-scroller -->
     <!-- base:js -->
     <script src="vendors/js/vendor.bundle.base.js"></script>
@@ -536,6 +683,31 @@
     <!-- Plugin js for this page-->
     <!-- End plugin js for this page-->
     <!-- inject:js -->
+    <script>
+        function filterTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('dataTable');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) { // Mulai dari 1 untuk melewati header
+                const cells = rows[i].getElementsByTagName('td');
+                let match = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j]) {
+                        const text = cells[j].textContent || cells[j].innerText;
+                        if (text.toLowerCase().includes(filter)) {
+                            match = true;
+                            break;
+                        }
+                    }
+                }
+
+                rows[i].style.display = match ? '' : 'none';
+            }
+        }
+    </script>
     <script src="js/off-canvas.js"></script>
     <script src="js/hoverable-collapse.js"></script>
     <script src="js/template.js"></script>

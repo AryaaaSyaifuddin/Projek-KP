@@ -32,4 +32,14 @@ class ViewController extends Controller
         // Pass data ke view
         return view('akun_dashboard', compact('dataPasien'));
     }
+
+    public function dashboardHasilPemeriksaan(){
+
+        // Pass data ke view
+        return view('hasil-pemeriksaan_dashboard');
+    }
+
+    public function error(){
+        return view('error');
+    }
 }

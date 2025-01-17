@@ -269,6 +269,19 @@
               </ul>
             </div>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="typcn typcn-user-outline menu-icon"></i>
+              <span class="menu-title">Hasil Pemeriksaan</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/dashboard">Detail Jadwal</a></li>
+              </ul>
+            </div>
+          </li>
         @endif
 
         @if (Auth::user()->role === 'perawat')
@@ -288,6 +301,19 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/pasien">Data Pasien</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/jadwal-pemeriksaan">Detail Jadwal</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="typcn typcn-user-outline menu-icon"></i>
+              <span class="menu-title">Hasil Pemeriksaan</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/dashboard">Detail Jadwal</a></li>
               </ul>
             </div>
           </li>

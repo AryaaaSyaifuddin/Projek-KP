@@ -132,4 +132,6 @@ class PasienController extends Controller
         return redirect()->back()->with('success', 'Pasien berhasil dihapus!');
     }
 
+
+
 }

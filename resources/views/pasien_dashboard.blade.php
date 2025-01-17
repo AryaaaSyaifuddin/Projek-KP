@@ -266,6 +266,19 @@
               </ul>
             </div>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="typcn typcn-user-outline menu-icon"></i>
+              <span class="menu-title">Hasil Pemeriksaan</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
+                <li class="nav-item"> <a class="nav-link" href="">Detail Jadwal</a></li>
+              </ul>
+            </div>
+          </li>
         @endif
 
         @if (Auth::user()->role === 'perawat')
@@ -285,6 +298,19 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/pasien">Data Pasien</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/jadwal-pemeriksaan">Detail Jadwal</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="typcn typcn-user-outline menu-icon"></i>
+              <span class="menu-title">Hasil Pemeriksaan</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Detail Jadwal</a></li>
               </ul>
             </div>
           </li>
@@ -342,39 +368,43 @@
 
         @if($showForm === true)
             <!-- Tombol Create -->
-            <button
+            <div class="button-action">
+
+                {{-- <button
                 type="button"
                 class="btn btn-outline-primary btn-icon-text"
                 style="padding: 8px 15px;"
                 onclick="window.location='{{ route('showCreateForm') }}'">
                 Create
                 <i class="typcn typcn-folder btn-icon-prepend"></i>
-            </button>
+                </button> --}}
 
-            <div class="row">
-                <div class="col-md-6">
-                    <form action="{{ route('search') }}" method="GET" class="form-inline mb-3">
-                        <input
-                            type="text"
-                            name="search"
-                            class="form-control"
-                            placeholder="Cari berdasarkan nama atau email"
-                            value="{{ request('search') }}"
-                            style="margin-right: 10px;"
-                        >
-                        <button type="submit" class="btn btn-outline-primary">Search</button>
-                    </form>
+                <!-- Tabel -->
+                <div class="form-group" style="margin: 20px 0; display: flex; justify-content: space-between;">
+                        <button
+                    type="button"
+                    class="btn btn-outline-primary btn-icon-text"
+                    style="padding: 8px 15px; min-width: 8%;"
+                    onclick="window.location='{{ route('showCreateForm') }}'">
+                    Create
+                    <i class="typcn typcn-folder btn-icon-prepend"></i>
+                    </button>
+                    <input
+                    type="text"
+                    id="searchInput"
+                    class="form-control"
+                    style="max-width: 40%;"
+                    placeholder="Cari pasien berdasarkan nama, nomor HP, atau lainnya..."
+                    onkeyup="filterTable()">
                 </div>
-            </div>
 
-
-            <!-- Tabel -->
+        </div>
             <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Data Pasien</h4>
                         <div class="table-responsive pt-3">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="dataTable">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
@@ -394,7 +424,7 @@
                                 <tbody>
                                     @foreach ($dataPasien as $index => $pasien)
                                         <tr>
-                                            <td>{{ $pasien->id_pasien}}</td>
+                                            <td>{{ $pasien->id_pasien }}</td>
                                             <td>{{ $pasien->nama_panjang }}</td>
                                             <td>{{ $pasien->tanggal_lahir }}</td>
                                             <td>{{ $pasien->jenis_kelamin }}</td>
@@ -597,6 +627,31 @@
     <!-- Plugin js for this page-->
     <!-- End plugin js for this page-->
     <!-- inject:js -->
+    <script>
+        function filterTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('dataTable');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) { // Mulai dari 1 untuk melewati header
+                const cells = rows[i].getElementsByTagName('td');
+                let match = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j]) {
+                        const text = cells[j].textContent || cells[j].innerText;
+                        if (text.toLowerCase().includes(filter)) {
+                            match = true;
+                            break;
+                        }
+                    }
+                }
+
+                rows[i].style.display = match ? '' : 'none';
+            }
+        }
+    </script>
     <script src="js/off-canvas.js"></script>
     <script src="js/hoverable-collapse.js"></script>
     <script src="js/template.js"></script>

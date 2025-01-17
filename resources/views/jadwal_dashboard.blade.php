@@ -266,6 +266,19 @@
               </ul>
             </div>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="typcn typcn-user-outline menu-icon"></i>
+              <span class="menu-title">Hasil Pemeriksaan</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/dashboard">Detail Jadwal</a></li>
+              </ul>
+            </div>
+          </li>
         @endif
 
         @if (Auth::user()->role === 'perawat')
@@ -285,6 +298,19 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/pasien">Data Pasien</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/jadwal-pemeriksaan">Detail Jadwal</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="typcn typcn-user-outline menu-icon"></i>
+              <span class="menu-title">Hasil Pemeriksaan</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/dashboard">Detail Jadwal</a></li>
               </ul>
             </div>
           </li>
@@ -328,7 +354,6 @@
                 $showForm = session('showForm', true); // Default true (form create)
                 $pasien = session('pasien', null); // Data pasien untuk edit
             @endphp
-
         @if($showForm === true)
             {{-- <!-- Tombol Create -->
             <button
@@ -339,6 +364,14 @@
                 Create
                 <i class="typcn typcn-folder btn-icon-prepend"></i>
             </button> --}}
+            <div class="form-group" style="margin: 20px 0;">
+                <input
+                type="text"
+                id="searchInput"
+                class="form-control"
+                placeholder="Cari pasien berdasarkan nama, nomor HP, atau lainnya..."
+                onkeyup="filterTable()">
+            </div>
 
             <!-- Tabel -->
             <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
@@ -346,7 +379,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Data Pasien</h4>
                         <div class="table-responsive pt-3">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="dataTable">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -526,6 +559,31 @@
                     document.getElementById('delete-form-' + id).submit();
                 }
             });
+        }
+    </script>
+    <script>
+        function filterTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('dataTable');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) { // Mulai dari 1 untuk melewati header
+                const cells = rows[i].getElementsByTagName('td');
+                let match = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j]) {
+                        const text = cells[j].textContent || cells[j].innerText;
+                        if (text.toLowerCase().includes(filter)) {
+                            match = true;
+                            break;
+                        }
+                    }
+                }
+
+                rows[i].style.display = match ? '' : 'none';
+            }
         }
     </script>
     <!-- container-scroller -->

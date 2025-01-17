@@ -35,6 +35,8 @@ Route::post('/register', [RegisterController::class, 'registerPost'])
 // Middleware Perawat
 Route::middleware([PerawatMiddleware::class])->group(function () {
 
+    Route::get('/error', [viewController::class, 'error']);
+
     // ============================================================================================================================================
 
     Route::post('/logout', [loginController::class, 'logout'])->name('logout');
@@ -63,6 +65,10 @@ Route::middleware([PerawatMiddleware::class])->group(function () {
     // Route untuk hapus data pasien
     Route::delete('/pasien/{id_pasien}', [PasienController::class, 'destroy'])->name('pasien.destroy');
 
+    Route::get('/pasien/search', [PasienController::class, 'search'])->name('pasien.search');
+
+    // ===========================================================================================================================================
+
     // Route untuk jadwal
     Route::get('/jadwal-pemeriksaan', [ViewController::class, 'dashboardJadwal']);
 
@@ -90,6 +96,8 @@ Route::middleware([PerawatMiddleware::class])->group(function () {
     Route::delete('/akun/{id}', [adminController::class, 'destroy'])->name('destroyAkun')->middleware(AdminMiddleware::class);
 
     // ============================================================================================================================================
+
+    Route::get('/hasil-pemeriksaan', [ViewController::class, 'dashboardHasilPemeriksaan'])->name('dashboardHasilPemeriksaan');
 
 });
 
