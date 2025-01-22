@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Middleware\RedirectIfLoggedIn;
-
+use App\Http\Middleware\UsersMiddleware;
 
     // Login Route
 
@@ -33,7 +33,7 @@ Route::post('/register', [RegisterController::class, 'registerPost'])
 // ================================================================================================================================================
 
 // Middleware Perawat
-Route::middleware([PerawatMiddleware::class])->group(function () {
+Route::middleware([UsersMiddleware::class])->group(function () {
 
     Route::get('/error', [viewController::class, 'error']);
 
@@ -67,6 +67,8 @@ Route::middleware([PerawatMiddleware::class])->group(function () {
 
     Route::get('/pasien/search', [PasienController::class, 'search'])->name('pasien.search');
 
+    Route::post('/pasien/check-nik', [PasienController::class, 'checkNik'])->name('pasien.checkNik');
+
     // ===========================================================================================================================================
 
     // Route untuk jadwal
@@ -98,6 +100,17 @@ Route::middleware([PerawatMiddleware::class])->group(function () {
     // ============================================================================================================================================
 
     Route::get('/hasil-pemeriksaan', [ViewController::class, 'dashboardHasilPemeriksaan'])->name('dashboardHasilPemeriksaan');
+
+    // ============================================================================================================================================
+
+    Route::get('/dokter', [ViewController::class, 'dashboardDokter'])->name('dashboardDokter');
+
+    // ============================================================================================================================================
+
+    Route::get('/perawat', [ViewController::class, 'dashboardPerawat'])->name('dashboardPerawat');
+
+    // ============================================================================================================================================
+
 
 });
 

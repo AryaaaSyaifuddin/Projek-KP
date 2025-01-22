@@ -5,12 +5,12 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class PerawatMiddleware
+class UsersMiddleware
 {
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role === 'perawat') {
-            return $next($request); // Lanjutkan request jika admin
+        if (Auth::check() && in_array(Auth::user()->role, ['perawat', 'admin', 'dokter'])) {
+            return $next($request); // Lanjutkan request jika role sesuai
         }
 
         return redirect()->back()->with('error', 'Anda tidak memiliki akses ke halaman ini.');

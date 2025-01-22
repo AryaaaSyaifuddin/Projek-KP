@@ -22,13 +22,28 @@ class Pasien extends Model
         'alamat',
         'nomor_identitas',
         'id_perawat',
+        'id_dokter', // Kolom baru untuk dokter
         'tanggal_pemeriksaan',
         'waktu_pemeriksaan',
     ];
 
-    // Relasi ke model User
+    /**
+     * Relasi ke model Users (perawat).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function perawat()
     {
         return $this->belongsTo(Users::class, 'id_perawat', 'id_user');
+    }
+
+    /**
+     * Relasi ke model Users (dokter).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function dokter()
+    {
+        return $this->belongsTo(Users::class, 'id_dokter', 'id_user');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pasien;
+use App\Models\Users;
 
 class ViewController extends Controller
 {
@@ -19,8 +20,11 @@ class ViewController extends Controller
         return view("dashboard");
     }
 
-    public function dashboardJadwal(){
-        $dataPasien = Pasien::all(); // Ambil data pasien dari database
+    public function dashboardJadwal()
+    {
+        $dataPasien = Pasien::join('users', 'pasien.id_perawat', '=', 'users.id_user')
+            ->select('pasien.*', 'users.nama as nama_perawat')
+            ->get();
 
         // Pass data ke view
         return view('jadwal_dashboard', compact('dataPasien'));
@@ -42,4 +46,23 @@ class ViewController extends Controller
     public function error(){
         return view('error');
     }
+
+    public function dashboardDokter()
+    {
+        // Ambil hanya data user yang memiliki role "dokter"
+        $dataUsers = Users::where('role', 'dokter')->get();
+
+        // Pass data ke view
+        return view('dokter_dashboard', compact('dataUsers'));
+    }
+
+    public function dashboardPerawat()
+    {
+        // Ambil hanya data user yang memiliki role "dokter"
+        $dataUsers = Users::where('role', 'perawat')->get();
+
+        // Pass data ke view
+        return view('dokter_dashboard', compact('dataUsers'));
+    }
+
 }

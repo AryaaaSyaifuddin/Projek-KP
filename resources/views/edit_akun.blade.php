@@ -7,14 +7,18 @@
     <title>Dashboard</title>
     <!-- base:css -->
     <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="{{ asset('vendors/typicons.font/font/typicons.css') }}">
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <!-- endinject -->
     <!-- plugin css for this page -->
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('css/vertical-layout-light/style.css') }}">
     <!-- endinject -->
+    <link rel="shortcut icon" href="{{ asset('img/favicon.jpg') }}">
     <link rel="shortcut icon" href="img/favicon.jpg" />
   </head>
   <body>
@@ -156,7 +160,7 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
                 <i class="typcn typcn-user-outline mr-0"></i>
-                <span class="nav-profile-name">Evan Morales</span>
+                <span class="nav-profile-name">{{ Auth::user()->nama ?? 'Anonim' }}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                 <a class="dropdown-item">
@@ -242,20 +246,46 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="typcn typcn-user-add-outline menu-icon"></i>
+            <a class="nav-link" data-toggle="collapse" href="#dokter" aria-expanded="false" aria-controls="dokter">
+                <i class="fas fa-user-md menu-icon"></i> <!-- Ikon dokter -->
+                <span class="menu-title">Dokter</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="dokter">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="/dokter">Data Dokter</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Dokter</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#perawat" aria-expanded="false" aria-controls="perawat">
+                <i class="fas fa-user-nurse menu-icon"></i> <!-- Ikon perawat medis -->
+                <span class="menu-title">Perawat</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="perawat">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="/perawat">Data Perawat</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Perawat</a></li>
+                </ul>
+            </div>
+        </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="akun">
+              <i class="fas fa-user-circle menu-icon"></i>
               <span class="menu-title">Account</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/akun"> Data Account </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/akun"> Data Account </a></li>
               </ul>
             </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="typcn typcn-user-outline menu-icon"></i>
+              <i class="fas fa-user-injured menu-icon"></i>
               <span class="menu-title">Pasien</span>
               <i class="menu-arrow"></i>
             </a>
@@ -267,15 +297,15 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="typcn typcn-user-outline menu-icon"></i>
+            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="hasil_pemeriksaan">
+              <i class="fas fa-file-medical menu-icon"></i>
               <span class="menu-title">Hasil Pemeriksaan</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-basic">
+            <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/dashboard">Detail Jadwal</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/sama-saja">Detail Jadwal</a></li>
               </ul>
             </div>
           </li>
@@ -290,7 +320,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="typcn typcn-user-outline menu-icon"></i>
+              <i class="fas fa-user-injured menu-icon"></i>
               <span class="menu-title">Pasien</span>
               <i class="menu-arrow"></i>
             </a>
@@ -302,19 +332,22 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="typcn typcn-user-outline menu-icon"></i>
+            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="hasil_pemeriksaan">
+              <i class="fas fa-file-medical menu-icon"></i>
               <span class="menu-title">Hasil Pemeriksaan</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-basic">
+            <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/dashboard">Detail Jadwal</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/sama-saja">Detail Jadwal</a></li>
               </ul>
             </div>
           </li>
           @endif
+
+
+
       </nav>
       @if (session('success'))
                 <script>
@@ -442,6 +475,14 @@
       <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
+    <script src="{{ asset('js/off-canvas.js') }}"></script>
+    <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
+    <script src="{{ asset('js/template.js') }}"></script>
+    <script src="{{ asset('js/settings.js') }}"></script>
+    <script src="{{ asset('js/todolist.js') }}"></script>
+    <!-- endinject -->
     <!-- base:js -->
     <script src="vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->

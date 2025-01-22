@@ -8,7 +8,6 @@
     <!-- base:css -->
     <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <!-- endinject -->
@@ -45,17 +44,16 @@
       });
    </script>
    @endif
-
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo" href="index.html"><img src="img/favicon.jpg" alt="logo" style="width:100%"/></a>
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="img/logo-mini.svg" alt="logo"/></a>
-            <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
-              <span class="typcn typcn-th-menu"></span>
-            </button>
-          </div>
+          <a class="navbar-brand brand-logo" href="index.html"><img src="img/favicon.jpg" alt="logo" style="width:100%"/></a>
+          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="img/logo-mini.svg" alt="logo"/></a>
+          <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
+            <span class="typcn typcn-th-menu"></span>
+          </button>
+        </div>
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item nav-profile dropdown">
@@ -64,18 +62,15 @@
                 <span class="nav-profile-name">{{ Auth::user()->nama ?? 'Anonim' }}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-            <a class="dropdown-item" href="#">
+                <a class="dropdown-item">
                 <i class="typcn typcn-cog text-primary"></i>
                 Settings
-            </a>
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="dropdown-item">
-                    <i class="typcn typcn-power text-primary"></i>
-                    Logout
-                </button>
-            </form>
-        </div>
+                </a>
+                <a class="dropdown-item">
+                <i class="typcn typcn-power text-primary"></i>
+                Logout
+                </a>
+              </div>
             </li>
           </ul>
           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -161,8 +156,8 @@
                     <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Dokter</a></li>
                 </ul>
             </div>
-        </li>
-        <li class="nav-item">
+          </li>
+          <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#perawat" aria-expanded="false" aria-controls="perawat">
                 <i class="fas fa-user-nurse menu-icon"></i> <!-- Ikon perawat medis -->
                 <span class="menu-title">Perawat</span>
@@ -174,7 +169,7 @@
                     <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Perawat</a></li>
                 </ul>
             </div>
-        </li>
+          </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="akun">
               <i class="fas fa-user-circle menu-icon"></i>
@@ -252,7 +247,19 @@
 
 
 
-
+      </nav>
+      @if (session('success'))
+                <script>
+                Swal.fire({
+                    title: 'Success!',
+                    text: '{{ session("success") }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+                </script>
+            @endif
       </nav>
         <!-- partial -->
         <div class="main-panel">
@@ -286,173 +293,74 @@
               </div>
             </div>
 
-            @php
-                // Variabel kontrol untuk menampilkan form atau tabel
-                $showForm = session('showForm', true); // Default true (form create)
-                $user = session('user', null); // Data user untuk edit
-            @endphp
+                <div class="form-group" style="margin: 20px 0; display: flex; justify-content: space-between;">
+                    <input
+                    type="text"
+                    id="searchInput"
+                    class="form-control"
+                    style="max-width: 40%;"
+                    placeholder="Cari pasien berdasarkan nama, nomor HP, atau lainnya..."
+                    onkeyup="filterTable()">
+                </div>
 
-            @if($showForm === true)
-            <!-- Tombol Create -->
-            <button
-                type="button"
-                class="btn btn-outline-primary btn-icon-text"
-                style="padding: 8px 15px;"
-                onclick="window.location='{{ route('showCreateFormAkun') }}'">
-                Create
-                <i class="typcn typcn-folder btn-icon-prepend"></i>
-            </button>
-
-            <!-- Tabel -->
-            <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Data Users</h4>
-                        <div class="table-responsive pt-3">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Nama</th>
-                                        <th>Role</th>
-                                        <th>Username</th>
-                                        <th>Email</th>
-                                        <th>No HP</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($dataUsers as $index => $user)
+                <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Data Users</h4>
+                            <div class="table-responsive pt-3">
+                                <table class="table table-bordered" id="dataTable">
+                                    <thead>
                                         <tr>
-                                            <td>{{ $user->id_user }}</td>
-                                            <td>{{ $user->nama }}</td>
-                                            <td>{{ $user->role }}</td>
-                                            <td>{{ $user->username }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ $user->no_hp }}</td>
-                                            <td>{{ $user->status }}</td>
-                                            <td style="min-width: 190px">
-                                                <a href="{{ route('editAkun', $user->id_user) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px;">
-                                                    Edit
-                                                    <i class="typcn typcn-edit btn-icon-append"></i>
-                                                </a>
-
-                                                <form action="{{ route('destroyAkun', $user->id_user) }}" method="POST" style="display:inline;" id="delete-form-{{ $user->id_user }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px;" onclick="confirmDelete({{ $user->id_user }})">
-                                                        Delete
-                                                        <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
+                                            <th>Id</th>
+                                            <th>Nama</th>
+                                            <th>Role</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>No HP</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($dataUsers as $index => $user)
+                                            <tr>
+                                                <td>{{ $user->id_user }}</td>
+                                                <td>{{ $user->nama }}</td>
+                                                <td>{{ $user->role }}</td>
+                                                <td>{{ $user->username }}</td>
+                                                <td>{{ $user->email }}</td>
+                                                <td>{{ $user->no_hp }}</td>
+                                                <td>{{ $user->status }}</td>
+                                                <td style="min-width: 190px">
+                                                    <a href="{{ route('editAkun', $user->id_user) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px;">
+                                                        Edit
+                                                        <i class="typcn typcn-edit btn-icon-append"></i>
+                                                    </a>
+
+                                                    <form action="{{ route('destroyAkun', $user->id_user) }}" method="POST" style="display:inline;" id="delete-form-{{ $user->id_user }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px;" onclick="confirmDelete({{ $user->id_user }})">
+                                                            Delete
+                                                            <i class="typcn typcn-delete-outline btn-icon-append"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            @else
-                @if (session('success'))
-                    <script>
-                    Swal.fire({
-                        title: 'Success!',
-                        text: '{{ session("success") }}',
-                        icon: 'success',
-                        confirmButtonText: 'OK',
-                        timer: 3000,
-                        timerProgressBar: true,
-                    });
-                    </script>
-                @endif
-            <!-- Tampilan Form Create -->
-            <div class="col-12 grid-margin" style="margin-top: 15px;padding: 0px;">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Tambah Data User</h4>
-                        <form method="POST" action="{{ route('storeAkun') }}" class="form-sample">
-                            @csrf
-                            <p class="card-description">Informasi User</p>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nama</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nama" placeholder="Masukkan nama" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Role</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" name="role" required>
-                                                <option value="admin">Admin</option>
-                                                <option value="perawat">Perawat</option>
-                                                <option value="dokter">Dokter</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Username</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="username" placeholder="Masukkan username" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Email</label>
-                                        <div class="col-sm-9">
-                                            <input type="email" class="form-control" name="email" placeholder="Masukkan email" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">No HP</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="no_hp" placeholder="Masukkan nomor HP" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Password</label>
-                                        <div class="col-sm-9">
-                                            <input type="password" class="form-control" name="password" placeholder="Masukkan password" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary" style="margin-right: 2%;">Simpan</button>
-                                <a href="{{ route('cancelFormAkun') }}" class="btn btn-secondary">Batal</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-
 
 
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">
-              <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com</a> 2020</span>
-              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Free <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard </a>templates from Bootstrapdash.com</span>
+              <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">Team Kerja Praktik</a> 2025</span>
             </div>
           </footer>
           <!-- partial -->
@@ -461,6 +369,23 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Data ini akan dihapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
+    </script>
     <!-- container-scroller -->
     <!-- base:js -->
     <script src="vendors/js/vendor.bundle.base.js"></script>
@@ -468,6 +393,31 @@
     <!-- Plugin js for this page-->
     <!-- End plugin js for this page-->
     <!-- inject:js -->
+    <script>
+        function filterTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('dataTable');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) { // Mulai dari 1 untuk melewati header
+                const cells = rows[i].getElementsByTagName('td');
+                let match = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j]) {
+                        const text = cells[j].textContent || cells[j].innerText;
+                        if (text.toLowerCase().includes(filter)) {
+                            match = true;
+                            break;
+                        }
+                    }
+                }
+
+                rows[i].style.display = match ? '' : 'none';
+            }
+        }
+    </script>
     <script src="js/off-canvas.js"></script>
     <script src="js/hoverable-collapse.js"></script>
     <script src="js/template.js"></script>

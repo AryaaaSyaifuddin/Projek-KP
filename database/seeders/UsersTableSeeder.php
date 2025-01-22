@@ -11,6 +11,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
+            // Perawat data
             [
                 'nama' => 'Ayu Lestari',
                 'role' => 'perawat',
@@ -44,6 +45,7 @@ class UsersTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+
             // Admin data
             [
                 'nama' => 'Rudi Prasetyo',
@@ -64,6 +66,63 @@ class UsersTableSeeder extends Seeder
                 'email' => 'indah.sari@example.com',
                 'no_hp' => '081234567894',
                 'status' => 'sudah diverifikasi',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            // Dokter data
+            [
+                'nama' => 'Dr. Andi Kusuma',
+                'role' => 'dokter',
+                'username' => 'andi.kusuma',
+                'password' => Hash::make('dokter123'),
+                'email' => 'andi.kusuma@example.com',
+                'no_hp' => '081234567895',
+                'status' => 'sudah diverifikasi',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama' => 'Dr. Siti Nurhaliza',
+                'role' => 'dokter',
+                'username' => 'siti.nurhaliza',
+                'password' => Hash::make('dokter123'),
+                'email' => 'siti.nurhaliza@example.com',
+                'no_hp' => '081234567896',
+                'status' => 'sudah diverifikasi',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama' => 'Dr. Fahmi Wijaya',
+                'role' => 'dokter',
+                'username' => 'fahmi.wijaya',
+                'password' => Hash::make('dokter123'),
+                'email' => 'fahmi.wijaya@example.com',
+                'no_hp' => '081234567897',
+                'status' => 'sudah diverifikasi',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama' => 'Dr. Rina Handayani',
+                'role' => 'dokter',
+                'username' => 'rina.handayani',
+                'password' => Hash::make('dokter123'),
+                'email' => 'rina.handayani@example.com',
+                'no_hp' => '081234567898',
+                'status' => 'sudah diverifikasi',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama' => 'Dr. Wahyu Saputra',
+                'role' => 'dokter',
+                'username' => 'wahyu.saputra',
+                'password' => Hash::make('dokter123'),
+                'email' => 'wahyu.saputra@example.com',
+                'no_hp' => '081234567899',
+                'status' => 'belum diverifikasi',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

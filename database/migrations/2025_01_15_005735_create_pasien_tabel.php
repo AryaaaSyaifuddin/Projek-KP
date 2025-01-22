@@ -22,12 +22,15 @@ return new class extends Migration
             $table->string('pekerjaan')->nullable();
             $table->string('alamat')->nullable();
             $table->string('nomor_identitas');
-            $table->unsignedBigInteger('id_perawat');
+            $table->unsignedBigInteger('id_perawat'); // Relasi ke perawat
+            $table->unsignedBigInteger('id_dokter'); // Relasi ke dokter
             $table->date('tanggal_pemeriksaan');
             $table->time('waktu_pemeriksaan');
-            $table->foreign('id_perawat')->references('id_user')->on('users')->onDelete('cascade'); // Foreign key ke kolom id_user
+            $table->foreign('id_perawat')->references('id_user')->on('users')->onDelete('cascade'); // Foreign key ke kolom id_user untuk perawat
+            $table->foreign('id_dokter')->references('id_user')->on('users')->onDelete('cascade'); // Foreign key ke kolom id_user untuk dokter
             $table->timestamps();
         });
+
 
     }
 

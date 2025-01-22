@@ -36,6 +36,9 @@ class LoginController extends Controller
             } elseif ($user->role === 'admin') {
                 return redirect('/dashboard')  // Ganti dengan route yang sesuai
                     ->with('success', 'Login berhasil sebagai Admin!');
+            } elseif ($user->role === 'dokter') {
+                return redirect('/dashboard')  // Ganti dengan route yang sesuai
+                    ->with('success', 'Login berhasil sebagai Dokter!');
             }
 
         }
