@@ -88,7 +88,7 @@ class adminController extends Controller
     }
 
     // Menangani pembatalan dan kembali ke tabel
-    public function cancelForm()
+    public function cancelFormAkun()
     {
         session(['showForm' => true, 'user' => null]);
         return redirect('/akun'); // Redirect ke halaman user

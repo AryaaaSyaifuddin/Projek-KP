@@ -454,7 +454,7 @@
                             <!-- Submit Button -->
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary" style="margin-right: 1%;">Simpan</button>
-                                <a href="{{ route('cancelForm') }}" class="btn btn-secondary">Batal</a>
+                                <a href="{{ route('cancelFormAkun') }}" class="btn btn-secondary">Batal</a>
                             </div>
                         </form>
                     </div>

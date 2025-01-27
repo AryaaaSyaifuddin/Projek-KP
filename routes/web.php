@@ -7,6 +7,7 @@ use App\Http\Middleware\PerawatMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ViewController;
+use App\Http\Controllers\PredictController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Middleware\RedirectIfLoggedIn;
 use App\Http\Middleware\UsersMiddleware;
@@ -69,6 +70,9 @@ Route::middleware([UsersMiddleware::class])->group(function () {
 
     Route::post('/pasien/check-nik', [PasienController::class, 'checkNik'])->name('pasien.checkNik');
 
+    Route::get('/pasien/rekam-medis', [ViewController::class, 'pasienRekamMedis']);
+
+    Route::post('/predict', [PredictController::class, 'predictHealthStatus']);
     // ===========================================================================================================================================
 
     // Route untuk jadwal
@@ -92,7 +96,7 @@ Route::middleware([UsersMiddleware::class])->group(function () {
     Route::put('/akun/update/{id}', [adminController::class, 'update'])->name('akun.update')->middleware(AdminMiddleware::class);
 
     // Membatalkan form dan kembali ke tabel
-    Route::get('/akun/cancel', [adminController::class, 'cancelForm'])->name('cancelFormAkun')->middleware(AdminMiddleware::class);
+    Route::get('/akun/cancel', [adminController::class, 'cancelFormAkun'])->name('cancelFormAkun')->middleware(AdminMiddleware::class);
 
     // Menghapus data akun
     Route::delete('/akun/{id}', [adminController::class, 'destroy'])->name('destroyAkun')->middleware(AdminMiddleware::class);

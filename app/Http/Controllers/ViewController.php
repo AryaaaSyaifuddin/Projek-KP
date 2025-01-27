@@ -65,4 +65,9 @@ class ViewController extends Controller
         return view('dokter_dashboard', compact('dataUsers'));
     }
 
+    public function pasienRekamMedis(){
+
+        return view('form_hasil_pemeriksaan');
+    }
+
 }

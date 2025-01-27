@@ -487,21 +487,31 @@
                                                     {{ \Carbon\Carbon::parse($pasien->tanggal_pemeriksaan)->format('d-m-Y') }} {{ $pasien->waktu_pemeriksaan }}
                                                 </span>
                                             </td>
-                                            <td style="min-width: 190px">
-                                                <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px;">
+                                            <td style="min-width: 190px; align-item= center">
+                                                <!-- Tombol Edit -->
+                                                <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px; min-width: 39%;">
                                                     Edit
                                                     <i class="typcn typcn-edit btn-icon-append"></i>
                                                 </a>
 
+                                                <!-- Tombol Delete -->
                                                 <form action="{{ route('pasien.destroy', $pasien->id_pasien) }}" method="POST" style="display:inline;" id="delete-form-{{ $pasien->id_pasien }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px;" onclick="confirmDelete({{ $pasien->id_pasien }})">
+                                                    <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px; min-width: 39%;" onclick="confirmDelete({{ $pasien->id_pasien }})">
                                                         Delete
                                                         <i class="typcn typcn-delete-outline btn-icon-append"></i>
                                                     </button>
                                                 </form>
+
+                                                <!-- Tombol Rekam Medis -->
+                                                {{-- {{ route('rekam_medis.create', $pasien->id_pasien) }} --}}
+                                                <a href="/pasien/rekam-medis" class="btn btn-outline-success btn-icon-text" style="padding: 8px 8px; margin-top: 4PX; width: 80%;">
+                                                    Rekam Medis
+                                                    <i class="typcn typcn-plus btn-icon-append"></i>
+                                                </a>
                                             </td>
+
                                         </tr>
                                     @endforeach
                                 </tbody>

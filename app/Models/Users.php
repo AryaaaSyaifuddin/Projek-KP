@@ -52,9 +52,15 @@ class Users extends Authenticatable
                     default:
                         throw new \Exception("Role tidak valid");
                 }
+
+                // Pastikan ID yang dihasilkan tidak ada yang duplikat
+                while (Users::where('id_user', $user->id_user)->exists()) {
+                    $user->id_user++; // Jika ada, tambahkan satu lagi pada ID yang dihasilkan
+                }
             }
         });
     }
+
 
     public function pasien()
     {

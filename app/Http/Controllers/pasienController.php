@@ -29,8 +29,6 @@ class PasienController extends Controller
         return view('pasien_dashboard', compact('showForm', 'dataPasien', 'pasien', 'dokterList'));
     }
 
-
-
     // Menampilkan form create pasien
     public function showCreateForm()
     {
@@ -51,9 +49,7 @@ class PasienController extends Controller
         return view('edit_pasien', compact('pasien', 'dokterList'));
     }
 
-
     // Menyimpan data pasien baru
-
     public function store(Request $request)
     {
         // Validasi inputan
