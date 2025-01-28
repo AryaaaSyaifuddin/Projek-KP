@@ -400,367 +400,528 @@
               </div>
             </div>
 
+
             <form action="/predict" method="POST" >
                 @csrf
                 <!-- Personal Information -->
-                <div class="form-group">
-                    <label for="id">id:</label>
-                    <input type="number" id="id" name="id" required>
-                </div>
-                <div class="form-group">
-                    <label for="gender">Gender:</label>
-                    <select name="gender" id="gender" required>
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="height">tinggi badan:</label>
-                    <input type="number" id="height" name="height" required>
-                </div>
-                <div class="form-group">
-                    <label for="weight">berat badan:</label>
-                    <input type="number" step="0.1" id="weight" name="weight" required>
-                </div>
-                <div class="form-group">
-                    <label for="Sistolik">Sistolik:</label>
-                    <input type="number" id="Sistolik" name="Sistolik" required>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="id" class="col-sm-4 col-form-label">ID:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="id" name="id" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="gender" class="col-sm-4 col-form-label">Gender:</label>
+                            <div class="col-sm-8">
+                                <select name="gender" id="gender" class="form-control" required>
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="height" class="col-sm-4 col-form-label">Tinggi Badan:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="height" name="height" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="weight" class="col-sm-4 col-form-label">Berat Badan:</label>
+                            <div class="col-sm-8">
+                                <input type="number" step="0.1" id="weight" name="weight" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="Sistolik" class="col-sm-4 col-form-label">Sistolik:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="Sistolik" name="Sistolik" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="Diastolik" class="col-sm-4 col-form-label">Diastolik:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="Diastolik" name="Diastolik" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="Age" class="col-sm-4 col-form-label">Umur:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="Age" name="Age" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="BMI" class="col-sm-4 col-form-label">Body Mass Index (BMI):</label>
+                            <div class="col-sm-8">
+                                <input type="number" step="0.1" id="BMI" name="BMI" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="BMICat" class="col-sm-4 col-form-label">Kategori BMI:</label>
+                            <div class="col-sm-8">
+                                <select name="BMICat" id="BMICat" class="form-control" required>
+                                    <option value="0">Normal</option>
+                                    <option value="1">Obesitas I</option>
+                                    <option value="2">Obesitas II</option>
+                                    <option value="3">Over Weight</option>
+                                    <option value="4">Under Weight</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="Hipertensi_Kategori" class="col-sm-4 col-form-label">Kategori Hipertensi:</label>
+                            <div class="col-sm-8">
+                                <select name="Hipertensi_Kategori" id="Hipertensi_Kategori" class="form-control" required>
+                                    <option value="0">Hipertensi Tingkat 1</option>
+                                    <option value="1">Hipertensi Tingkat 2</option>
+                                    <option value="2">Normal</option>
+                                    <option value="3">Pra-hipertensi</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="tuberkulosis" class="col-sm-4 col-form-label">Tuberkulosis:</label>
+                            <div class="col-sm-8">
+                                <select name="tuberkulosis" id="tuberkulosis" class="form-control" required>
+                                    <option value="0">Ada</option>
+                                    <option value="1">Tidak</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="penyakit_jantung" class="col-sm-4 col-form-label">Penyakit Jantung:</label>
+                            <div class="col-sm-8">
+                                <select name="penyakit_jantung" id="penyakit_jantung" class="form-control" required>
+                                    <option value="0">Ada</option>
+                                    <option value="1">Tidak</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="hipertensi" class="col-sm-4 col-form-label">Hipertensi:</label>
+                            <div class="col-sm-8">
+                                <select name="hipertensi" id="hipertensi" class="form-control" required>
+                                    <option value="0">Ada</option>
+                                    <option value="1">Tidak</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="diabetes_melitus" class="col-sm-4 col-form-label">Diabetes Melitus:</label>
+                            <div class="col-sm-8">
+                                <select name="diabetes_melitus" id="diabetes_melitus" class="form-control" required>
+                                    <option value="0">Ada</option>
+                                    <option value="1">Tidak</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="gangguan_jiwa" class="col-sm-4 col-form-label">Gangguan Jiwa:</label>
+                            <div class="col-sm-8">
+                                <select name="gangguan_jiwa" id="gangguan_jiwa" class="form-control" required>
+                                    <option value="0">Ada</option>
+                                    <option value="1">Tidak</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="trauma_pada_kepala" class="col-sm-4 col-form-label">Trauma Pada Kepala:</label>
+                            <div class="col-sm-8">
+                                <select name="trauma_pada_kepala" id="trauma_pada_kepala" class="form-control" required>
+                                    <option value="0">Ada</option>
+                                    <option value="1">Tidak</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="hepatitis" class="col-sm-4 col-form-label">Hepatitis:</label>
+                            <div class="col-sm-8">
+                                <select name="hepatitis" id="hepatitis" class="form-control" required>
+                                    <option value="0">Ada</option>
+                                    <option value="1">Tidak</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="Spirometri" class="col-sm-4 col-form-label">Spirometri:</label>
+                            <div class="col-sm-8">
+                                <select name="Spirometri" id="Spirometri" class="form-control" required>
+                                    <option value="0">Normal</option>
+                                    <option value="1">Tidak Normal</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="Treadmil" class="col-sm-4 col-form-label">Treadmil:</label>
+                            <div class="col-sm-8">
+                                <select name="Treadmil" id="Treadmil" class="form-control" required>
+                                    <option value="0">Normal</option>
+                                    <option value="1">Tidak Normal</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="Audiometri" class="col-sm-4 col-form-label">Audiometri:</label>
+                            <div class="col-sm-8">
+                                <select name="Audiometri" id="Audiometri" class="form-control" required>
+                                    <option value="0">Normal</option>
+                                    <option value="1">Tidak Normal</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="foto_thorax" class="col-sm-4 col-form-label">Foto Thorax:</label>
+                            <div class="col-sm-8">
+                                <select name="foto_thorax" id="foto_thorax" class="form-control" required>
+                                    <option value="0">Normal</option>
+                                    <option value="1">Tidak Normal</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="Nadi(kali/menit)" class="col-sm-4 col-form-label">Nadi (kali/menit):</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="Nadi(kali/menit)" name="Nadi(kali/menit)" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="FrekuensiNapas(kali/menit)" class="col-sm-4 col-form-label">Frekuensi Napas (kali/menit):</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="FrekuensiNapas(kali/menit)" name="FrekuensiNapas(kali/menit)" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Tingkatan_Kesadaran" class="col-sm-4 col-form-label">Tingkatan Kesadaran:</label>
+                            <div class="col-sm-8">
+                                <select name="Tingkatan_Kesadaran" id="Tingkatan_Kesadaran" class="form-control" required>
+                                    <option value="1">compos mentis</option>
+                                    <option value="0">apatis</option>
+                                    <option value="2">delirium</option>
+                                    <option value="3">koma</option>
+                                    <option value="4">semi koma</option>
+                                    <option value="5">somnolen</option>
+                                    <option value="6">sopor</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Buta_Warna" class="col-sm-4 col-form-label">Buta Warna:</label>
+                            <div class="col-sm-8">
+                                <select name="Buta_Warna" id="Buta_Warna" class="form-control" required>
+                                    <option value="0">tidak</option>
+                                    <option value="1">ya</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Jantung" class="col-sm-4 col-form-label">Jantung:</label>
+                            <div class="col-sm-8">
+                                <select name="Jantung" id="Jantung" class="form-control" required>
+                                    <option value="0">normal</option>
+                                    <option value="1">tidak normal</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="hemoglobin" class="col-sm-4 col-form-label">Hemoglobin:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="hemoglobin" name="hemoglobin" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="leukosit" class="col-sm-4 col-form-label">Leukosit:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="leukosit" name="leukosit" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="eritrosit" class="col-sm-4 col-form-label">Eritrosit:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="eritrosit" name="eritrosit" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="LED" class="col-sm-4 col-form-label">LED:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="LED" name="LED" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="eosinofil" class="col-sm-4 col-form-label">Eosinofil:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="eosinofil" name="eosinofil" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="basofil" class="col-sm-4 col-form-label">Basofil:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="basofil" name="basofil" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="neutrofil" class="col-sm-4 col-form-label">Neutrofil:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="neutrofil" name="neutrofil" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="lymphosit" class="col-sm-4 col-form-label">Lymphosit:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="lymphosit" name="lymphosit" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="monosit" class="col-sm-4 col-form-label">Monosit:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="monosit" name="monosit" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="trombosit" class="col-sm-4 col-form-label">Trombosit:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="trombosit" name="trombosit" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="hematokrit" class="col-sm-4 col-form-label">Hematokrit:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="hematokrit" name="hematokrit" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="MCV" class="col-sm-4 col-form-label">MCV:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="MCV" name="MCV" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="SGOT" class="col-sm-4 col-form-label">SGOT:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="SGOT" name="SGOT" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="SGPT" class="col-sm-4 col-form-label">SGPT:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="SGPT" name="SGPT" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="BUN" class="col-sm-4 col-form-label">BUN:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="BUN" name="BUN" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kreatinin" class="col-sm-4 col-form-label">Kreatinin:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="kreatinin" name="kreatinin" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="asam_urat" class="col-sm-4 col-form-label">Asam Urat:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="asam_urat" name="asam_urat" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kolestrol_total" class="col-sm-4 col-form-label">Kolesterol Total:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="kolestrol_total" name="kolestrol_total" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="trigliserida" class="col-sm-4 col-form-label">Trigliserida:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="trigliserida" name="trigliserida" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kolestrol_HDL_(direct)" class="col-sm-4 col-form-label">Kolesterol HDL (direct):</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="kolestrol_HDL_(direct)" name="kolestrol_HDL_(direct)" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kolestrol_LDL_(direct)" class="col-sm-4 col-form-label">Kolesterol LDL (direct):</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="kolestrol_LDL_(direct)" name="kolestrol_LDL_(direct)" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="HBs_Ag_Kuantitatif" class="col-sm-4 col-form-label">HBs Ag Kuantitatif:</label>
+                            <div class="col-sm-8">
+                                <select name="HBs_Ag_Kuantitatif" id="HBs_Ag_Kuantitatif" class="form-control" required>
+                                    <option value="0">negatif</option>
+                                    <option value="1">positif</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="pH_pada_urine" class="col-sm-4 col-form-label">pH pada urine:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="pH_pada_urine" name="pH_pada_urine" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="nitrite_pada_urine" class="col-sm-4 col-form-label">Nitrite pada urine:</label>
+                            <div class="col-sm-8">
+                                <select name="nitrite_pada_urine" id="nitrite_pada_urine" class="form-control" required>
+                                    <option value="0">negatif</option>
+                                    <option value="1">positif</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="protein_pada_urine" class="col-sm-4 col-form-label">Protein pada urine:</label>
+                            <div class="col-sm-8">
+                                <select name="protein_pada_urine" id="protein_pada_urine" class="form-control" required>
+                                    <option value="0">negatif</option>
+                                    <option value="1">positif</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="reduksi_pada_urine" class="col-sm-4 col-form-label">Reduksi pada urine:</label>
+                            <div class="col-sm-8">
+                                <select name="reduksi_pada_urine" id="reduksi_pada_urine" class="form-control" required>
+                                    <option value="0">negatif</option>
+                                    <option value="1">positif 1</option>
+                                    <option value="2">positif 2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="ketone_pada_urine" class="col-sm-4 col-form-label">Ketone pada Urine:</label>
+                            <div class="col-sm-8">
+                                <select name="ketone_pada_urine" id="ketone_pada_urine" class="form-control" required>
+                                    <option value="0">Negatif</option>
+                                    <option value="1">Positif</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="urobilinogen_pada_urine" class="col-sm-4 col-form-label">Urobilinogen pada Urine:</label>
+                            <div class="col-sm-8">
+                                <select name="urobilinogen_pada_urine" id="urobilinogen_pada_urine" class="form-control" required>
+                                    <option value="0">Negatif</option>
+                                    <option value="1">Positif</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="billirubin_pada_urine" class="col-sm-4 col-form-label">Billirubin pada Urine:</label>
+                            <div class="col-sm-8">
+                                <select name="billirubin_pada_urine" id="billirubin_pada_urine" class="form-control" required>
+                                    <option value="0">Negatif</option>
+                                    <option value="1">Positif</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="silinder_pada_urine" class="col-sm-4 col-form-label">Silinder pada Urine:</label>
+                            <div class="col-sm-8">
+                                <select name="silinder_pada_urine" id="silinder_pada_urine" class="form-control" required>
+                                    <option value="0">Negatif</option>
+                                    <option value="1">Positif</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="kristal_pada_urine" class="col-sm-4 col-form-label">Kristal pada Urine:</label>
+                            <div class="col-sm-8">
+                                <select name="kristal_pada_urine" id="kristal_pada_urine" class="form-control" required>
+                                    <option value="0">Negatif</option>
+                                    <option value="1">Positif</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="yeast_pada_urine" class="col-sm-4 col-form-label">Yeast pada Urine:</label>
+                            <div class="col-sm-8">
+                                <select name="yeast_pada_urine" id="yeast_pada_urine" class="form-control" required>
+                                    <option value="0">Negatif</option>
+                                    <option value="1">Positif</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="bakteri_pada_urine" class="col-sm-4 col-form-label">Bakteri pada Urine:</label>
+                            <div class="col-sm-8">
+                                <select name="bakteri_pada_urine" id="bakteri_pada_urine" class="form-control" required>
+                                    <option value="0">Negatif</option>
+                                    <option value="1">Positif</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="berat_jenis_pada_urine" class="col-sm-4 col-form-label">Berat Jenis pada Urine:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="berat_jenis_pada_urine" name="berat_jenis_pada_urine" class="form-control" step="0.001" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="eritrosit_pada_urine" class="col-sm-4 col-form-label">Eritrosit pada Urine:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="eritrosit_pada_urine" name="eritrosit_pada_urine" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="lekosit_pada_urine" class="col-sm-4 col-form-label">Lekosit pada Urine:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="lekosit_pada_urine" name="lekosit_pada_urine" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="gula_darah_puasa" class="col-sm-4 col-form-label">Gula Darah Puasa:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="gula_darah_puasa" name="gula_darah_puasa" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="gula_darah_2_jam_pp" class="col-sm-4 col-form-label">Gula Darah 2 Jam PP:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="gula_darah_2_jam_pp" name="gula_darah_2_jam_pp" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="Diastolik">Diastolik:</label>
-                    <input type="number" id="Diastolik" name="Diastolik" required>
-                </div>
-                <div class="form-group">
-                    <label for="Age">umur:</label>
-                    <input type="number" id="Age" name="Age" required>
-                </div>
-                <div class="form-group">
-                    <label for="BMI">Body Mass Index (BMI):</label>
-                    <input type="number" step="0.1" id="BMI" name="BMI" required>
-                </div>
-                <div class="form-group">
-                    <label for="BMICat">Kategori BMI:</label>
-                    <select name="BMICat" id="BMICat" required>
-                        <option value="0">Normal</option>
-                        <option value="1">Obesitas I</option>
-                        <option value="2">Obesitas II</option>
-                        <option value="3">Over Weight</option>
-                        <option value="4">Under Weight</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="Hipertensi_Kategori">Kategori Hipertensi:</label>
-                    <select name="Hipertensi_Kategori" id="Hipertensi_Kategori" required>
-                        <option value="0">Hipertensi Tingkat 1</option>
-                        <option value="1">Hipertensi Tingkat 2</option>
-                        <option value="2">Normal</option>
-                        <option value="3">Pra-hipertensi</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="tuberkulosis">tuberkulosis:</label>
-                    <select name="tuberkulosis" id="tuberkulosis" required>
-                        <option value="0">ada</option>
-                        <option value="1">tidak</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="penyakit_jantung">penyakit jantung:</label>
-                    <select name="penyakit_jantung" id="penyakit_jantung" required>
-                        <option value="0">ada</option>
-                        <option value="1">tidak</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="hipertensi">hipertensi:</label>
-                    <select name="hipertensi" id="hipertensi" required>
-                        <option value="0">ada</option>
-                        <option value="1">tidak</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="diabetes_melitus">diabetes melitus:</label>
-                    <select name="diabetes_melitus" id="diabetes_melitus" required>
-                        <option value="0">ada</option>
-                        <option value="1">tidak</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="gangguan_jiwa">gangguan jiwa:</label>
-                    <select name="gangguan_jiwa" id="gangguan_jiwa" required>
-                        <option value="0">ada</option>
-                        <option value="1">tidak</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="trauma_pada_kepala">trauma pada kepala:</label>
-                    <select name="trauma_pada_kepala" id="trauma_pada_kepala" required>
-                        <option value="0">ada</option>
-                        <option value="1">tidak</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="hepatitis">hepatitis:</label>
-                    <select name="hepatitis" id="hepatitis" required>
-                        <option value="0">ada</option>
-                        <option value="1">tidak</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="Spirometri">Spirometri:</label>
-                    <select name="Spirometri" id="Spirometri" required>
-                        <option value="0">normal</option>
-                        <option value="1">tidak normal</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="Treadmil">Treadmil:</label>
-                    <select name="Treadmil" id="Treadmil" required>
-                        <option value="0">normal</option>
-                        <option value="1">tidak normal</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="Audiometri">Audiometri:</label>
-                    <select name="Audiometri" id="Audiometri" required>
-                        <option value="0">normal</option>
-                        <option value="1">tidak normal</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="foto_thorax">foto thorax:</label>
-                    <select name="foto_thorax" id="foto_thorax" required>
-                        <option value="0">normal</option>
-                        <option value="1">tidak normal</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="Nadi(kali/menit)">Nadi (kali/menit):</label>
-                    <input type="number" id="Nadi(kali/menit)" name="Nadi(kali/menit)" required>
-                </div>
-                <div class="form-group">
-                    <label for="FrekuensiNapas(kali/menit)">Frekuensi Napas (kali/menit):</label>
-                    <input type="number" id="FrekuensiNapas(kali/menit)" name="FrekuensiNapas(kali/menit)" required>
-                </div>
-                <!-- Medical History -->
-                <div class="form-group">
-                    <label for="Tingkatan_Kesadaran">Tingkatan Kesadaran:</label>
-                    <select name="Tingkatan_Kesadaran" id="Tingkatan_Kesadaran" required>
-                        <option value="1">compos mentis</option>
-                        <option value="0">apatis</option>
-                        <option value="2">delirium</option>
-                        <option value="3">koma</option>
-                        <option value="4">semi koma</option>
-                        <option value="5">somnolen</option>
-                        <option value="6">sopor</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="Buta_Warna">Buta Warna:</label>
-                    <select name="Buta_Warna" id="Buta_Warna" required>
-                        <option value="0">tidak</option>
-                        <option value="1">ya</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="Jantung">Jantung:</label>
-                    <select name="Jantung" id="Jantung" required>
-                        <option value="0">normal</option>
-                        <option value="1">tidak normal</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="hemoglobin">hemoglobin:</label>
-                    <input type="number" id="hemoglobin" name="hemoglobin" step="0.01"required>
-                </div>
-                <div class="form-group">
-                    <label for="leukosit">leukosit:</label>
-                    <input type="number" id="leukosit" name="leukosit" step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label for="eritrosit">eritrosit:</label>
-                    <input type="number" id="eritrosit" name="eritrosit" step="0.01"required>
-                </div>
-                <div class="form-group">
-                    <label for="LED">LED:</label>
-                    <input type="number" id="LED" name="LED" step="0.01"required>
-                </div>
-                <div class="form-group">
-                    <label for="eosinofil">eosinofil:</label>
-                    <input type="number" id="eosinofil" name="eosinofil"step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label for="basofil">basofil:</label>
-                    <input type="number" id="basofil" name="basofil" step="0.01"required>
-                </div>
-                <div class="form-group">
-                    <label for="neutrofil">neutrofil:</label>
-                    <input type="number" id="neutrofil" name="neutrofil" step="0.01"required>
-                </div>
-                <div class="form-group">
-                    <label for="lymphosit">lymphosit:</label>
-                    <input type="number" id="lymphosit" name="lymphosit" step="0.01"required>
-                </div>
-                <div class="form-group">
-                    <label for="monosit">monosit:</label>
-                    <input type="number" id="monosit" name="monosit"step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label for="trombosit">trombosit:</label>
-                    <input type="number" id="trombosit" name="trombosit" required>
-                </div>
-                <div class="form-group">
-                    <label for="hematokrit">hematokrit:</label>
-                    <input type="number" id="hematokrit" name="hematokrit"step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label for="MCV">MCV:</label>
-                    <input type="number" id="MCV" name="MCV"step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label for="SGOT">S G O T:</label>
-                    <input type="number" id="SGOT" name="SGOT" step="0.01"required>
-                </div>
-                <div class="form-group">
-                    <label for="SGPT">S G P T:</label>
-                    <input type="number" id="SGPT" name="SGPT" step="0.01"required>
-                </div>
-                <div class="form-group">
-                    <label for="BUN">B U N:</label>
-                    <input type="number" id="BUN" name="BUN" step="0.01"required>
-                </div>
-                <div class="form-group">
-                    <label for="kreatinin">kreatinin:</label>
-                    <input type="number" id="kreatinin" name="kreatinin"step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label for="asam_urat">asam urat:</label>
-                    <input type="number" id="asam_urat" name="asam_urat" step="0.01"required>
-                </div>
-                <div class="form-group">
-                    <label for="kolestrol_total">kolestrol total:</label>
-                    <input type="number" id="kolestrol_total" name="kolestrol_total" step="0.01"required>
-                </div>
-                <div class="form-group">
-                    <label for="trigliserida">trigliserida:</label>
-                    <input type="number" id="trigliserida" name="trigliserida"step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label for="kolestrol_HDL_(direct)">kolestrol HDL (direct):</label>
-                    <input type="number" id="kolestrol_HDL_(direct)" name="kolestrol_HDL_(direct)"step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label for="kolestrol_LDL_(direct)">kolestrol LDL (direct):</label>
-                    <input type="number" id="kolestrol_LDL_(direct)" name="kolestrol_LDL_(direct)" step="0.01"required>
-                </div>
-                <div class="form-group">
-                    <label for="HBs_Ag_Kuantitatif">HBs Ag Kuantitatif:</label>
-                    <select name="HBs_Ag_Kuantitatif" id="HBs_Ag_Kuantitatif" required>
-                        <option value="0">negatif</option>
-                        <option value="1">positif</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="pH_pada_urine">pH pada urine:</label>
-                    <input type="number" id="pH_pada_urine" name="pH_pada_urine" step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label for="nitrite_pada_urine">nitrite pada urine:</label>
-                    <select name="nitrite_pada_urine" id="nitrite_pada_urine" required>
-                        <option value="0">negatif</option>
-                        <option value="1">positif</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="protein_pada_urine">protein pada urine:</label>
-                    <select name="protein_pada_urine" id="protein_pada_urine" required>
-                        <option value="0">negatif</option>
-                        <option value="1">positif</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="reduksi_pada_urine">reduksi pada urine:</label>
-                    <select name="reduksi_pada_urine" id="reduksi_pada_urine" required>
-                        <option value="0">negatif</option>
-                        <option value="1">positif 1</option>
-                        <option value="2">positif 2</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="ketone_pada_urine">ketone pada urine:</label>
-                    <select name="ketone_pada_urine" id="ketone_pada_urine" required>
-                        <option value="0">negatif</option>
-                        <option value="1">positif</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="urobilinogen_pada_urine">urobilinogen pada urine:</label>
-                    <select name="urobilinogen_pada_urine" id="urobilinogen_pada_urine" required>
-                        <option value="0">negatif</option>
-                        <option value="1">positif</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="billirubin_pada_urine">billirubin pada urine:</label>
-                    <select name="billirubin_pada_urine" id="billirubin_pada_urine" required>
-                        <option value="0">negatif</option>
-                        <option value="1">positif</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="silinder_pada_urine">silinder pada urine:</label>
-                    <select name="silinder_pada_urine" id="silinder_pada_urine" required>
-                        <option value="0">negatif</option>
-                        <option value="1">positif</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="kristal_pada_urine">kristal pada urine:</label>
-                    <select name="kristal_pada_urine" id="kristal_pada_urine" required>
-                        <option value="0">negatif</option>
-                        <option value="1">positif</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="yeast_pada_urine">yeast pada urine:</label>
-                    <select name="yeast_pada_urine" id="yeast_pada_urine" required>
-                        <option value="0">negatif</option>
-                        <option value="1">positif</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="bakteri_pada_urine">bakteri pada urine:</label>
-                    <select name="bakteri_pada_urine" id="bakteri_pada_urine" required>
-                        <option value="0">negatif</option>
-                        <option value="1">positif</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="berat_jenis_pada_urine">Berat Jenis pada Urine:</label>
-                    <input type="number" id="berat_jenis_pada_urine" name="berat_jenis_pada_urine" step="0.001" required>
-                </div>
-                <div class="form-group">
-                    <label for="eritrosit_pada_urine">Eritrosit pada Urine:</label>
-                    <input type="number" id="eritrosit_pada_urine" name="eritrosit_pada_urine" required>
-                </div>
-                <div class="form-group">
-                    <label for="lekosit_pada_urine">Lekosit pada Urine:</label>
-                    <input type="number" id="lekosit_pada_urine" name="lekosit_pada_urine" required>
-                </div>
-                <div class="form-group">
-                    <label for="gula_darah_puasa">Gula Darah Puasa:</label>
-                    <input type="number" id="gula_darah_puasa" name="gula_darah_puasa" required>
-                </div>
-                <div class="form-group">
-                    <label for="gula_darah_2_jam_pp">Gula Darah 2 Jam PP:</label>
-                    <input type="number" id="gula_darah_2_jam_pp" name="gula_darah_2_jam_pp" required>
-                </div>
                 <!-- Tombol Submit -->
                 <button type="submit" name="action" class="btn btn-primary">Predict</button>
             </form>
@@ -775,10 +936,11 @@
                     </div>
                 </div>
                 @elseif (session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-                @endif
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+            </div>
+            @endif
 
             {{-- <form method="POST" action="/predict">
                 @csrf
