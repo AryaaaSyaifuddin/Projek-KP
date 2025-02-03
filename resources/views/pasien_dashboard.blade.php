@@ -312,7 +312,6 @@
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/sama-saja">Detail Jadwal</a></li>
               </ul>
             </div>
           </li>
@@ -347,7 +346,6 @@
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/sama-saja">Detail Jadwal</a></li>
               </ul>
             </div>
           </li>
@@ -505,8 +503,7 @@
                                                 </form>
 
                                                 <!-- Tombol Rekam Medis -->
-                                                {{-- {{ route('rekam_medis.create', $pasien->id_pasien) }} --}}
-                                                <a href="/pasien/rekam-medis" class="btn btn-outline-success btn-icon-text" style="padding: 8px 8px; margin-top: 4PX; width: 80%;">
+                                                <a href="{{ route('rekam_medis.create', $pasien->id_pasien) }}" class="btn btn-outline-success btn-icon-text" style="padding: 8px 8px; margin-top: 4PX; width: 80%;">
                                                     Rekam Medis
                                                     <i class="typcn typcn-plus btn-icon-append"></i>
                                                 </a>

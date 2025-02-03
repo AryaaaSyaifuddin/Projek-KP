@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HasilPemeriksaan;
 use Illuminate\Http\Request;
 use App\Models\Pasien;
+use App\Models\PrediksiHasilPemeriksaan;
 use App\Models\Users;
 
 class ViewController extends Controller
@@ -38,9 +40,11 @@ class ViewController extends Controller
     }
 
     public function dashboardHasilPemeriksaan(){
+        $hasilPemeriksaan = HasilPemeriksaan::all();
+        $hasilPrediksi = PrediksiHasilPemeriksaan::all();
 
         // Pass data ke view
-        return view('hasil-pemeriksaan_dashboard');
+        return view('hasil-pemeriksaan_dashboard', compact('hasilPemeriksaan', 'hasilPrediksi'));
     }
 
     public function error(){
@@ -65,9 +69,16 @@ class ViewController extends Controller
         return view('dokter_dashboard', compact('dataUsers'));
     }
 
-    public function pasienRekamMedis(){
 
-        return view('form_hasil_pemeriksaan');
+    public function prediksiHasilPemeriksaan($id)
+    {
+        $hasilPemeriksaan = HasilPemeriksaan::findOrFail($id);
+
+
+        // Kirim data pasien ke view edit_pasien
+        return view('prediksi_hasil_pemeriksaan', compact('hasilPemeriksaan'));
     }
+
+
 
 }

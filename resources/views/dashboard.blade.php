@@ -213,7 +213,6 @@
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/sama-saja">Detail Jadwal</a></li>
               </ul>
             </div>
           </li>
@@ -250,7 +249,6 @@
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/sama-saja">Detail Jadwal</a></li>
               </ul>
             </div>
           </li>
@@ -275,7 +273,6 @@
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/sama-saja">Detail Jadwal</a></li>
               </ul>
             </div>
           </li>
@@ -314,7 +311,7 @@
               </div>
             </div>
 
-            
+
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
           <footer class="footer">

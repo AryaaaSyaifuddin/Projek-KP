@@ -217,7 +217,6 @@
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/sama-saja">Detail Jadwal</a></li>
               </ul>
             </div>
           </li>
@@ -252,7 +251,6 @@
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/sama-saja">Detail Jadwal</a></li>
               </ul>
             </div>
           </li>
@@ -312,7 +310,6 @@
                         <form method="POST" action="{{ route('pasien.update', $pasien->id_pasien) }}">
                             @csrf
                             @method('PUT')
-
                             <!-- Input Nama Lengkap -->
                             <div class="form-group">
                                 <label for="nama_panjang">Nama Lengkap</label>

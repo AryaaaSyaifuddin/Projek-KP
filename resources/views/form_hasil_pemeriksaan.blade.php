@@ -311,7 +311,6 @@
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/sama-saja">Detail Jadwal</a></li>
               </ul>
             </div>
           </li>
@@ -346,7 +345,6 @@
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/sama-saja">Detail Jadwal</a></li>
               </ul>
             </div>
           </li>
@@ -372,44 +370,24 @@
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="row">
-              <div class="col-sm-6">
-                <h3 class="mb-0 font-weight-bold">{{ Auth::user()->nama ?? 'Anonim' }}</h3>
-                <p>Selamat satang di Sistem Manajemen Check Up</p>
-              </div>
-              <div class="col-sm-6">
-                <div class="d-flex align-items-center justify-content-md-end">
-                  <div class="mb-3 mb-xl-0 pr-1">
-                      <div class="dropdown">
-                        <button class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="typcn typcn-calendar-outline mr-2"></i>Last 7 days
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3" data-x-placement="top-start">
-                          <h6 class="dropdown-header">Last 14 days</h6>
-                          <a class="dropdown-item" href="#">Last 21 days</a>
-                          <a class="dropdown-item" href="#">Last 28 days</a>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-arrow-forward-outline mr-2"></i>Export</button>
-                  </div>
-                  <div class="pr-1 mb-3 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-info-large-outline mr-2"></i>info</button>
-                  </div>
-                </div>
+              <div class="col-sm-6" style="margin-bottom: 40px;">
+                <h3 class="mb-0 font-weight-bold">Rekam medis atas nama : {{ $pasien->nama_panjang }}</h3>
+                <p>Masukkan data dengan sesuai agar mendapartkan prediksi yang akurat</p>
               </div>
             </div>
 
 
-            <form action="/predict" method="POST" >
+            <form action="{{ route('rekam_medis.store') }}" method="POST">
                 @csrf
+                <input type="hidden" name="id_pasien" value="{{ $pasien->id_pasien }}">
+
                 <!-- Personal Information -->
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
                             <label for="id" class="col-sm-4 col-form-label">ID:</label>
                             <div class="col-sm-8">
-                                <input type="number" id="id" name="id" class="form-control" required>
+                                <input type="number" id="id" name="id" class="form-control" value="{{ $nextId }}" readonly required>
                             </div>
                         </div>
 
@@ -921,9 +899,10 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Tombol Submit -->
-                <button type="submit" name="action" class="btn btn-primary">Predict</button>
+                <button type="submit" class="btn btn-primary">
+                    Simpan
+                </button>
+                <a href="/pasien" style="padding: 14px 30px; background-color: #2b63c4; border-radius: 3px; color: white;">Back</a>
             </form>
 
             <!-- Bagian Hasil Pemeriksaan -->

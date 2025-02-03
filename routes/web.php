@@ -11,6 +11,8 @@ use App\Http\Controllers\PredictController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Middleware\RedirectIfLoggedIn;
 use App\Http\Middleware\UsersMiddleware;
+use App\Http\Controllers\HasilPemeriksaanController;
+use App\Http\Controllers\PrediksiHasilPemeriksaanController;
 
     // Login Route
 
@@ -70,35 +72,45 @@ Route::middleware([UsersMiddleware::class])->group(function () {
 
     Route::post('/pasien/check-nik', [PasienController::class, 'checkNik'])->name('pasien.checkNik');
 
-    Route::get('/pasien/rekam-medis', [ViewController::class, 'pasienRekamMedis']);
+    Route::get('/pasien/rekam-medis/create/{id}', [HasilPemeriksaanController::class, 'RekamMedis'])->name('rekam_medis.create');
+
+    Route::post('/pasien/rekam-medis/store', [HasilPemeriksaanController::class, 'storeRekamMedis'])->name('rekam_medis.store');
+
+    Route::get('/pasien/edit/{id}', [PasienController::class, 'edit'])->name('pasien.edit');
+
+    Route::get('/pasien/rekam-medis/prediksi/{id}', [ViewController::class, 'prediksiHasilPemeriksaan'])->name('hasilPemeriksaan.predict');
 
     Route::post('/predict', [PredictController::class, 'predictHealthStatus']);
+
+    Route::post('/pasien/rekam-medis/simpan-prediksi', [PrediksiHasilPemeriksaanController::class, 'storePrediksi'])->name('simpan.hasil.pemeriksaan');
+
+    Route::get('/hasil_pemeriksaan/edit/{id}', [HasilPemeriksaanController::class, 'editRekamMedis'])->name('edit.hasil.pemeriksaan');
+
+    Route::get('/hasil_prediksi/edit/{id}', [PrediksiHasilPemeriksaanController::class, 'editPrediksi'])->name('edit.hasil.prediksi');
+
+    Route::put('/hasil_prediksi/update/{id}', [PrediksiHasilPemeriksaanController::class, 'updatePrediksi'])->name('update.hasil.prediksi');
+
+    Route::delete('/hasil_prediksi/delete/{id}', [PrediksiHasilPemeriksaanController::class, 'deletePrediksi'])->name('delete.hasil.prediksi');
+
+    Route::put('/hasil_pemeriksaan/update/{id}', [HasilPemeriksaanController::class, 'updateRekamMedis'])->name('update.hasil.pemeriksaan');
     // ===========================================================================================================================================
 
-    // Route untuk jadwal
     Route::get('/jadwal-pemeriksaan', [ViewController::class, 'dashboardJadwal']);
 
     // ===========================================================================================================================================
 
-    // Route untuk dashboard akun ( akun )
     Route::get('/akun', [adminController::class, 'dashboardAkun'])->name('dashboardAkun')->middleware(AdminMiddleware::class);
 
-    // Menampilkan form create akun
     Route::get('/akun/create', [adminController::class, 'showCreateFormAkun'])->name('showCreateFormAkun')->middleware(AdminMiddleware::class);
 
-    // Menampilkan form edit akun
     Route::get('/akun/edit/{id}', [adminController::class, 'edit'])->name('editAkun')->middleware(AdminMiddleware::class);
 
-    // Menyimpan data akun baru
     Route::post('/akun', [adminController::class, 'store'])->name('storeAkun')->middleware(AdminMiddleware::class);
 
-    // Mengupdate data akun
     Route::put('/akun/update/{id}', [adminController::class, 'update'])->name('akun.update')->middleware(AdminMiddleware::class);
 
-    // Membatalkan form dan kembali ke tabel
     Route::get('/akun/cancel', [adminController::class, 'cancelFormAkun'])->name('cancelFormAkun')->middleware(AdminMiddleware::class);
 
-    // Menghapus data akun
     Route::delete('/akun/{id}', [adminController::class, 'destroy'])->name('destroyAkun')->middleware(AdminMiddleware::class);
 
     // ============================================================================================================================================
