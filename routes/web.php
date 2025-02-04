@@ -13,6 +13,7 @@ use App\Http\Middleware\RedirectIfLoggedIn;
 use App\Http\Middleware\UsersMiddleware;
 use App\Http\Controllers\HasilPemeriksaanController;
 use App\Http\Controllers\PrediksiHasilPemeriksaanController;
+use App\Http\Controllers\StatusPemeriksaanController;
 
     // Login Route
 
@@ -78,6 +79,8 @@ Route::middleware([UsersMiddleware::class])->group(function () {
 
     Route::get('/pasien/edit/{id}', [PasienController::class, 'edit'])->name('pasien.edit');
 
+    Route::put('/hasil_pemeriksaan/update/{id}', [HasilPemeriksaanController::class, 'updateRekamMedis'])->name('update.hasil.pemeriksaan');
+
     Route::get('/pasien/rekam-medis/prediksi/{id}', [ViewController::class, 'prediksiHasilPemeriksaan'])->name('hasilPemeriksaan.predict');
 
     Route::post('/predict', [PredictController::class, 'predictHealthStatus']);
@@ -92,7 +95,12 @@ Route::middleware([UsersMiddleware::class])->group(function () {
 
     Route::delete('/hasil_prediksi/delete/{id}', [PrediksiHasilPemeriksaanController::class, 'deletePrediksi'])->name('delete.hasil.prediksi');
 
-    Route::put('/hasil_pemeriksaan/update/{id}', [HasilPemeriksaanController::class, 'updateRekamMedis'])->name('update.hasil.pemeriksaan');
+    Route::get('/persetujuan_hasil_pemeriksaan', [ViewController::class, 'accHasilPrediksi']);
+
+    Route::put('/status-pemeriksaan/{id}', [StatusPemeriksaanController::class, 'update'])->name('status_pemeriksaan.update');
+
+    Route::put('/status-pemeriksaan/revert/{id}', [StatusPemeriksaanController::class, 'revert'])->name('status_pemeriksaan.revert');
+
     // ===========================================================================================================================================
 
     Route::get('/jadwal-pemeriksaan', [ViewController::class, 'dashboardJadwal']);

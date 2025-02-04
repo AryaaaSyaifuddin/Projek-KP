@@ -19,6 +19,16 @@
     <link rel="shortcut icon" href="img/favicon.jpg" />
   </head>
   <body>
+    @if ($errors->any())
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Kesalahan!',
+            text: '{{ $errors->first() }}', // Ambil pesan error pertama
+            confirmButtonText: 'OK'
+        });
+    </script>
+@endif
     @if (session('error'))
    <script>
       Swal.fire({
@@ -454,57 +464,58 @@
                     onkeyup="filterTable()">
                 </div>
 
-                <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Data Users</h4>
-                            <div class="table-responsive pt-3">
-                                <table class="table table-bordered">
-                                    <thead>
+        </div>
+            <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Data Pasien</h4>
+                        <div class="table-responsive pt-3">
+                            <table class="table table-bordered" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Id Pasien</th>
+                                        <th>Nama Pasien</th>
+                                        <th>Hasil Pemeriksaan</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($hasilPemeriksaan as $hasil)
                                         <tr>
-                                            <th>Id</th>
-                                            <th>Nama</th>
-                                            <th>Role</th>
-                                            <th>Username</th>
-                                            <th>Email</th>
-                                            <th>No HP</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($dataUsers as $index => $user)
-                                            <tr>
-                                                <td>{{ $user->id_user }}</td>
-                                                <td>{{ $user->nama }}</td>
-                                                <td>{{ $user->role }}</td>
-                                                <td>{{ $user->username }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->no_hp }}</td>
-                                                <td>{{ $user->status }}</td>
-                                                <td style="min-width: 190px">
-                                                    <a href="{{ route('editAkun', $user->id_user) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px;">
-                                                        Edit
-                                                        <i class="typcn typcn-edit btn-icon-append"></i>
-                                                    </a>
+                                            <td>{{ $hasil->id }}</td>
+                                            <td>{{ $hasil->patient->id_pasien ?? 'N/A' }}</td>
+                                            <td>{{ $hasil->patient->nama_panjang ?? 'N/A' }}</td>
+                                            <td>{{ $hasil->prediksi->hasil_pemeriksaan ?? 'N/A' }}</td>
+                                            <td>{{ $hasil->statusPemeriksaan->status ?? 'N/A' }}</td>
+                                            <td>
+                                                <!-- Tombol Setujui -->
+                                                <form action="{{ route('status_pemeriksaan.update', $hasil->statusPemeriksaan->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="btn btn-success btn-sm" style="min-width: 30%;">
+                                                        <i class="fas fa-check"></i> Setujui
+                                                    </button>
+                                                </form>
 
-                                                    <form action="{{ route('destroyAkun', $user->id_user) }}" method="POST" style="display:inline;" id="delete-form-{{ $user->id_user }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px;" onclick="confirmDelete({{ $user->id_user }})">
-                                                            Delete
-                                                            <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                                <!-- Tombol Kembalikan ke Menunggu -->
+                                                <form action="{{ route('status_pemeriksaan.revert', $hasil->statusPemeriksaan->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="btn btn-warning btn-sm" style="min-width: 30%;">
+                                                        <i class="fas fa-undo"></i> Kembalikan
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
+            </div>
         @else
             @if (session('success'))
                 <script>
@@ -532,7 +543,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Nama Lengkap</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nama_panjang" placeholder="Masukkan nama lengkap" required>
+                                            <input type="text" class="form-control" name="nama_panjang" placeholder="Masukkan nama lengkap" value="{{ old('nama_panjang') }}"required>
                                         </div>
                                     </div>
                                 </div>
@@ -625,9 +636,23 @@
 
                                 <input type="hidden" name="id_perawat" value="{{ Auth::user()->id_user }}">
 
-                                <button type="submit" class="btn btn-primary" style="margin-right: 2%;">Simpan</button>
-                                <a href="{{ route('cancelForm') }}" class="btn btn-secondary">Batal</a>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Dokter</label>
+                                        <div class="col-sm-9" style="display: flex; padding: 8px 15px;">
+                                            <select class="form-control" name="id_dokter" required>
+                                                <option value="" disabled selected>Pilih Dokter</option>
+                                                @foreach ($dokterList as $dokter)
+                                                    <option value="{{ $dokter->id_user }}">{{ $dokter->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
+                            <button type="submit" class="btn btn-primary" style="margin-right: 2%;">Simpan</button>
+                            <a href="{{ route('cancelForm') }}" class="btn btn-secondary">Batal</a>
                         </form>
                     </div>
                 </div>

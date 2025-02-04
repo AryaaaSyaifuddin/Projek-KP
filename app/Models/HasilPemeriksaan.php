@@ -92,6 +92,16 @@ class HasilPemeriksaan extends Model
      */
     public function patient()
     {
-        return $this->belongsTo(Pasien::class, 'id_pasien');
+        return $this->belongsTo(Pasien::class, 'id_pasien', 'id_pasien');
+    }
+
+        public function statusPemeriksaan()
+    {
+        return $this->hasOne(StatusPemeriksaan::class, 'id_hasil_pemeriksaan');
+    }
+
+    public function prediksi()
+    {
+        return $this->hasOne(PrediksiHasilPemeriksaan::class, 'id_rekammedis');
     }
 }

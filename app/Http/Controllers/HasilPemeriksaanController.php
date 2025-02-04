@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PrediksiHasilPemeriksaan;
+use App\Models\StatusPemeriksaan;
 use Illuminate\Http\Request;
 use App\Models\HasilPemeriksaan;
 use App\Models\Pasien;
@@ -92,11 +93,17 @@ class HasilPemeriksaanController extends Controller
             'gula_darah_2_jam_pp' => 'required|numeric',
         ]);
 
-        // Menyimpan data ke database
-        HasilPemeriksaan::create($validatedData);
+        // Menyimpan data ke tabel hasil_pemeriksaan
+        $hasilPemeriksaan = HasilPemeriksaan::create($validatedData);
+
+        // Membuat data di tabel status_pemeriksaan secara otomatis
+        StatusPemeriksaan::create([
+            'id_hasil_pemeriksaan' => $hasilPemeriksaan->id, // Menggunakan ID hasil_pemeriksaan yang baru dibuat
+            'status' => 'Menunggu Persetujuan', // Status default
+        ]);
 
         // Redirect dengan pesan sukses
-        return redirect()->back()->with('success', 'Rekam medis berhasil ditambahkan.');
+        return redirect()->back()->with('success', 'Rekam medis dan status pemeriksaan berhasil ditambahkan.');
     }
 
     public function editRekamMedis($id)

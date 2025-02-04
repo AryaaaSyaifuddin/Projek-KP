@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\HasilPemeriksaan;
+use App\Models\StatusPemeriksaan;
 use Illuminate\Http\Request;
 use App\Models\Pasien;
 use App\Models\PrediksiHasilPemeriksaan;
@@ -77,6 +78,14 @@ class ViewController extends Controller
 
         // Kirim data pasien ke view edit_pasien
         return view('prediksi_hasil_pemeriksaan', compact('hasilPemeriksaan'));
+    }
+
+    public function accHasilPrediksi()
+    {
+        // Ambil data dari HasilPemeriksaan dengan relasi ke StatusPemeriksaan dan PrediksiHasilPemeriksaan
+        $hasilPemeriksaan = HasilPemeriksaan::with(['statusPemeriksaan', 'prediksi', 'patient'])->get();
+
+        return view('persetujuan_hasil_pemeriksaan', compact('hasilPemeriksaan'));
     }
 
 

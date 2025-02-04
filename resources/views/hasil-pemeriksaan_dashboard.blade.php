@@ -305,6 +305,8 @@
             <div class="collapse" id="hasil_pemeriksaan">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/persetujuan_hasil_pemeriksaan">Status Hasil Pemeriksaan</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/rekomendasi_medis">Rekomendasi Medis</a></li>
               </ul>
             </div>
           </li>
@@ -352,6 +354,19 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="fas fa-user-injured menu-icon"></i>
+              <span class="menu-title">Pasien</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/pasien">Data Pasien</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/jadwal-pemeriksaan">Detail Jadwal</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="hasil_pemeriksaan">
               <i class="fas fa-file-medical menu-icon"></i>
               <span class="menu-title">Hasil Pemeriksaan</span>
@@ -360,6 +375,8 @@
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/persetujuan_hasil_pemeriksaan">Status Hasil Pemeriksaan</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/rekomendasi_medis">Rekomendasi Medis</a></li>
               </ul>
             </div>
           </li>
@@ -449,6 +466,7 @@
                             <table class="table table-bordered" id="dataTable">
                                 <thead>
                                     <tr>
+                                        <th style="min-width: 130px">ID</th>
                                         <th style="min-width: 130px">ID Pasien</th>
                                         <th style="min-width: 130px">Gender</th>
                                         <th style="min-width: 130px">Height</th>
@@ -520,6 +538,7 @@
                                 <tbody>
                                     @foreach ($hasilPemeriksaan as $hasil)
                                         <tr>
+                                            <td>{{ $hasil->id }}</td>
                                             <td>{{ $hasil->id_pasien }}</td>
                                             <td>{{ $hasil->gender }}</td>
                                             <td>{{ $hasil->height }}</td>
@@ -530,17 +549,17 @@
                                             <td>{{ $hasil->BMI }}</td>
                                             <td>{{ $hasil->BMICat }}</td>
                                             <td>{{ $hasil->Hipertensi_Kategori }}</td>
-                                            <td>{{ $hasil->tuberkulosis ? 'Ya' : 'Tidak' }}</td>
-                                            <td>{{ $hasil->penyakit_jantung ? 'Ya' : 'Tidak' }}</td>
-                                            <td>{{ $hasil->hipertensi ? 'Ya' : 'Tidak' }}</td>
-                                            <td>{{ $hasil->diabetes_melitus ? 'Ya' : 'Tidak' }}</td>
-                                            <td>{{ $hasil->gangguan_jiwa ? 'Ya' : 'Tidak' }}</td>
-                                            <td>{{ $hasil->trauma_pada_kepala ? 'Ya' : 'Tidak' }}</td>
-                                            <td>{{ $hasil->hepatitis ? 'Ya' : 'Tidak' }}</td>
-                                            <td>{{ $hasil->Spirometri ? 'Ya' : 'Tidak' }}</td>
-                                            <td>{{ $hasil->Treadmil ? 'Ya' : 'Tidak' }}</td>
-                                            <td>{{ $hasil->Audiometri ? 'Ya' : 'Tidak' }}</td>
-                                            <td>{{ $hasil->foto_thorax ? 'Ya' : 'Tidak' }}</td>
+                                            <td>{{ $hasil->tuberkulosis ? 'Tidak' : 'Ya' }}</td>
+                                            <td>{{ $hasil->penyakit_jantung ? 'Tidak' : 'Ya'  }}</td>
+                                            <td>{{ $hasil->hipertensi ? 'Tidak' : 'Ya' }}</td>
+                                            <td>{{ $hasil->diabetes_melitus ? 'Tidak' : 'Ya' }}</td>
+                                            <td>{{ $hasil->gangguan_jiwa ? 'Tidak' : 'Ya' }}</td>
+                                            <td>{{ $hasil->trauma_pada_kepala ? 'Tidak' : 'Ya' }}</td>
+                                            <td>{{ $hasil->hepatitis ? 'Tidak' : 'Ya' }}</td>
+                                            <td>{{ $hasil->Spirometri ? 'Tidak Normal' : 'Normal' }}</td>
+                                            <td>{{ $hasil->Treadmil ? 'Tidak Normal' : 'Normal' }}</td>
+                                            <td>{{ $hasil->Audiometri ? 'Tidak Normal' : 'Normal' }}</td>
+                                            <td>{{ $hasil->foto_thorax ? 'Tidak Normal' : 'Normal' }}</td>
                                             <td>{{ $hasil->{'Nadi(kali/menit)'} }}</td>
                                             <td>{{ $hasil->{'FrekuensiNapas(kali/menit)'} }}</td>
                                             <td>{{ $hasil->Tingkatan_Kesadaran }}</td>
@@ -597,13 +616,11 @@
                                                 </a>
 
                                                 @if($hasilPemeriksaan)
-                                                    {{-- Tombol "Edit Hasil" hanya muncul jika sudah ada hasil prediksi --}}
                                                     <a href="{{ route('edit.hasil.prediksi', $hasilPemeriksaan->id) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px; min-width: 100%; margin-bottom: 7px;">
                                                         Edit Hasil
                                                         <i class="typcn typcn-edit btn-icon-append"></i>
                                                     </a>
 
-                                                    {{-- Tombol "Delete" hanya muncul jika sudah ada hasil prediksi --}}
                                                     <form action="{{ route('delete.hasil.prediksi', $hasilPemeriksaan->id) }}" method="POST" style="display: inline-block; width: 100%;">
                                                         @csrf
                                                         @method('DELETE')
@@ -613,7 +630,6 @@
                                                         </button>
                                                     </form>
                                                 @else
-                                                    {{-- Tombol "Prediction" hanya muncul jika belum ada hasil prediksi --}}
                                                     <a href="{{ route('hasilPemeriksaan.predict', $hasil->id) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px; min-width: 100%;">
                                                         Prediction
                                                         <i class="fa-solid fa-chart-bar btn-icon-append"></i>

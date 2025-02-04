@@ -27,12 +27,13 @@ class PrediksiHasilPemeriksaanController extends Controller
         // Set session success message
         if ($hasilPemeriksaan) {
             Session::flash('success', 'Hasil pemeriksaan berhasil disimpan.');
+            // Redirect ke route tertentu setelah berhasil menyimpan
+            return redirect('/hasil-pemeriksaan');
         } else {
             Session::flash('error', 'Gagal menyimpan hasil pemeriksaan.');
+            // Redirect kembali ke halaman sebelumnya jika gagal
+            return redirect()->back();
         }
-
-        // Redirect kembali ke halaman sebelumnya
-        return redirect()->back();
     }
 
     public function editPrediksi($id)
