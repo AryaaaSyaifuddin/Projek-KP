@@ -60,6 +60,7 @@ return new class extends Migration
             $table->float('trigliserida'); // Trigliserida
             $table->float('kolestrol_HDL_(direct)'); // Kolesterol HDL
             $table->float('kolestrol_LDL_(direct)'); // Kolesterol LDL
+            $table->integer('anti_HBs'); // HBsAg Kuantitatif
             $table->integer('HBs_Ag_Kuantitatif'); // HBsAg Kuantitatif
             $table->float('pH_pada_urine'); // pH urine
             $table->integer('nitrite_pada_urine'); // Nitrit pada urine
