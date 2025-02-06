@@ -490,23 +490,10 @@
                                             <td>{{ $hasil->prediksi->hasil_pemeriksaan ?? 'Not available' }}</td>
                                             <td>{{ $hasil->statusPemeriksaan->status ?? 'Not available' }}</td>
                                             <td>
-                                                <!-- Tombol Setujui -->
-                                                <form action="{{ route('status_pemeriksaan.update', $hasil->statusPemeriksaan->id) }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button type="submit" class="btn btn-success btn-sm" style="min-width: 30%;">
-                                                        <i class="fas fa-check"></i> Setujui
-                                                    </button>
-                                                </form>
-
-                                                <!-- Tombol Kembalikan ke Menunggu -->
-                                                <form action="{{ route('status_pemeriksaan.revert', $hasil->statusPemeriksaan->id) }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button type="submit" class="btn btn-warning btn-sm" style="min-width: 30%;">
-                                                        <i class="fas fa-undo"></i> Kembalikan
-                                                    </button>
-                                                </form>
+                                                <a href="{{ route('rekomendasimedis.view', $hasil->id) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px; margin-bottom: 7px;">
+                                                    Generate Rekom Medis
+                                                    <i class="typcn typcn-edit btn-icon-append"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach

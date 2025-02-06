@@ -13,6 +13,7 @@ use App\Http\Middleware\RedirectIfLoggedIn;
 use App\Http\Middleware\UsersMiddleware;
 use App\Http\Controllers\HasilPemeriksaanController;
 use App\Http\Controllers\PrediksiHasilPemeriksaanController;
+use App\Http\Controllers\RekomendasiMedisController;
 use App\Http\Controllers\StatusPemeriksaanController;
 
     // Login Route
@@ -101,6 +102,14 @@ Route::middleware([UsersMiddleware::class])->group(function () {
 
     Route::put('/status-pemeriksaan/revert/{id}', [StatusPemeriksaanController::class, 'revert'])->name('status_pemeriksaan.revert');
 
+    // REKOMEDASI MEDIS
+
+    Route::get('/rekomendasi_medis', [ViewController::class, 'rekomendasiMedisHasilPrediksi']);
+
+    Route::get('/rekomendasi-medis/{id}', [RekomendasiMedisController::class, 'formRekommendasiMedis'])->name('rekomendasimedis.view');
+
+    Route::post('/rekomendasi-medis/generate/{id}', [RekomendasiMedisController::class, 'storeRekomendasiMedis'])->name('generate.rekammedis');
+    
     // ===========================================================================================================================================
 
     Route::get('/jadwal-pemeriksaan', [ViewController::class, 'dashboardJadwal']);

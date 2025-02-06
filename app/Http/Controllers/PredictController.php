@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class PredictController extends Controller
 {
-
     public function predictHealthStatus(Request $request)
     {
         try {

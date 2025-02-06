@@ -88,6 +88,14 @@ class ViewController extends Controller
         return view('persetujuan_hasil_pemeriksaan', compact('hasilPemeriksaan'));
     }
 
+    public function rekomendasiMedisHasilPrediksi()
+    {
+        // Ambil data dari HasilPemeriksaan dengan relasi ke StatusPemeriksaan dan PrediksiHasilPemeriksaan
+        $hasilPemeriksaan = HasilPemeriksaan::with(['statusPemeriksaan', 'prediksi', 'patient'])->get();
+
+        return view('rekomendasi_medis', compact('hasilPemeriksaan'));
+    }
+
 
 
 }
