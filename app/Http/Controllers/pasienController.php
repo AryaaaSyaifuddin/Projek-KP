@@ -19,15 +19,26 @@ class PasienController extends Controller
         $pasien = session('pasien', null); // Data pasien untuk edit
         $dokterList = Users::where('role', 'dokter')->get();
 
-        // Ambil data pasien dengan informasi perawat dan dokter
+        // Ambil data pasien dengan informasi perawat dan dokter, lalu urutkan:
+        // 1. Pasien dengan jadwal pemeriksaan yang belum lewat (upcoming) muncul di atas
+        // 2. Pasien yang sudah lewat muncul di bawah, keduanya diurutkan berdasarkan tanggal dan waktu pemeriksaan secara ascending
         $dataPasien = Pasien::join('users as perawat', 'pasien.id_perawat', '=', 'perawat.id_user')
             ->join('users as dokter', 'pasien.id_dokter', '=', 'dokter.id_user')
             ->select('pasien.*', 'perawat.nama as nama_perawat', 'dokter.nama as nama_dokter')
+            ->orderByRaw("
+                CASE
+                    WHEN (pasien.tanggal_pemeriksaan || ' ' || pasien.waktu_pemeriksaan)::timestamp >= NOW() THEN 0
+                    ELSE 1
+                END
+            ")
+            ->orderBy('pasien.tanggal_pemeriksaan', 'asc')
+            ->orderBy('pasien.waktu_pemeriksaan', 'asc')
             ->get();
 
         // Pass data ke view
         return view('pasien_dashboard', compact('showForm', 'dataPasien', 'pasien', 'dokterList'));
     }
+
 
     // Menampilkan form create pasien
     public function showCreateForm()

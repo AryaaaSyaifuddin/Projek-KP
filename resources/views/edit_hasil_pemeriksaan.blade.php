@@ -260,7 +260,6 @@
             <div class="collapse" id="dokter">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="/dokter">Data Dokter</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Dokter</a></li>
                 </ul>
             </div>
         </li>
@@ -273,7 +272,6 @@
             <div class="collapse" id="perawat">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="/perawat">Data Perawat</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Perawat</a></li>
                 </ul>
             </div>
         </li>
@@ -424,28 +422,6 @@
                 <h3 class="mb-0 font-weight-bold">{{ Auth::user()->nama ?? 'Anonim' }}</h3>
                 <p>Selamat satang di Sistem Manajemen Check Up</p>
               </div>
-              <div class="col-sm-6">
-                <div class="d-flex align-items-center justify-content-md-end">
-                  <div class="mb-3 mb-xl-0 pr-1">
-                      <div class="dropdown">
-                        <button class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="typcn typcn-calendar-outline mr-2"></i>Last 7 days
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3" data-x-placement="top-start">
-                          <h6 class="dropdown-header">Last 14 days</h6>
-                          <a class="dropdown-item" href="#">Last 21 days</a>
-                          <a class="dropdown-item" href="#">Last 28 days</a>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-arrow-forward-outline mr-2"></i>Export</button>
-                  </div>
-                  <div class="pr-1 mb-3 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-info-large-outline mr-2"></i>info</button>
-                  </div>
-                </div>
-              </div>
             </div>
 
 
@@ -455,12 +431,13 @@
                 <!-- Personal Information -->
                 <div class="row">
                     <div class="col-md-6">
-                        {{-- <div class="form-group row">
+                        <div class="form-group row">
                             <label for="id" class="col-sm-4 col-form-label">ID:</label>
                             <div class="col-sm-8">
-                                <input type="number" id="id" name="id" class="form-control" value="{{ $hasilPemeriksaan->id }}" required readonly>
+                                <input type="number" id="id" name="id" class="form-control" value="{{ $hasilPemeriksaan->id }}" required>
                             </div>
-                        </div> --}}
+                        </div>
+
                         <div class="form-group row">
                             <label for="gender" class="col-sm-4 col-form-label">Gender:</label>
                             <div class="col-sm-8">
@@ -831,6 +808,30 @@
                                 <input type="number" id="kolestrol_LDL_(direct)" name="kolestrol_LDL_(direct)" step="0.01" class="form-control" value="{{ $hasilPemeriksaan->{'kolestrol_LDL_(direct)'} }}" required>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label for="gula_darah_puasa" class="col-sm-4 col-form-label">Gula Darah Puasa:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="gula_darah_puasa" name="gula_darah_puasa" class="form-control" value="{{ $hasilPemeriksaan->gula_darah_puasa }}" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="gula_darah_2_jam_pp" class="col-sm-4 col-form-label">Gula Darah 2 Jam PP:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="gula_darah_2_jam_pp" name="gula_darah_2_jam_pp" class="form-control" value="{{ $hasilPemeriksaan->gula_darah_2_jam_pp }}" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="anti_HBs" class="col-sm-4 col-form-label">Anti HBs:</label>
+                            <div class="col-sm-8">
+                                <select name="anti_HBs" id="anti_HBs" class="form-control" required>
+                                    <option value="0" {{ $hasilPemeriksaan->anti_HBs == 0 ? 'selected' : '' }}>negatif</option>
+                                    <option value="1" {{ $hasilPemeriksaan->anti_HBs == 1 ? 'selected' : '' }}>positif</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label for="HBs_Ag_Kuantitatif" class="col-sm-4 col-form-label">HBs Ag Kuantitatif:</label>
                             <div class="col-sm-8">
@@ -844,6 +845,12 @@
                             <label for="pH_pada_urine" class="col-sm-4 col-form-label">pH pada urine:</label>
                             <div class="col-sm-8">
                                 <input type="number" id="pH_pada_urine" name="pH_pada_urine" step="0.01" class="form-control" value="{{ $hasilPemeriksaan->pH_pada_urine }}" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="berat_jenis_pada_urine" class="col-sm-4 col-form-label">Berat Jenis pada Urine:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="berat_jenis_pada_urine" name="berat_jenis_pada_urine" class="form-control" step="0.001" value="{{ $hasilPemeriksaan->berat_jenis_pada_urine }}" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -905,6 +912,20 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="eritrosit_pada_urine" class="col-sm-4 col-form-label">Eritrosit pada Urine:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="eritrosit_pada_urine" name="eritrosit_pada_urine" class="form-control" value="{{ $hasilPemeriksaan->eritrosit_pada_urine }}" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="lekosit_pada_urine" class="col-sm-4 col-form-label">Lekosit pada Urine:</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="lekosit_pada_urine" name="lekosit_pada_urine" class="form-control" value="{{ $hasilPemeriksaan->lekosit_pada_urine }}" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="silinder_pada_urine" class="col-sm-4 col-form-label">Silinder pada Urine:</label>
                             <div class="col-sm-8">
                                 <select name="silinder_pada_urine" id="silinder_pada_urine" class="form-control" required>
@@ -943,45 +964,11 @@
                                 </select>
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="berat_jenis_pada_urine" class="col-sm-4 col-form-label">Berat Jenis pada Urine:</label>
-                            <div class="col-sm-8">
-                                <input type="number" id="berat_jenis_pada_urine" name="berat_jenis_pada_urine" class="form-control" step="0.001" value="{{ $hasilPemeriksaan->berat_jenis_pada_urine }}" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="eritrosit_pada_urine" class="col-sm-4 col-form-label">Eritrosit pada Urine:</label>
-                            <div class="col-sm-8">
-                                <input type="number" id="eritrosit_pada_urine" name="eritrosit_pada_urine" class="form-control" value="{{ $hasilPemeriksaan->eritrosit_pada_urine }}" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="lekosit_pada_urine" class="col-sm-4 col-form-label">Lekosit pada Urine:</label>
-                            <div class="col-sm-8">
-                                <input type="number" id="lekosit_pada_urine" name="lekosit_pada_urine" class="form-control" value="{{ $hasilPemeriksaan->lekosit_pada_urine }}" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="gula_darah_puasa" class="col-sm-4 col-form-label">Gula Darah Puasa:</label>
-                            <div class="col-sm-8">
-                                <input type="number" id="gula_darah_puasa" name="gula_darah_puasa" class="form-control" value="{{ $hasilPemeriksaan->gula_darah_puasa }}" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="gula_darah_2_jam_pp" class="col-sm-4 col-form-label">Gula Darah 2 Jam PP:</label>
-                            <div class="col-sm-8">
-                                <input type="number" id="gula_darah_2_jam_pp" name="gula_darah_2_jam_pp" class="form-control" value="{{ $hasilPemeriksaan->gula_darah_2_jam_pp }}" required>
-                            </div>
-                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="margin-right: 1%">Simpan</button>
-                    <a href="/hasil-pemeriksaan" class="btn btn-secondary">Batal</a>
                 </div>
+                    <button type="submit" class="btn btn-primary" style="margin-right: 1%">Simpan</button>
+                    <a href="/hasil-pemeriksaan" class="btn btn-secondary">Back</a>
+
             </form>
 
 

@@ -13,6 +13,6 @@ class UsersMiddleware
             return $next($request); // Lanjutkan request jika role sesuai
         }
 
-        return redirect()->back()->with('error', 'Anda tidak memiliki akses ke halaman ini.');
+        return redirect('/')->with('error', 'Anda harus login terlebih dahulu.');
     }
 }

@@ -260,7 +260,6 @@
             <div class="collapse" id="dokter">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="/dokter">Data Dokter</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Dokter</a></li>
                 </ul>
             </div>
         </li>
@@ -273,7 +272,6 @@
             <div class="collapse" id="perawat">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="/perawat">Data Perawat</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Perawat</a></li>
                 </ul>
             </div>
         </li>
@@ -412,28 +410,7 @@
                 <h3 class="mb-0 font-weight-bold">{{ Auth::user()->nama ?? 'Anonim' }}</h3>
                 <p>Selamat satang di Sistem Manajemen Check Up</p>
               </div>
-              <div class="col-sm-6">
-                <div class="d-flex align-items-center justify-content-md-end">
-                  <div class="mb-3 mb-xl-0 pr-1">
-                      <div class="dropdown">
-                        <button class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="typcn typcn-calendar-outline mr-2"></i>Last 7 days
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3" data-x-placement="top-start">
-                          <h6 class="dropdown-header">Last 14 days</h6>
-                          <a class="dropdown-item" href="#">Last 21 days</a>
-                          <a class="dropdown-item" href="#">Last 28 days</a>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-arrow-forward-outline mr-2"></i>Export</button>
-                  </div>
-                  <div class="pr-1 mb-3 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-info-large-outline mr-2"></i>info</button>
-                  </div>
-                </div>
-              </div>
+
             </div>
 
 

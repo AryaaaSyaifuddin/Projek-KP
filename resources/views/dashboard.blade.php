@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <!-- Include CSS (misalnya Bootstrap) jika diperlukan -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- endinject -->
     <!-- plugin css for this page -->
@@ -162,7 +166,6 @@
             <div class="collapse" id="dokter">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="/dokter">Data Dokter</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Dokter</a></li>
                 </ul>
             </div>
         </li>
@@ -175,7 +178,6 @@
             <div class="collapse" id="perawat">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="/perawat">Data Perawat</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Perawat</a></li>
                 </ul>
             </div>
         </li>
@@ -295,6 +297,10 @@
           </li>
           @endif
 
+
+
+
+
       </nav>
         <!-- partial -->
         <div class="main-panel">
@@ -304,29 +310,53 @@
                 <h3 class="mb-0 font-weight-bold">{{ Auth::user()->nama ?? 'Anonim' }}</h3>
                 <p>Selamat satang di Sistem Manajemen Check Up</p>
               </div>
-              <div class="col-sm-6">
-                <div class="d-flex align-items-center justify-content-md-end">
-                  <div class="mb-3 mb-xl-0 pr-1">
-                      <div class="dropdown">
-                        <button class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="typcn typcn-calendar-outline mr-2"></i>Last 7 days
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3" data-x-placement="top-start">
-                          <h6 class="dropdown-header">Last 14 days</h6>
-                          <a class="dropdown-item" href="#">Last 21 days</a>
-                          <a class="dropdown-item" href="#">Last 28 days</a>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-arrow-forward-outline mr-2"></i>Export</button>
-                  </div>
-                  <div class="pr-1 mb-3 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-info-large-outline mr-2"></i>info</button>
-                  </div>
-                </div>
-              </div>
             </div>
+
+
+                <div class="row">
+                    <div class="col-lg-6 grid-margin stretch-card">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h4 class="card-title">Jadwal Check-up Hari Ini</h4>
+                                <canvas id="barChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart Data Pasien Harian -->
+                    <div class="col-lg-6 grid-margin stretch-card">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h4 class="card-title">Grafik Pasien Harian (Bulan Ini)</h4>
+                                <canvas id="dailyChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <!-- Chart Check-up Hari Ini -->
+                    <div class="col-lg-6 grid-margin stretch-card">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h4 class="card-title">Grafik Pasien Bulanan (12 Bulan Terakhir)</h4>
+                                <canvas id="monthlyChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart Data Pasien Tahunan -->
+                    <div class="col-lg-6 grid-margin stretch-card">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h4 class="card-title">Grafik Pasien Tahunan (5 Tahun Terakhir)</h4>
+                                <canvas id="yearlyChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
           <!-- content-wrapper ends -->
@@ -346,6 +376,159 @@
     <!-- container-scroller -->
     <!-- base:js -->
     <script src="vendors/js/vendor.bundle.base.js"></script>
+    <script>
+        // Parsing data dari Controller ke format JSON
+        const dailyPatients = @json($dailyPatients);
+        const monthlyPatients = @json($monthlyPatients);
+        const yearlyPatients = @json($yearlyPatients);
+        const todayCheckups = @json($todayCheckups);
+
+        // --- Grafik Pasien Harian ---
+        const dailyLabels = dailyPatients.map(item => item.date);
+        const dailyData = dailyPatients.map(item => item.count);
+        const dailyCtx = document.getElementById('dailyChart').getContext('2d');
+        const dailyChart = new Chart(dailyCtx, {
+            type: 'line',
+            data: {
+                labels: dailyLabels,
+                datasets: [{
+                    label: 'Jumlah Pasien',
+                    data: dailyData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.3)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Tanggal'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Jumlah Pasien'
+                        }
+                    }
+                }
+            }
+        });
+
+        // --- Grafik Pasien Bulanan ---
+        const monthlyLabels = monthlyPatients.map(item => item.month);
+        const monthlyData = monthlyPatients.map(item => item.count);
+        const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+        const monthlyChart = new Chart(monthlyCtx, {
+            type: 'line',
+            data: {
+                labels: monthlyLabels,
+                datasets: [{
+                    label: 'Jumlah Pasien',
+                    data: monthlyData,
+                    backgroundColor: 'rgba(153, 102, 255, 0.3)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Bulan'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Jumlah Pasien'
+                        }
+                    }
+                }
+            }
+        });
+
+        // --- Grafik Pasien Tahunan ---
+        const yearlyLabels = yearlyPatients.map(item => item.year);
+        const yearlyData = yearlyPatients.map(item => item.count);
+        const yearlyCtx = document.getElementById('yearlyChart').getContext('2d');
+        const yearlyChart = new Chart(yearlyCtx, {
+            type: 'line',
+            data: {
+                labels: yearlyLabels,
+                datasets: [{
+                    label: 'Jumlah Pasien',
+                    data: yearlyData,
+                    backgroundColor: 'rgba(255, 159, 64, 0.3)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Tahun'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Jumlah Pasien'
+                        }
+                    }
+                }
+            }
+        });
+
+        // --- Grafik Check-up Hari Ini (Berdasarkan Jam) ---
+        const barLabels = todayCheckups.map(item => item.hour + ":00");
+        const barData = todayCheckups.map(item => item.count);
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        const barChart = new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: barLabels,
+                datasets: [{
+                    label: 'Check-up Hari Ini',
+                    data: barData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Jam'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Jumlah Check-up'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
     <!-- endinject -->
     <!-- Plugin js for this page-->
     <!-- End plugin js for this page-->

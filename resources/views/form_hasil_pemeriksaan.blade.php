@@ -260,7 +260,6 @@
             <div class="collapse" id="dokter">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="/dokter">Data Dokter</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Dokter</a></li>
                 </ul>
             </div>
         </li>
@@ -273,7 +272,6 @@
             <div class="collapse" id="perawat">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="/perawat">Data Perawat</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Perawat</a></li>
                 </ul>
             </div>
         </li>
@@ -476,7 +474,7 @@
                         <div class="form-group row">
                             <label for="BMI" class="col-sm-4 col-form-label">Body Mass Index (BMI):</label>
                             <div class="col-sm-8">
-                                <input type="number" step="0.1" id="BMI" name="BMI" class="form-control" required>
+                                <input type="number" step="0.1" id="BMI" name="BMI" class="form-control" required readonly>
                             </div>
                         </div>
 
@@ -1513,6 +1511,49 @@
     <script src="{{ asset('js/template.js') }}"></script>
     <script src="{{ asset('js/settings.js') }}"></script>
     <script src="{{ asset('js/todolist.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const heightInput = document.getElementById("height");
+            const weightInput = document.getElementById("weight");
+            const bmiInput = document.getElementById("BMI");
+            const bmiCatSelect = document.getElementById("BMICat");
+
+            function calculateBMI() {
+                const height = parseFloat(heightInput.value) / 100; // Convert to meters
+                const weight = parseFloat(weightInput.value);
+
+                if (!height || !weight) {
+                    bmiInput.value = "";
+                    bmiCatSelect.value = "";
+                    return;
+                }
+
+                const bmi = (weight / (height * height)).toFixed(1); // Calculate BMI
+                bmiInput.value = bmi;
+
+                // Determine BMI category
+                let category = "0"; // Default to Normal
+                if (bmi < 18.5) {
+                    category = "4"; // Underweight
+                } else if (bmi >= 18.5 && bmi <= 22.9) {
+                    category = "0"; // Normal
+                } else if (bmi >= 23 && bmi <= 24.9) {
+                    category = "3"; // Overweight
+                } else if (bmi >= 25 && bmi <= 29.9) {
+                    category = "1"; // Obesitas I
+                } else if (bmi >= 30) {
+                    category = "2"; // Obesitas II
+                }
+
+                bmiCatSelect.value = category; // Set BMI category
+            }
+
+            // Add event listeners to inputs
+            heightInput.addEventListener("input", calculateBMI);
+            weightInput.addEventListener("input", calculateBMI);
+        });
+    </script>
+
     <!-- endinject -->
     <!-- base:js -->
     <script src="vendors/js/vendor.bundle.base.js"></script>

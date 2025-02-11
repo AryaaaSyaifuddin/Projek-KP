@@ -12,12 +12,13 @@ class StatusPemeriksaanSeeder extends Seeder
      */
     public function run(): void
     {
-        // Data id_hasil_pemeriksaan dari 2 sampai 5
-        for ($i = 2; $i <= 5; $i++) {
+
+        for ($id = 29; $id <= 34; $id++) {
             StatusPemeriksaan::create([
-                'id_hasil_pemeriksaan' => $i,
-                'status' => 'Menunggu Persetujuan'
+                'id_hasil_pemeriksaan' => $id,
+                'status'               => 'Menunggu Persetujuan'
             ]);
         }
+
     }
 }

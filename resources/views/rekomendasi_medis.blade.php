@@ -15,6 +15,7 @@
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+
     <!-- endinject -->
     <link rel="shortcut icon" href="img/favicon.jpg" />
   </head>
@@ -261,7 +262,6 @@
             <div class="collapse" id="dokter">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="/dokter">Data Dokter</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Dokter</a></li>
                 </ul>
             </div>
           </li>
@@ -274,7 +274,6 @@
             <div class="collapse" id="perawat">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="/perawat">Data Perawat</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Perawat</a></li>
                 </ul>
             </div>
           </li>
@@ -411,28 +410,6 @@
                 <h3 class="mb-0 font-weight-bold">{{ Auth::user()->nama ?? 'Anonim' }}</h3>
                 <p>Selamat satang di Sistem Manajemen Check Up</p>
               </div>
-              <div class="col-sm-6">
-                <div class="d-flex align-items-center justify-content-md-end">
-                  <div class="mb-3 mb-xl-0 pr-1">
-                      <div class="dropdown">
-                        <button class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="typcn typcn-calendar-outline mr-2"></i>Last 7 days
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3" data-x-placement="top-start">
-                          <h6 class="dropdown-header">Last 14 days</h6>
-                          <a class="dropdown-item" href="#">Last 21 days</a>
-                          <a class="dropdown-item" href="#">Last 28 days</a>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-arrow-forward-outline mr-2"></i>Export</button>
-                  </div>
-                  <div class="pr-1 mb-3 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-info-large-outline mr-2"></i>info</button>
-                  </div>
-                </div>
-              </div>
             </div>
             @php
                 // Variabel kontrol untuk menampilkan form atau tabel
@@ -443,16 +420,6 @@
         @if($showForm === true)
             <!-- Tombol Create -->
             <div class="button-action">
-
-                {{-- <button
-                type="button"
-                class="btn btn-outline-primary btn-icon-text"
-                style="padding: 8px 15px;"
-                onclick="window.location='{{ route('showCreateForm') }}'">
-                Create
-                <i class="typcn typcn-folder btn-icon-prepend"></i>
-                </button> --}}
-
                 <!-- Tabel -->
                 <div class="form-group" style="margin: 20px 0; display: flex; justify-content: space-between;">
                     <input
@@ -464,12 +431,62 @@
                     onkeyup="filterTable()">
                 </div>
 
+
+
+
+
         </div>
             <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Data Pasien</h4>
                         <div class="table-responsive pt-3">
+                            <!-- Modal Detail (Atas-Bawah) dengan Format Baris -->
+                            <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 600px;">
+                                <div class="modal-content shadow-lg border-0">
+                                    <!-- Header Modal -->
+                                    <div class="modal-header bg-primary text-white">
+                                    <h5 class="modal-title" id="detailModalLabel">
+                                        <i class="fas fa-notes-medical"></i> Detail Rekomendasi Medis
+                                    </h5>
+                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Tutup">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <!-- Body Modal -->
+                                    <div class="modal-body">
+                                    <!-- Card Diagnosa -->
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-primary text-white">
+                                        <i class="fas fa-stethoscope"></i> Diagnosa
+                                        </div>
+                                        <div class="card-body">
+                                        <!-- Menggunakan white-space: pre-line untuk memunculkan enter -->
+                                        <p class="card-text" id="detailDiagnosis" style="font-size: 1.1em; white-space: pre-line;"></p>
+                                        </div>
+                                    </div>
+                                    <!-- Card Rekomendasi Medis -->
+                                    <div class="card">
+                                        <div class="card-header bg-success text-white">
+                                        <i class="fas fa-heartbeat"></i> Rekomendasi Medis
+                                        </div>
+                                        <div class="card-body">
+                                        <!-- Menggunakan white-space: pre-line untuk memunculkan enter -->
+                                        <p class="card-text" id="detailRekomendasi" style="font-size: 1.1em; white-space: pre-line;"></p>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <!-- Footer Modal -->
+                                    <div class="modal-footer border-top-0">
+                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+                                        <i class="fas fa-times-circle"></i> Tutup
+                                    </button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
                             <table class="table table-bordered" id="dataTable">
                                 <thead>
                                     <tr>
@@ -477,7 +494,8 @@
                                         <th>Id Pasien</th>
                                         <th>Nama Pasien</th>
                                         <th>Hasil Pemeriksaan</th>
-                                        <th>Status</th>
+                                        <th>Status Pemeriksaan</th>
+                                        <th>Rekomendasi Medis</th> <!-- Kolom baru -->
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -490,15 +508,32 @@
                                             <td>{{ $hasil->prediksi->hasil_pemeriksaan ?? 'Not available' }}</td>
                                             <td>{{ $hasil->statusPemeriksaan->status ?? 'Not available' }}</td>
                                             <td>
+                                                @if($hasil->rekomMedis)
+                                                    <!-- Opsional: Pastikan kedua field tidak kosong -->
+                                                    @if($hasil->rekomMedis->diagnosis && $hasil->rekomMedis->rekomendasi)
+                                                        <span class="badge badge-success">Sudah Diisi</span>
+                                                    @else
+                                                        <span class="badge badge-warning">Data Tidak Lengkap</span>
+                                                    @endif
+                                                @else
+                                                    <span class="badge badge-warning">Belum Diisi</span>
+                                                @endif
+                                            </td>
+                                            <td>
                                                 <a href="{{ route('rekomendasimedis.view', $hasil->id) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px; margin-bottom: 7px;">
                                                     Generate Rekom Medis
                                                     <i class="typcn typcn-edit btn-icon-append"></i>
                                                 </a>
+                                                <button class="btn btn-info btn-icon-text" style="padding: 8px 8px; margin-bottom: 7px;" onclick="viewDetail({{ $hasil->id }})">
+                                                    View Detail
+                                                    <i class="typcn typcn-eye btn-icon-append"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
@@ -707,6 +742,36 @@
                 rows[i].style.display = match ? '' : 'none';
             }
         }
+    </script>
+    <script>
+    function viewDetail(id) {
+        // Reset konten modal sebelum diisi ulang
+        $('#detailDiagnosis').text('');
+        $('#detailRekomendasi').text('');
+
+        $.ajax({
+            url: '/rekomendasimedis/detail/' + id, // Pastikan route ini sudah didefinisikan
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if(response.success) {
+                    // Jika data berisi karakter newline (\n), style pre-line akan menampilkannya sebagai enter
+                    $('#detailDiagnosis').text(response.data.diagnosis);
+                    $('#detailRekomendasi').text(response.data.rekomendasi);
+                } else {
+                    $('#detailDiagnosis').text('Data tidak ditemukan');
+                    $('#detailRekomendasi').text('Data tidak ditemukan');
+                }
+                $('#detailModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching detail:', error);
+                $('#detailDiagnosis').text('Error fetching data');
+                $('#detailRekomendasi').text('Error fetching data');
+                $('#detailModal').modal('show');
+            }
+        });
+    }
     </script>
     <script src="js/off-canvas.js"></script>
     <script src="js/hoverable-collapse.js"></script>

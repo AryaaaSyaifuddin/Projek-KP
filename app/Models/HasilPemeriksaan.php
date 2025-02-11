@@ -105,4 +105,9 @@ class HasilPemeriksaan extends Model
     {
         return $this->hasOne(PrediksiHasilPemeriksaan::class, 'id_rekammedis');
     }
+
+    public function rekomMedis()
+    {
+        return $this->hasOne(RekomendasiMedis::class, 'hasil_pemeriksaan_id');
+    }
 }

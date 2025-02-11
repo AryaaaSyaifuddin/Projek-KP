@@ -404,28 +404,6 @@
                 <h3 class="mb-0 font-weight-bold">{{ Auth::user()->nama ?? 'Anonim' }}</h3>
                 <p>Selamat satang di Sistem Manajemen Check Up</p>
               </div>
-              <div class="col-sm-6">
-                <div class="d-flex align-items-center justify-content-md-end">
-                  <div class="mb-3 mb-xl-0 pr-1">
-                      <div class="dropdown">
-                        <button class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="typcn typcn-calendar-outline mr-2"></i>Last 7 days
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3" data-x-placement="top-start">
-                          <h6 class="dropdown-header">Last 14 days</h6>
-                          <a class="dropdown-item" href="#">Last 21 days</a>
-                          <a class="dropdown-item" href="#">Last 28 days</a>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-arrow-forward-outline mr-2"></i>Export</button>
-                  </div>
-                  <div class="pr-1 mb-3 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-info-large-outline mr-2"></i>info</button>
-                  </div>
-                </div>
-              </div>
             </div>
             @php
                 // Variabel kontrol untuk menampilkan form atau tabel
@@ -514,24 +492,26 @@
                                         <th style="min-width: 130px">Trigliserida</th>
                                         <th style="min-width: 130px">Kolesterol HDL (Direct)</th>
                                         <th style="min-width: 130px">Kolesterol LDL (Direct)</th>
+                                        <th style="min-width: 130px">Gula Darah Puasa</th>
+                                        <th style="min-width: 130px">Gula Darah 2 Jam PP</th>
+                                        <th style="min-width: 130px">Anti HBs Ag</th>
                                         <th style="min-width: 130px">HBs Ag Kuantitatif</th>
                                         <th style="min-width: 130px">pH pada Urine</th>
+                                        <th style="min-width: 130px">Berat Jenis pada Urine</th>
                                         <th style="min-width: 130px">Nitrite pada Urine</th>
                                         <th style="min-width: 130px">Protein pada Urine</th>
                                         <th style="min-width: 130px">Reduksi pada Urine</th>
                                         <th style="min-width: 130px">Keton pada Urine</th>
                                         <th style="min-width: 130px">Urobilinogen pada Urine</th>
                                         <th style="min-width: 130px">Billirubin pada Urine</th>
+                                        <th style="min-width: 130px">Eritrosit pada Urine</th>
+                                        <th style="min-width: 130px">Leukosit pada Urine</th>
                                         <th style="min-width: 130px">Silinder pada Urine</th>
                                         <th style="min-width: 130px">Kristal pada Urine</th>
                                         <th style="min-width: 130px">Yeast pada Urine</th>
                                         <th style="min-width: 130px">Bakteri pada Urine</th>
-                                        <th style="min-width: 130px">Berat Jenis pada Urine</th>
-                                        <th style="min-width: 130px">Eritrosit pada Urine</th>
-                                        <th style="min-width: 130px">Leukosit pada Urine</th>
-                                        <th style="min-width: 130px">Gula Darah Puasa</th>
-                                        <th style="min-width: 130px">Gula Darah 2 Jam PP</th>
                                         <th style="min-width: 130px">Hasil</th>
+                                        <th style="min-width: 130px">Status</th>
                                         <th style="min-width: 180px">Action</th>
                                     </tr>
                                 </thead>
@@ -586,29 +566,33 @@
                                             <td>{{ $hasil->trigliserida }}</td>
                                             <td>{{ $hasil->{'kolestrol_HDL_(direct)'} }}</td>
                                             <td>{{ $hasil->{'kolestrol_LDL_(direct)'} }}</td>
-                                            <td>{{ $hasil->HBs_Ag_Kuantitatif ? 'Ya' : 'Tidak' }}</td>
+                                            <td>{{ $hasil->gula_darah_puasa }}</td>
+                                            <td>{{ $hasil->gula_darah_2_jam_pp }}</td>
+                                            <td>{{ $hasil->anti_HBs ? 'Positif' : 'Negatif' }}</td>
+                                            <td>{{ $hasil->HBs_Ag_Kuantitatif ? 'Positif' : 'Negatif' }}</td>
                                             <td>{{ $hasil->pH_pada_urine }}</td>
+                                            <td>{{ $hasil->berat_jenis_pada_urine }}</td>
                                             <td>{{ $hasil->nitrite_pada_urine ? 'Ya' : 'Tidak' }}</td>
                                             <td>{{ $hasil->protein_pada_urine ? 'Ya' : 'Tidak' }}</td>
                                             <td>{{ $hasil->reduksi_pada_urine }}</td>
                                             <td>{{ $hasil->ketone_pada_urine ? 'Ya' : 'Tidak' }}</td>
                                             <td>{{ $hasil->urobilinogen_pada_urine ? 'Ya' : 'Tidak' }}</td>
                                             <td>{{ $hasil->billirubin_pada_urine ? 'Ya' : 'Tidak' }}</td>
+                                            <td>{{ $hasil->eritrosit_pada_urine }}</td>
+                                            <td>{{ $hasil->lekosit_pada_urine }}</td>
                                             <td>{{ $hasil->silinder_pada_urine ? 'Ya' : 'Tidak' }}</td>
                                             <td>{{ $hasil->kristal_pada_urine ? 'Ya' : 'Tidak' }}</td>
                                             <td>{{ $hasil->yeast_pada_urine ? 'Ya' : 'Tidak' }}</td>
                                             <td>{{ $hasil->bakteri_pada_urine ? 'Ya' : 'Tidak' }}</td>
-                                            <td>{{ $hasil->berat_jenis_pada_urine }}</td>
-                                            <td>{{ $hasil->eritrosit_pada_urine }}</td>
-                                            <td>{{ $hasil->lekosit_pada_urine }}</td>
-                                            <td>{{ $hasil->gula_darah_puasa }}</td>
-                                            <td>{{ $hasil->gula_darah_2_jam_pp }}</td>
+
                                             <td>
                                                 @php
                                                     $hasilPemeriksaan = $hasilPrediksi->where('id_rekammedis', $hasil->id)->first();
                                                 @endphp
                                                 {{ $hasilPemeriksaan ? $hasilPemeriksaan->hasil_pemeriksaan : '-' }}
                                             </td>
+
+                                            <td>{{ $hasil->statusPemeriksaan->status ?? 'Not available' }}</td>
                                             <td>
                                                 <a href="{{ route('edit.hasil.pemeriksaan', $hasil->id) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px; min-width: 100%; margin-bottom: 7px;">
                                                     Edit

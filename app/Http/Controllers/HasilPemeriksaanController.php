@@ -261,5 +261,20 @@ class HasilPemeriksaanController extends Controller
         return redirect()->back()->with('success', 'Rekam medis berhasil diperbarui.');
     }
 
+    // app/Http/Controllers/HasilPemeriksaanController.php
+    public function detailRekamMedis($id)
+    {
+        // Ambil data berdasarkan id, sertakan relasi jika perlu
+        $hasil = HasilPemeriksaan::with('statusPemeriksaan')->find($id);
+
+        if (!$hasil) {
+            return response()->json(['error' => 'Data tidak ditemukan'], 404);
+        }
+
+        // Render view partial yang berisi detail data
+        return view('hasil_pemeriksaan.detail', compact('hasil'));
+    }
+
+
 
 }

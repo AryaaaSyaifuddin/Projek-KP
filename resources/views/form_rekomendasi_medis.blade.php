@@ -25,6 +25,43 @@
         select.form-control {
             min-height: 45px;
         }
+
+        /* Style untuk textarea */
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #4CAF50; /* Warna border */
+            border-radius: 10px; /* Sudut melengkung */
+            background-color: #f9f9f9; /* Warna latar belakang */
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+            color: #333; /* Warna teks */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bayangan */
+            transition: all 0.3s ease; /* Efek transisi */
+            resize: vertical; /* Memungkinkan resize vertikal */
+        }
+
+        /* Style saat textarea dihover */
+        textarea:hover {
+            border-color: #45a049; /* Warna border saat dihover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Bayangan lebih besar saat dihover */
+        }
+
+        /* Style saat textarea aktif (focus) */
+        textarea:focus {
+            border-color: #45a049; /* Warna border saat focus */
+            outline: none; /* Menghilangkan outline default */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Bayangan lebih besar saat focus */
+            background-color: #fff; /* Warna latar belakang saat focus */
+        }
+
+        /* Style untuk label */
+        .col-form-label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
     </style>
   </head>
   <body>
@@ -272,7 +309,6 @@
             <div class="collapse" id="dokter">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="/dokter">Data Dokter</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Dokter</a></li>
                 </ul>
             </div>
         </li>
@@ -285,7 +321,6 @@
             <div class="collapse" id="perawat">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="/perawat">Data Perawat</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Perawat</a></li>
                 </ul>
             </div>
         </li>
@@ -424,28 +459,7 @@
                 <h3 class="mb-0 font-weight-bold">{{ Auth::user()->nama ?? 'Anonim' }}</h3>
                 <p>Selamat satang di Sistem Manajemen Check Up</p>
               </div>
-              <div class="col-sm-6">
-                <div class="d-flex align-items-center justify-content-md-end">
-                  <div class="mb-3 mb-xl-0 pr-1">
-                      <div class="dropdown">
-                        <button class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="typcn typcn-calendar-outline mr-2"></i>Last 7 days
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3" data-x-placement="top-start">
-                          <h6 class="dropdown-header">Last 14 days</h6>
-                          <a class="dropdown-item" href="#">Last 21 days</a>
-                          <a class="dropdown-item" href="#">Last 28 days</a>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-arrow-forward-outline mr-2"></i>Export</button>
-                  </div>
-                  <div class="pr-1 mb-3 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-info-large-outline mr-2"></i>info</button>
-                  </div>
-                </div>
-              </div>
+
             </div>
 
 
@@ -994,23 +1008,25 @@
 
                 <!-- Tombol Submit -->
                 <button type="submit" class="btn btn-primary">Generate Rekom Medis</button>
-                <a href="/hasil-pemeriksaan" class="btn btn-secondary">Batal</a>
+                <a href="/rekomendasi_medis" class="btn btn-secondary">Batal</a>
             </form>
 
             <!-- Bagian Hasil Pemeriksaan -->
-            <form action="{{ route('simpan.hasil.pemeriksaan') }}" method="POST">
+            <form action="{{ route('simpan.hasil.rekommedis') }}" method="POST">
                 @csrf
                 <div class="form-group row">
-                    <label for="hasil_pemeriksaan" class="col-sm-4 col-form-label">Hasil Pemeriksaan:</label>
+                    <label for="hasil_pemeriksaan" class="col-sm-3 col-form-label">Diagnosa Dan Rekomendasi Medis :</label>
                     <div class="col-sm-8">
                         <input type="hidden" name="id_rekammedis" value="{{ $hasilPemeriksaan->id }}">
-                        <textarea name="hasil_pemeriksaan" id="hasil_pemeriksaan" rows="10" cols="150" style="font-size: 20px;font-family: monospace;max-width: 100%;">{{ session('successrekom') }} </textarea>
+                        <textarea name="diagnosa" id="diagnosa" rows="8" cols="150" style="font-size: 20px;font-family: monospace;max-width: 100%;">{{ session('diagnosisMessage') }}</textarea>
+                        <textarea name="rekom_medis" id="rekom_medis" rows="12" cols="150" style="font-size: 20px;font-family: monospace;max-width: 100%;">{{ session('recommendationMessage') }}</textarea>
                     </div>
                 </div>
-                @if (session('success'))
+                @if (session('successrekom'))
                 <button type="submit" class="btn btn-primary">Simpan Hasil</button>
                 @endif
             </form>
+
 
                 @if (session('error'))
                 <div class="alert alert-danger">
