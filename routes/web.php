@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\adminController;
-use App\Http\Controllers\loginController;
-use App\Http\Controllers\pasienController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PasienController;
 use App\Http\Middleware\PerawatMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +24,7 @@ Route::middleware([RedirectIfLoggedIn::class])->group(function () {
 
     Route::get("/", [ViewController::class, "showlogin"])->name('login');
 
-    Route::post("/", [loginController::class, 'loginPost'])->name('login.post');
+    Route::post("/", [LoginController::class, 'loginPost'])->name('login.post');
 
     Route::get("/register", [ViewController::class, "showRegister"]);
 
@@ -41,7 +41,7 @@ Route::middleware([UsersMiddleware::class])->group(function () {
 
     // ==========================================================================================================================================================
 
-    Route::post('/logout', [loginController::class, 'logout'])->name('logout');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/dashboard', [viewController::class, 'dashboard']);
 
@@ -79,7 +79,10 @@ Route::middleware([UsersMiddleware::class])->group(function () {
 
     Route::get('/pasien/rekam-medis/edit/{id}', [HasilPemeriksaanController::class, 'editRekamMedis'])->name('edit.hasil.pemeriksaan');
 
-    Route::get('/pasien/rekam-medis/detail/{id}', [HasilPemeriksaanController::class, 'detailRekamMedis'])->name('hasil.pemeriksaan.detail');
+    Route::get('/hasilpemeriksaan/detail/{id}', [HasilPemeriksaanController::class, 'detailRekamMedis'])->name('hasil.pemeriksaan.detail');
+
+    Route::get('/hasilpemeriksaan/export-pdf/{id}', [HasilPemeriksaanController::class, 'exportPdf'])->name('hasilpemeriksaan.exportPdf');
+
 
     // ==========================================================================================================================================================
 
@@ -110,6 +113,8 @@ Route::middleware([UsersMiddleware::class])->group(function () {
     Route::post('/rekomendasi-medis/simpan', [RekomendasiMedisController::class, 'store'])->name('simpan.hasil.rekommedis')->middleware(DokMinMiddleware::class);
 
     Route::get('/rekomendasimedis/detail/{id}', [RekomendasiMedisController::class, 'detail'])->name('rekomendasimedis.detail')->middleware(DokMinMiddleware::class);
+
+    Route::delete('/rekomendasimedis/{id}', [RekomendasiMedisController::class, 'destroy'])->name('rekomendasimedis.destroy');
 
 
     // ==========================================================================================================================================================

@@ -441,6 +441,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Data Pasien</h4>
                         <div class="table-responsive pt-3">
+
                             <!-- Modal Detail (Atas-Bawah) dengan Format Baris -->
                             <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 600px;">
@@ -524,10 +525,21 @@
                                                     Generate Rekom Medis
                                                     <i class="typcn typcn-edit btn-icon-append"></i>
                                                 </a>
+
                                                 <button class="btn btn-info btn-icon-text" style="padding: 8px 8px; margin-bottom: 7px;" onclick="viewDetail({{ $hasil->id }})">
                                                     View Detail
                                                     <i class="typcn typcn-eye btn-icon-append"></i>
                                                 </button>
+
+                                                <form action="{{ route('rekomendasimedis.destroy', $hasil->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-icon-text" style="padding: 8px 8px; margin-bottom: 7px;"
+                                                            onclick="return confirm('Apakah Anda yakin ingin menghapus data rekomendasi medis ini?')">
+                                                        Delete
+                                                        <i class="typcn typcn-delete-outline btn-icon-append"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -551,134 +563,7 @@
                 });
                 </script>
             @endif
-            <!-- Tampilan Form Create -->
-            <div class="col-12 grid-margin" style="margin-top: 15px;padding: 0px;">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Tambah Data Pasien</h4>
-                        <!-- Form menggunakan method POST untuk kirim data ke server -->
-                        <form method="POST" action="{{ route('pasien.store') }}" class="form-sample">
-                            @csrf
-                            <p class="card-description">Informasi Pasien</p>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nama Lengkap</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nama_panjang" placeholder="Masukkan nama lengkap" value="{{ old('nama_panjang') }}"required>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
-                                        <div class="col-sm-9">
-                                            <input type="date" class="form-control" name="tanggal_lahir" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Jenis Kelamin</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" name="jenis_kelamin" required>
-                                                <option value="Laki-laki">Laki-laki</option>
-                                                <option value="Perempuan">Perempuan</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nomor HP</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nomor_hp" placeholder="Masukkan nomor HP" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Email</label>
-                                        <div class="col-sm-9">
-                                            <input type="email" class="form-control" name="email" placeholder="Masukkan email (opsional)">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Pekerjaan</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="pekerjaan" placeholder="Masukkan pekerjaan">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Alamat</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="alamat" placeholder="Masukkan alamat lengkap">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nomor Identitas (NIK/KTP)</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="nomor_identitas" placeholder="Masukkan nomor identitas (NIK/KTP)" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Input Tanggal Pemeriksaan -->
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Tanggal Pemeriksaan</label>
-                                        <div class="col-sm-9">
-                                            <input type="date" class="form-control" name="tanggal_pemeriksaan" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Input Waktu Pemeriksaan -->
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Waktu Pemeriksaan</label>
-                                        <div class="col-sm-9">
-                                            <input type="time" class="form-control" name="waktu_pemeriksaan" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <input type="hidden" name="id_perawat" value="{{ Auth::user()->id_user }}">
-
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Dokter</label>
-                                        <div class="col-sm-9" style="display: flex; padding: 8px 15px;">
-                                            <select class="form-control" name="id_dokter" required>
-                                                <option value="" disabled selected>Pilih Dokter</option>
-                                                @foreach ($dokterList as $dokter)
-                                                    <option value="{{ $dokter->id_user }}">{{ $dokter->nama }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <button type="submit" class="btn btn-primary" style="margin-right: 2%;">Simpan</button>
-                            <a href="{{ route('cancelForm') }}" class="btn btn-secondary">Batal</a>
-                        </form>
-                    </div>
-                </div>
-            </div>
         @endif
 
           <!-- content-wrapper ends -->

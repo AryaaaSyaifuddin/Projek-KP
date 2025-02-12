@@ -13,7 +13,7 @@ class StatusPemeriksaanSeeder extends Seeder
     public function run(): void
     {
 
-        for ($id = 29; $id <= 34; $id++) {
+        for ($id = 35; $id <= 39; $id++) {
             StatusPemeriksaan::create([
                 'id_hasil_pemeriksaan' => $id,
                 'status'               => 'Menunggu Persetujuan'

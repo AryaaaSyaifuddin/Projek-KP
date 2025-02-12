@@ -27,8 +27,9 @@ class PasienController extends Controller
             ->select('pasien.*', 'perawat.nama as nama_perawat', 'dokter.nama as nama_dokter')
             ->orderByRaw("
                 CASE
-                    WHEN (pasien.tanggal_pemeriksaan || ' ' || pasien.waktu_pemeriksaan)::timestamp >= NOW() THEN 0
-                    ELSE 1
+                    WHEN pasien.tanggal_pemeriksaan = CURRENT_DATE THEN 0  -- Jika hari ini, tetap di atas
+                    WHEN (pasien.tanggal_pemeriksaan || ' ' || pasien.waktu_pemeriksaan)::timestamp >= NOW() THEN 1
+                    ELSE 2
                 END
             ")
             ->orderBy('pasien.tanggal_pemeriksaan', 'asc')

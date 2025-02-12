@@ -713,5 +713,20 @@ class RekomendasiMedisController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        // Cari data rekomendasi medis berdasarkan id rekam medis (hasil_pemeriksaan_id)
+        $rekomMedis = RekomendasiMedis::where('hasil_pemeriksaan_id', $id)->first();
+
+        if (!$rekomMedis) {
+            return redirect()->back()->with('error', 'Data rekomendasi medis tidak ditemukan!');
+        }
+
+        // Hapus data rekomendasi medis tersebut
+        $rekomMedis->delete();
+
+        return redirect()->back()->with('success', 'Data rekomendasi medis berhasil dihapus!');
+    }
+
 
 }

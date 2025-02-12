@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use App\Models\HasilPemeriksaan;
 use App\Models\Pasien;
 
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+
+
+
 class HasilPemeriksaanController extends Controller
 {
     /**
@@ -264,16 +268,40 @@ class HasilPemeriksaanController extends Controller
     // app/Http/Controllers/HasilPemeriksaanController.php
     public function detailRekamMedis($id)
     {
-        // Ambil data berdasarkan id, sertakan relasi jika perlu
-        $hasil = HasilPemeriksaan::with('statusPemeriksaan')->find($id);
+        // Ambil data hasil pemeriksaan beserta relasi prediksinya
+        $hasil = HasilPemeriksaan::with('prediksi')->find($id);
 
-        if (!$hasil) {
-            return response()->json(['error' => 'Data tidak ditemukan'], 404);
+        if ($hasil) {
+            return response()->json([
+                'success'           => true,
+                'data'              => $hasil,
+                // Ambil hasil pemeriksaan dari relasi prediksi
+                'hasil_pemeriksaan' => $hasil->prediksi ? $hasil->prediksi->hasil_pemeriksaan : '-'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data tidak ditemukan'
+            ]);
         }
-
-        // Render view partial yang berisi detail data
-        return view('hasil_pemeriksaan.detail', compact('hasil'));
     }
+
+    public function exportPdf($id)
+    {
+        $hasil = HasilPemeriksaan::with('prediksi', 'patient', 'statusPemeriksaan', 'rekomMedis')->find($id);
+        if (!$hasil) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+        // Misal, jika Anda ingin mengoper koleksi hasil pemeriksaan (contoh: berdasarkan pasien atau kriteria lain)
+        $hasilPemeriksaan = HasilPemeriksaan::with('prediksi', 'patient', 'statusPemeriksaan', 'rekomMedis')
+                                ->where('id_pasien', $hasil->id_pasien)
+                                ->get();
+
+        $pasien = $hasil->patient;
+        $pdf = PDF::loadView('pdf.hasil_pemeriksaan', compact('hasil', 'pasien', 'hasilPemeriksaan'));
+        return $pdf->download('Rekam Medis Dari - ' . $pasien->nama_panjang . '.pdf');
+    }
+
 
 
 

@@ -522,6 +522,14 @@
                                                     Rekam Medis
                                                     <i class="typcn typcn-plus btn-icon-append"></i>
                                                 </a>
+
+                                                @if($pasien->hasilPemeriksaan)
+                                                    <a href="{{ route('hasilpemeriksaan.exportPdf', $pasien->hasilPemeriksaan->id) }}" class="btn btn-success btn-icon-text" style="padding: 8px 8px; margin-top: 4PX; width: 80%;">
+                                                        Export PDF
+                                                        <i class="typcn typcn-document-text btn-icon-append"></i>
+                                                    </a>
+                                                @endif
+
                                             </td>
 
                                         </tr>

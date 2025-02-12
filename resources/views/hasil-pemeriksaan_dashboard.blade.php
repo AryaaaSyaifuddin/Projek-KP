@@ -12,6 +12,31 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome (untuk ikon) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- jQuery dan Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        .stamp {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-55deg);
+        font-size: 7em;
+        color: rgba(255, 0, 0, 0.2); /* Contoh: warna merah dengan transparansi */
+        pointer-events: none;  /* Agar stamp tidak mengganggu interaksi modal */
+        white-space: nowrap;
+        z-index: 9999;
+        border: solid;
+        padding: 14px 50px;
+        }
+
+    </style>
     <!-- endinject -->
     <!-- plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -440,6 +465,79 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Data Pasien</h4>
+
+                        <!-- Modal Detail Hasil Pemeriksaan -->
+                        <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 900px;">
+                            <!-- Kontainer modal-content diberi posisi relative agar stamp dapat diposisikan absolut di dalamnya -->
+                            <div class="modal-content shadow-lg border-0" style="font-family: monospace; position: relative;">
+
+                                <!-- Stempel Besar (Stamp) -->
+                                <div id="stampResult" class="stamp"></div>
+
+                                <!-- Header Modal -->
+                                <div class="modal-header bg-primary text-white">
+                                <h5 class="modal-title" id="detailModalLabel">
+                                    <i class="fas fa-notes-medical"></i> Detail Hasil Pemeriksaan
+                                </h5>
+                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Tutup">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+
+                                <!-- Body Modal -->
+                                <div class="modal-body">
+                                <!-- 1. Identitas & Data Demografis -->
+                                <div class="mb-3">
+                                    <div style="font-weight: bold;">Identitas & Data Demografis</div>
+                                    <div id="modalIdentitas"></div>
+                                </div>
+                                <!-- 2. Tanda Vital & Antropometri -->
+                                <div class="mb-3">
+                                    <div style="font-weight: bold;">Tanda Vital & Antropometri</div>
+                                    <div id="modalVital"></div>
+                                </div>
+                                <!-- 3. Riwayat Penyakit / Komorbiditas -->
+                                <div class="mb-3">
+                                    <div style="font-weight: bold;">Riwayat Penyakit / Komorbiditas</div>
+                                    <div id="modalRiwayat"></div>
+                                </div>
+                                <!-- 4. Tes Fungsional / Imaging -->
+                                <div class="mb-3">
+                                    <div style="font-weight: bold;">Tes Fungsional / Imaging</div>
+                                    <div id="modalFungsional"></div>
+                                </div>
+                                <!-- 5. Pemeriksaan Fisik Tambahan -->
+                                <div class="mb-3">
+                                    <div style="font-weight: bold;">Pemeriksaan Fisik Tambahan</div>
+                                    <div id="modalPemeriksaanFisik"></div>
+                                </div>
+                                <!-- 6. Pemeriksaan Darah (Hematologi & Biokimia) -->
+                                <div class="mb-3">
+                                    <div style="font-weight: bold;">Pemeriksaan Darah (Hematologi & Biokimia)</div>
+                                    <div id="modalDarah"></div>
+                                </div>
+                                <!-- 7. Pemeriksaan Urine -->
+                                <div class="mb-3">
+                                    <div style="font-weight: bold;">Pemeriksaan Urine</div>
+                                    <div id="modalUrine"></div>
+                                </div>
+                                </div>
+
+                                <!-- Footer Modal -->
+                                <div class="modal-footer border-top-0">
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+                                    <i class="fas fa-times-circle"></i> Tutup
+                                </button>
+                                </div>
+
+                            </div>
+                            </div>
+                        </div>
+
+
+
+
                         <div class="table-responsive pt-3">
                             <table class="table table-bordered" id="dataTable">
                                 <thead>
@@ -599,6 +697,11 @@
                                                     <i class="typcn typcn-edit btn-icon-append"></i>
                                                 </a>
 
+                                                <button class="btn btn-info btn-icon-text" style="padding: 8px 8px; margin-bottom: 7px;min-width: 100%" onclick="viewDetail({{ $hasil->id }})">
+                                                    View Detail
+                                                    <i class="typcn typcn-eye btn-icon-append"></i>
+                                                </button>
+
                                                 @if($hasilPemeriksaan)
                                                     <a href="{{ route('edit.hasil.prediksi', $hasilPemeriksaan->id) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px; min-width: 100%; margin-bottom: 7px;">
                                                         Edit Hasil
@@ -613,6 +716,7 @@
                                                             <i class="typcn typcn-trash btn-icon-append"></i>
                                                         </button>
                                                     </form>
+
                                                 @else
                                                     <a href="{{ route('hasilPemeriksaan.predict', $hasil->id) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px; min-width: 100%;">
                                                         Prediction
@@ -846,6 +950,129 @@
             });
         });
     </script>
+    <script>
+        function viewDetail(id) {
+        // Bersihkan konten modal dan stamp
+        $('#modalIdentitas, #modalVital, #modalRiwayat, #modalFungsional, #modalPemeriksaanFisik, #modalDarah, #modalUrine').html('');
+        $('#stampResult').text(''); // reset stamp
+
+        $.ajax({
+            url: '/hasilpemeriksaan/detail/' + id, // Pastikan route ini sudah didefinisikan di backend
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+            if(response.success) {
+                var data = response.data;
+
+                // 1. Identitas & Data Demografis
+                var identitas = 'ID: ' + data.id + '<br>' +
+                                'ID Pasien: ' + data.id_pasien + '<br>' +
+                                'Gender: ' + data.gender + '<br>' +
+                                'Age: ' + data.Age;
+                $('#modalIdentitas').html(identitas);
+
+                // 2. Tanda Vital & Antropometri
+                var vital = 'Height: ' + data.height + '<br>' +
+                            'Weight: ' + data.weight + '<br>' +
+                            'BMI: ' + data.BMI + ' (' + data.BMICat + ')<br>' +
+                            'Hipertensi Kategori: ' + data.Hipertensi_Kategori + '<br>' +
+                            'Sistolik: ' + data.Sistolik + ' - Diastolik: ' + data.Diastolik + '<br>' +
+                            'Nadi: ' + data['Nadi(kali/menit)'] + '<br>' +
+                            'Frekuensi Napas: ' + data['FrekuensiNapas(kali/menit)'] + '<br>' +
+                            'Tingkatan Kesadaran: ' + data.Tingkatan_Kesadaran;
+                $('#modalVital').html(vital);
+
+                // 3. Riwayat Penyakit / Komorbiditas
+                var riwayat = 'Tuberkulosis: ' + (data.tuberkulosis ? 'Tidak' : 'Ya') + '<br>' +
+                            'Penyakit Jantung: ' + (data.penyakit_jantung ? 'Tidak' : 'Ya') + '<br>' +
+                            'Hipertensi: ' + (data.hipertensi ? 'Tidak' : 'Ya') + '<br>' +
+                            'Diabetes Melitus: ' + (data.diabetes_melitus ? 'Tidak' : 'Ya') + '<br>' +
+                            'Gangguan Jiwa: ' + (data.gangguan_jiwa ? 'Tidak' : 'Ya') + '<br>' +
+                            'Trauma pada Kepala: ' + (data.trauma_pada_kepala ? 'Tidak' : 'Ya') + '<br>' +
+                            'Hepatitis: ' + (data.hepatitis ? 'Tidak' : 'Ya');
+                $('#modalRiwayat').html(riwayat);
+
+                // 4. Tes Fungsional / Imaging
+                var fungsional = 'Spirometri: ' + (data.Spirometri ? 'Tidak Normal' : 'Normal') + '<br>' +
+                                'Treadmil: ' + (data.Treadmil ? 'Tidak Normal' : 'Normal') + '<br>' +
+                                'Audiometri: ' + (data.Audiometri ? 'Tidak Normal' : 'Normal') + '<br>' +
+                                'Foto Thorax: ' + (data.foto_thorax ? 'Tidak Normal' : 'Normal');
+                $('#modalFungsional').html(fungsional);
+
+                // 5. Pemeriksaan Fisik Tambahan
+                var fisik = 'Buta Warna: ' + (data.Buta_Warna ? 'Ya' : 'Tidak') + '<br>' +
+                            'Jantung: ' + (data.Jantung ? 'Ya' : 'Tidak');
+                $('#modalPemeriksaanFisik').html(fisik);
+
+                // 6. Pemeriksaan Darah (Hematologi & Biokimia)
+                var darah = 'Hemoglobin: ' + data.hemoglobin + '<br>' +
+                            'Leukosit: ' + data.leukosit + '<br>' +
+                            'Eritrosit: ' + data.eritrosit + '<br>' +
+                            'LED: ' + data.LED + '<br>' +
+                            'Eosinofil: ' + data.eosinofil + '<br>' +
+                            'Basofil: ' + data.basofil + '<br>' +
+                            'Neutrofil: ' + data.neutrofil + '<br>' +
+                            'Lymphosit: ' + data.lymphosit + '<br>' +
+                            'Monosit: ' + data.monosit + '<br>' +
+                            'Trombosit: ' + data.trombosit + '<br>' +
+                            'Hematokrit: ' + data.hematokrit + '<br>' +
+                            'MCV: ' + data.MCV + '<br>' +
+                            'SGOT: ' + data.SGOT + '<br>' +
+                            'SGPT: ' + data.SGPT + '<br>' +
+                            'BUN: ' + data.BUN + '<br>' +
+                            'Kreatinin: ' + data.kreatinin + '<br>' +
+                            'Asam Urat: ' + data.asam_urat + '<br>' +
+                            'Kolestrol Total: ' + data.kolestrol_total + '<br>' +
+                            'Trigliserida: ' + data.trigliserida + '<br>' +
+                            'Kolestrol HDL (Direct): ' + data['kolestrol_HDL_(direct)'] + '<br>' +
+                            'Kolestrol LDL (Direct): ' + data['kolestrol_LDL_(direct)'] + '<br>' +
+                            'Gula Darah Puasa: ' + data.gula_darah_puasa + '<br>' +
+                            'Gula Darah 2 Jam PP: ' + data.gula_darah_2_jam_pp + '<br>' +
+                            'Anti HBs: ' + (data.anti_HBs ? 'Positif' : 'Negatif') + '<br>' +
+                            'HBs Ag Kuantitatif: ' + (data.HBs_Ag_Kuantitatif ? 'Positif' : 'Negatif');
+                $('#modalDarah').html(darah);
+
+                // 7. Pemeriksaan Urine
+                var urine = 'pH pada Urine: ' + data.pH_pada_urine + '<br>' +
+                            'Berat Jenis pada Urine: ' + data.berat_jenis_pada_urine + '<br>' +
+                            'Nitrite pada Urine: ' + (data.nitrite_pada_urine ? 'Ya' : 'Tidak') + '<br>' +
+                            'Protein pada Urine: ' + (data.protein_pada_urine ? 'Ya' : 'Tidak') + '<br>' +
+                            'Reduksi pada Urine: ' + data.reduksi_pada_urine + '<br>' +
+                            'Keton pada Urine: ' + (data.ketone_pada_urine ? 'Ya' : 'Tidak') + '<br>' +
+                            'Urobilinogen pada Urine: ' + (data.urobilinogen_pada_urine ? 'Ya' : 'Tidak') + '<br>' +
+                            'Billirubin pada Urine: ' + (data.billirubin_pada_urine ? 'Ya' : 'Tidak') + '<br>' +
+                            'Eritrosit pada Urine: ' + data.eritrosit_pada_urine + '<br>' +
+                            'Lekosit pada Urine: ' + data.lekosit_pada_urine + '<br>' +
+                            'Silinder pada Urine: ' + (data.silinder_pada_urine ? 'Ya' : 'Tidak') + '<br>' +
+                            'Kristal pada Urine: ' + (data.kristal_pada_urine ? 'Ya' : 'Tidak') + '<br>' +
+                            'Yeast pada Urine: ' + (data.yeast_pada_urine ? 'Ya' : 'Tidak') + '<br>' +
+                            'Bakteri pada Urine: ' + (data.bakteri_pada_urine ? 'Ya' : 'Tidak');
+                $('#modalUrine').html(urine);
+
+                // Contoh potongan script AJAX
+                if (response.hasil_pemeriksaan && response.hasil_pemeriksaan !== '-') {
+                $('#stampResult').text(response.hasil_pemeriksaan);
+                } else {
+                $('#stampResult').text('Belum Ada Hasil');
+                }
+
+            } else {
+                $('#modalIdentitas, #modalVital, #modalRiwayat, #modalFungsional, #modalPemeriksaanFisik, #modalDarah, #modalUrine').html('Data tidak ditemukan');
+                $('#stampResult').text('');
+            }
+            // Tampilkan modal setelah data diisi
+            $('#detailModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+            console.error('Error fetching detail:', error);
+            $('#modalIdentitas, #modalVital, #modalRiwayat, #modalFungsional, #modalPemeriksaanFisik, #modalDarah, #modalUrine').html('Error fetching data');
+            $('#stampResult').text('');
+            $('#detailModal').modal('show');
+            }
+        });
+        }
+    </script>
+
     <script src="js/off-canvas.js"></script>
     <script src="js/hoverable-collapse.js"></script>
     <script src="js/template.js"></script>

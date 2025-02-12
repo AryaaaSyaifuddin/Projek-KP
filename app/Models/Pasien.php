@@ -47,5 +47,10 @@ class Pasien extends Model
         return $this->belongsTo(Users::class, 'id_dokter', 'id_user');
     }
 
-    
+    public function hasilPemeriksaan()
+    {
+        return $this->hasOne(HasilPemeriksaan::class, 'id_pasien');
+    }
+
+
 }
