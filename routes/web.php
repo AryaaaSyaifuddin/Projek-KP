@@ -83,6 +83,7 @@ Route::middleware([UsersMiddleware::class])->group(function () {
 
     Route::get('/hasilpemeriksaan/export-pdf/{id}', [HasilPemeriksaanController::class, 'exportPdf'])->name('hasilpemeriksaan.exportPdf');
 
+    Route::delete('/hasil-pemeriksaan/{id}', [HasilPemeriksaanController::class, 'destroy'])->name('hasil-pemeriksaan.destroy');
 
     // ==========================================================================================================================================================
 

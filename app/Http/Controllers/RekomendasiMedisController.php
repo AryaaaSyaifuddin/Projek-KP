@@ -652,8 +652,8 @@ class RekomendasiMedisController extends Controller
             // ---------------------------
             // Gabungkan diagnosis dan rekomendasi
             if (empty($diagnoses)) {
-                $diagnosisMessage = "Semua parameter dalam batas normal.";
-                $recommendationMessage = "Tidak ada rekomendasi khusus.";
+                $diagnosisMessage = "Normal.";
+                $recommendationMessage = "Tidak ada rekomendasi khusus, tetap jaga pola hidup yang sehat <3.";
             } else {
                 $diagnosisMessage = implode(", ", $diagnoses);
                 $recommendationMessage = implode(" ", $recommendations);
@@ -689,7 +689,7 @@ class RekomendasiMedisController extends Controller
             'rekomendasi'          => $validatedData['rekom_medis'],
         ]);
 
-        return redirect()->back()->with('success', 'Data rekomendasi medis berhasil disimpan!');
+        return redirect('/rekomendasi_medis')->with('success', 'Data rekomendasi medis berhasil disimpan!');
     }
 
     public function detail($id)

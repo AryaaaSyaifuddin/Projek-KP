@@ -162,9 +162,6 @@
   </style>
 </head>
 <body>
-  <!-- Stempel (jika diperlukan) -->
-  <div class="page-container">
-    <!-- Header dengan logo dan informasi RS -->
     <header>
       <img src="img/favicon.jpg" alt="Logo">
       <p>Rumah Sakit Semen Gresik</p>
@@ -176,6 +173,66 @@
     <div class="hospital-info">
       <h2>Dokumen Rekam Medis Pasien {{ $pasien->nama_panjang }}</h2>
     </div>
+
+    @php
+    $normalParams = [
+        // Pemeriksaan Darah (Hematologi & Biokimia)
+        'hemoglobin'         => 'Wanita: 8 - 16,5 | Pria: 10 - 18',
+        'leukosit'           => '4 ribu – 11 ribu',
+        'eritrosit'          => 'Wanita: 4 juta - 5 juta | Pria: 4,5 juta – 5,5 juta',
+        'led'                => 'Wanita: 0 – 20 | Pria: 0 – 15',
+        'eosinofil'          => '0 – 1',
+        'basofil'            => '0 - 1',
+        'neutrofil'          => '50 – 70',
+        'lymphosit'          => '25 – 33',
+        'monosit'            => '3 – 8',
+        'trombosit'          => '150000 – 400000',
+        'hematokrit'         => 'Wanita: 37 – 45 | Pria: 40 – 50',
+        'mcv'                => '82 – 92',
+        'sgot'               => 'Wanita: < 31 | Pria: < 37',
+        'sgpt'               => 'Wanita: < 32 | Pria: < 42',
+        'bun'                => '5 – 23,5',
+        'kreatinin'          => 'Wanita: 0,7 – 1,1 | Pria: 0,8 – 1,4',
+        'asam_urat'          => 'Wanita: 2,6 – 6 | Pria: 3,5 – 7,2',
+        'kolestrol_total'    => '< 200',
+        'trigliserida'       => '< 200',
+        'kolestrol_hdl'      => '> 35',
+        'kolestrol_ldl'      => '< 115',
+        'gula_darah_puasa'   => '< 126',
+        'gula_darah_2_jam_pp'=> '< 140',
+
+        // Pemeriksaan Urine
+        'ph_urine'           => '5 – 8',
+        'berat_jenis_urine'  => '1,005 – 1,030',
+        'eritrosit_urine'    => '0 – 2',
+        'lekosit_urine'      => '0 – 5',
+    ];
+    @endphp
+
+    @php
+    function getPerawatName($id) {
+        $names = [
+            1 => "Ayu Lestari",
+            2 => "Budi Santoso",
+            3 => "Citra Dewi",
+            4 => "Rudi Prasetyo",
+            5 => "Indah Sari"
+        ];
+        return $names[$id] ?? 'Tidak Diketahui';
+    }
+
+    function getDokterName($id) {
+        $names = [
+            6 => "Dr. Andi Kusuma",
+            7 => "Dr. Siti Nurhaliza",
+            8 => "Dr. Fahmi Wijaya",
+            9 => "Dr. Rina Handayani",
+            10 => "Dr. Wahyu Saputra"
+        ];
+        return $names[$id] ?? 'Tidak Diketahui';
+    }
+    @endphp
+
 
     <!-- Data Pasien di bawah Header -->
     <div class="patient-info">
@@ -195,11 +252,21 @@
           <td>{{ $pasien->jenis_kelamin }}</td>
           <td>{{ $pasien->pekerjaan }}</td>
           <td>{{ $pasien->alamat }}</td>
-          <td>{{ $pasien->nama_perawat ?? 'Tidak Diketahui' }}</td>
-          <td>{{ $pasien->nama_dokter ?? 'Tidak Diketahui' }}</td>
+          <td>{{ getPerawatName($pasien->id_perawat) }}</td>
+          <td>{{ getDokterName($pasien->id_dokter) }}</td>
         </tr>
       </table>
     </div>
+
+    @php
+    function getGenderDescription($value) {
+        $descriptions = [
+            1 => 'Laki-laki',
+            2 => 'Perempuan',
+        ];
+        return $descriptions[$value] ?? 'Tidak Diketahui';
+    }
+    @endphp
 
     <!-- Section 1: Identitas & Data Demografis -->
     <div class="section">
@@ -219,7 +286,7 @@
         </tr>
         <tr>
           <th>Gender</th>
-          <td>{{ $hasil->gender }}</td>
+          <td>{{ getGenderDescription($hasil->gender) }}</td>
         </tr>
         <tr>
           <th>Usia</th>
@@ -227,6 +294,43 @@
         </tr>
       </table>
     </div>
+
+    @php
+    function getBMIDescription($value) {
+        $descriptions = [
+            0 => 'Normal',
+            1 => 'Obesitas I',
+            2 => 'Obesitas II',
+            3 => 'Overweight',
+            4 => 'Underweight',
+            5 => 'nan',
+        ];
+        return $descriptions[$value] ?? 'Tidak Diketahui';
+    }
+
+    function getHipertensiDescription($value) {
+        $descriptions = [
+            0 => 'Hipertensi Tingkat 1',
+            1 => 'Hipertensi Tingkat 2',
+            2 => 'Normal',
+            3 => 'Pra-hipertensi',
+        ];
+        return $descriptions[$value] ?? 'Tidak Diketahui';
+    }
+
+    function getKesadaranDescription($value) {
+        $descriptions = [
+            0 => 'apatis',
+            1 => 'compos mentis',
+            2 => 'delirium',
+            3 => 'koma',
+            4 => 'semi koma',
+            5 => 'somnolen',
+            6 => 'sopor',
+        ];
+        return $descriptions[$value] ?? 'Tidak Diketahui';
+    }
+    @endphp
 
     <!-- Section 2: Tanda Vital & Antropometri -->
     <div class="section">
@@ -242,11 +346,11 @@
         </tr>
         <tr>
           <th>BMI</th>
-          <td>{{ $hasil->BMI }} ({{ $hasil->BMICat }})</td>
+          <td>{{ $hasil->BMI }} ({{ getBMIDescription($hasil->BMICat) }})</td>
         </tr>
         <tr>
           <th>Kategori Hipertensi</th>
-          <td>{{ $hasil->Hipertensi_Kategori }}</td>
+          <td>{{ getHipertensiDescription($hasil->Hipertensi_Kategori) }}</td>
         </tr>
         <tr>
           <th>Sistolik / Diastolik</th>
@@ -262,7 +366,7 @@
         </tr>
         <tr>
           <th>Tingkatan Kesadaran</th>
-          <td>{{ $hasil->Tingkatan_Kesadaran }}</td>
+          <td>{{ getKesadaranDescription($hasil->Tingkatan_Kesadaran) }}</td>
         </tr>
       </table>
     </div>
@@ -340,175 +444,233 @@
       </table>
     </div>
 
-    <!-- Section 6: Pemeriksaan Darah (Hematologi &amp; Biokimia) -->
+    <!-- Section 6: Pemeriksaan Darah (Hematologi & Biokimia) -->
     <div class="section">
-      <div class="section-title">Pemeriksaan Darah (Hematologi &amp; Biokimia)</div>
-      <table class="data-table">
-        <tr>
-          <th>Hemoglobin</th>
-          <td>{{ $hasil->hemoglobin }}</td>
-        </tr>
-        <tr>
-          <th>Leukosit</th>
-          <td>{{ $hasil->leukosit }}</td>
-        </tr>
-        <tr>
-          <th>Eritrosit</th>
-          <td>{{ $hasil->eritrosit }}</td>
-        </tr>
-        <tr>
-          <th>LED</th>
-          <td>{{ $hasil->LED }}</td>
-        </tr>
-        <tr>
-          <th>Eosinofil</th>
-          <td>{{ $hasil->eosinofil }}</td>
-        </tr>
-        <tr>
-          <th>Basofil</th>
-          <td>{{ $hasil->basofil }}</td>
-        </tr>
-        <tr>
-          <th>Neutrofil</th>
-          <td>{{ $hasil->neutrofil }}</td>
-        </tr>
-        <tr>
-          <th>Lymphosit</th>
-          <td>{{ $hasil->lymphosit }}</td>
-        </tr>
-        <tr>
-          <th>Monosit</th>
-          <td>{{ $hasil->monosit }}</td>
-        </tr>
-        <tr>
-          <th>Trombosit</th>
-          <td>{{ $hasil->trombosit }}</td>
-        </tr>
-        <tr>
-          <th>Hematokrit</th>
-          <td>{{ $hasil->hematokrit }}</td>
-        </tr>
-        <tr>
-          <th>MCV</th>
-          <td>{{ $hasil->MCV }}</td>
-        </tr>
-        <tr>
-          <th>SGOT</th>
-          <td>{{ $hasil->SGOT }}</td>
-        </tr>
-        <tr>
-          <th>SGPT</th>
-          <td>{{ $hasil->SGPT }}</td>
-        </tr>
-        <tr>
-          <th>BUN</th>
-          <td>{{ $hasil->BUN }}</td>
-        </tr>
-        <tr>
-          <th>Kreatinin</th>
-          <td>{{ $hasil->kreatinin }}</td>
-        </tr>
-        <tr>
-          <th>Asam Urat</th>
-          <td>{{ $hasil->asam_urat }}</td>
-        </tr>
-        <tr>
-          <th>Kolestrol Total</th>
-          <td>{{ $hasil->kolestrol_total }}</td>
-        </tr>
-        <tr>
-          <th>Trigliserida</th>
-          <td>{{ $hasil->trigliserida }}</td>
-        </tr>
-        <tr>
-          <th>Kolestrol HDL (Direct)</th>
-          <td>{{ $hasil->{'kolestrol_HDL_(direct)'} }}</td>
-        </tr>
-        <tr>
-          <th>Kolestrol LDL (Direct)</th>
-          <td>{{ $hasil->{'kolestrol_LDL_(direct)'} }}</td>
-        </tr>
-        <tr>
-          <th>Gula Darah Puasa</th>
-          <td>{{ $hasil->gula_darah_puasa }}</td>
-        </tr>
-        <tr>
-          <th>Gula Darah 2 Jam PP</th>
-          <td>{{ $hasil->gula_darah_2_jam_pp }}</td>
-        </tr>
-        <tr>
-          <th>Anti HBs</th>
-          <td>{{ $hasil->anti_HBs ? 'Positif' : 'Negatif' }}</td>
-        </tr>
-        <tr>
-          <th>HBs Ag Kuantitatif</th>
-          <td>{{ $hasil->HBs_Ag_Kuantitatif ? 'Positif' : 'Negatif' }}</td>
-        </tr>
-      </table>
-    </div>
+        <div class="section-title">Pemeriksaan Darah (Hematologi &amp; Biokimia)</div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Pemeriksaan</th>
+              <th>Hasil Pemeriksaan</th>
+              <th>Batas Normal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hemoglobin</td>
+              <td>{{ $hasil->hemoglobin }}</td>
+              <td>{{ $normalParams['hemoglobin'] }}</td>
+            </tr>
+            <tr>
+              <td>Leukosit</td>
+              <td>{{ $hasil->leukosit }}</td>
+              <td>{{ $normalParams['leukosit'] }}</td>
+            </tr>
+            <tr>
+              <td>Eritrosit</td>
+              <td>{{ $hasil->eritrosit }}</td>
+              <td>{{ $normalParams['eritrosit'] }}</td>
+            </tr>
+            <tr>
+              <td>LED</td>
+              <td>{{ $hasil->LED }}</td>
+              <td>{{ $normalParams['led'] }}</td>
+            </tr>
+            <tr>
+              <td>Eosinofil</td>
+              <td>{{ $hasil->eosinofil }}</td>
+              <td>{{ $normalParams['eosinofil'] }}</td>
+            </tr>
+            <tr>
+              <td>Basofil</td>
+              <td>{{ $hasil->basofil }}</td>
+              <td>{{ $normalParams['basofil'] }}</td>
+            </tr>
+            <tr>
+              <td>Neutrofil</td>
+              <td>{{ $hasil->neutrofil }}</td>
+              <td>{{ $normalParams['neutrofil'] }}</td>
+            </tr>
+            <tr>
+              <td>Lymphosit</td>
+              <td>{{ $hasil->lymphosit }}</td>
+              <td>{{ $normalParams['lymphosit'] }}</td>
+            </tr>
+            <tr>
+              <td>Monosit</td>
+              <td>{{ $hasil->monosit }}</td>
+              <td>{{ $normalParams['monosit'] }}</td>
+            </tr>
+            <tr>
+              <td>Trombosit</td>
+              <td>{{ $hasil->trombosit }}</td>
+              <td>{{ $normalParams['trombosit'] }}</td>
+            </tr>
+            <tr>
+              <td>Hematokrit</td>
+              <td>{{ $hasil->hematokrit }}</td>
+              <td>{{ $normalParams['hematokrit'] }}</td>
+            </tr>
+            <tr>
+              <td>MCV</td>
+              <td>{{ $hasil->MCV }}</td>
+              <td>{{ $normalParams['mcv'] }}</td>
+            </tr>
+            <tr>
+              <td>SGOT</td>
+              <td>{{ $hasil->SGOT }}</td>
+              <td>{{ $normalParams['sgot'] }}</td>
+            </tr>
+            <tr>
+              <td>SGPT</td>
+              <td>{{ $hasil->SGPT }}</td>
+              <td>{{ $normalParams['sgpt'] }}</td>
+            </tr>
+            <tr>
+              <td>BUN</td>
+              <td>{{ $hasil->BUN }}</td>
+              <td>{{ $normalParams['bun'] }}</td>
+            </tr>
+            <tr>
+              <td>Kreatinin</td>
+              <td>{{ $hasil->kreatinin }}</td>
+              <td>{{ $normalParams['kreatinin'] }}</td>
+            </tr>
+            <tr>
+              <td>Asam Urat</td>
+              <td>{{ $hasil->asam_urat }}</td>
+              <td>{{ $normalParams['asam_urat'] }}</td>
+            </tr>
+            <tr>
+              <td>Kolestrol Total</td>
+              <td>{{ $hasil->kolestrol_total }}</td>
+              <td>{{ $normalParams['kolestrol_total'] }}</td>
+            </tr>
+            <tr>
+              <td>Trigliserida</td>
+              <td>{{ $hasil->trigliserida }}</td>
+              <td>{{ $normalParams['trigliserida'] }}</td>
+            </tr>
+            <tr>
+              <td>Kolestrol HDL (Direct)</td>
+              <td>{{ $hasil->{'kolestrol_HDL_(direct)'} }}</td>
+              <td>{{ $normalParams['kolestrol_hdl'] }}</td>
+            </tr>
+            <tr>
+              <td>Kolestrol LDL (Direct)</td>
+              <td>{{ $hasil->{'kolestrol_LDL_(direct)'} }}</td>
+              <td>{{ $normalParams['kolestrol_ldl'] }}</td>
+            </tr>
+            <tr>
+              <td>Gula Darah Puasa</td>
+              <td>{{ $hasil->gula_darah_puasa }}</td>
+              <td>{{ $normalParams['gula_darah_puasa'] }}</td>
+            </tr>
+            <tr>
+              <td>Gula Darah 2 Jam PP</td>
+              <td>{{ $hasil->gula_darah_2_jam_pp }}</td>
+              <td>{{ $normalParams['gula_darah_2_jam_pp'] }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-    <!-- Section 7: Pemeriksaan Urine -->
-    <div class="section">
-      <div class="section-title">Pemeriksaan Urine</div>
-      <table class="data-table">
-        <tr>
-          <th>pH pada Urine</th>
-          <td>{{ $hasil->pH_pada_urine }}</td>
-        </tr>
-        <tr>
-          <th>Berat Jenis pada Urine</th>
-          <td>{{ $hasil->berat_jenis_pada_urine }}</td>
-        </tr>
-        <tr>
-          <th>Nitrite pada Urine</th>
-          <td>{{ $hasil->nitrite_pada_urine ? 'Ya' : 'Tidak' }}</td>
-        </tr>
-        <tr>
-          <th>Protein pada Urine</th>
-          <td>{{ $hasil->protein_pada_urine ? 'Ya' : 'Tidak' }}</td>
-        </tr>
-        <tr>
-          <th>Reduksi pada Urine</th>
-          <td>{{ $hasil->reduksi_pada_urine }}</td>
-        </tr>
-        <tr>
-          <th>Keton pada Urine</th>
-          <td>{{ $hasil->ketone_pada_urine ? 'Ya' : 'Tidak' }}</td>
-        </tr>
-        <tr>
-          <th>Urobilinogen pada Urine</th>
-          <td>{{ $hasil->urobilinogen_pada_urine ? 'Ya' : 'Tidak' }}</td>
-        </tr>
-        <tr>
-          <th>Billirubin pada Urine</th>
-          <td>{{ $hasil->billirubin_pada_urine ? 'Ya' : 'Tidak' }}</td>
-        </tr>
-        <tr>
-          <th>Eritrosit pada Urine</th>
-          <td>{{ $hasil->eritrosit_pada_urine }}</td>
-        </tr>
-        <tr>
-          <th>Lekosit pada Urine</th>
-          <td>{{ $hasil->lekosit_pada_urine }}</td>
-        </tr>
-        <tr>
-          <th>Silinder pada Urine</th>
-          <td>{{ $hasil->silinder_pada_urine ? 'Ya' : 'Tidak' }}</td>
-        </tr>
-        <tr>
-          <th>Kristal pada Urine</th>
-          <td>{{ $hasil->kristal_pada_urine ? 'Ya' : 'Tidak' }}</td>
-        </tr>
-        <tr>
-          <th>Yeast pada Urine</th>
-          <td>{{ $hasil->yeast_pada_urine ? 'Ya' : 'Tidak' }}</td>
-        </tr>
-        <tr>
-          <th>Bakteri pada Urine</th>
-          <td>{{ $hasil->bakteri_pada_urine ? 'Ya' : 'Tidak' }}</td>
-        </tr>
-      </table>
-    </div>
+      @php
+        function getReduksiUrineDescription($value) {
+            $descriptions = [
+                0 => 'negatif',
+                1 => 'positif 1',
+                2 => 'positif 2',
+            ];
+            return $descriptions[$value] ?? 'Tidak Diketahui';
+        }
+      @endphp
+
+      <div class="section">
+        <div class="section-title">Pemeriksaan Urine</div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Pemeriksaan</th>
+              <th>Hasil Pemeriksaan</th>
+              <th>Batas Normal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>pH pada Urine</td>
+              <td>{{ $hasil->pH_pada_urine }}</td>
+              <td>{{ $normalParams['ph_urine'] }}</td>
+            </tr>
+            <tr>
+              <td>Berat Jenis pada Urine</td>
+              <td>{{ $hasil->berat_jenis_pada_urine }}</td>
+              <td>{{ $normalParams['berat_jenis_urine'] }}</td>
+            </tr>
+            <tr>
+              <td>Eritrosit pada Urine</td>
+              <td>{{ $hasil->eritrosit_pada_urine }}</td>
+              <td>{{ $normalParams['eritrosit_urine'] }}</td>
+            </tr>
+            <tr>
+              <td>Lekosit pada Urine</td>
+              <td>{{ $hasil->lekosit_pada_urine }}</td>
+              <td>{{ $normalParams['lekosit_urine'] }}</td>
+            </tr>
+            <tr>
+              <td>Nitrite pada Urine</td>
+              <td>{{ $hasil->nitrite_pada_urine ? 'Ya' : 'Tidak' }}</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Protein pada Urine</td>
+              <td>{{ $hasil->protein_pada_urine ? 'Ya' : 'Tidak' }}</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Reduksi pada Urine</td>
+              <td>{{ getReduksiUrineDescription($hasil->reduksi_pada_urine) }}</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Keton pada Urine</td>
+              <td>{{ $hasil->ketone_pada_urine ? 'Ya' : 'Tidak' }}</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Urobilinogen pada Urine</td>
+              <td>{{ $hasil->urobilinogen_pada_urine ? 'Ya' : 'Tidak' }}</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Billirubin pada Urine</td>
+              <td>{{ $hasil->billirubin_pada_urine ? 'Ya' : 'Tidak' }}</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Silinder pada Urine</td>
+              <td>{{ $hasil->silinder_pada_urine ? 'Ya' : 'Tidak' }}</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Kristal pada Urine</td>
+              <td>{{ $hasil->kristal_pada_urine ? 'Ya' : 'Tidak' }}</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Yeast pada Urine</td>
+              <td>{{ $hasil->yeast_pada_urine ? 'Ya' : 'Tidak' }}</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Bakteri pada Urine</td>
+              <td>{{ $hasil->bakteri_pada_urine ? 'Ya' : 'Tidak' }}</td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
 
     <!-- Section 8: Daftar Hasil Pemeriksaan -->
     <div class="section">
@@ -534,8 +696,7 @@
     <!-- Footer -->
     <footer>
       <p>Dokumen ini dicetak pada: {{ date('d/m/Y H:i:s') }}</p>
-      <p>Halaman 1 dari 1</p>
     </footer>
-  </div>
+
 </body>
 </html>

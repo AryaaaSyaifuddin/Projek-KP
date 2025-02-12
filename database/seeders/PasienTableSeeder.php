@@ -285,6 +285,14 @@ class PasienTableSeeder extends Seeder
             '2025-02-11',
             '2025-02-12',
             '2025-02-13',
+            '2025-02-14',
+            '2025-02-15',
+            '2025-02-16',
+            '2025-02-17',
+            '2025-02-18',
+            '2025-02-19',
+            '2025-02-20',
+            '2025-02-21',
 
             '2025-03-29',
             '2025-03-30',
@@ -394,16 +402,6 @@ class PasienTableSeeder extends Seeder
             '2024-10-01',
             '2024-10-02',
             '2024-11-03',
-            '2024-11-04',
-            '2024-12-05',
-            '2024-12-06',
-            '2024-12-07',
-            '2024-12-08',
-            '2024-12-09',
-            '2024-12-10',
-            '2024-12-11',
-            '2024-12-12',
-            '2024-12-13',
 
             '2023-01-29',
             '2023-01-30',
@@ -414,13 +412,7 @@ class PasienTableSeeder extends Seeder
             '2023-02-04',
             '2023-02-05',
             '2023-02-06',
-            '2023-02-07',
-            '2023-02-08',
-            '2023-02-09',
-            '2023-02-10',
-            '2023-02-11',
-            '2023-02-12',
-            '2023-02-13',
+
         ];
 
         $additionalPatients = [];
@@ -432,7 +424,7 @@ class PasienTableSeeder extends Seeder
 
             for ($i = 0; $i < $numAdditional; $i++) {
                 $additionalPatients[] = [
-                    'nama_panjang'         => 'Pasien ' . $i + 1,
+                    'nama_panjang'         => 'Pasien ke - ' . $i + 1,
                     // Contoh tanggal lahir acak antara tahun 1970 hingga 2000
                     'tanggal_lahir'        => date('Y-m-d', rand(strtotime('1970-01-01'), strtotime('2000-12-31'))),
                     'jenis_kelamin'        => (rand(0, 1) ? 'Laki-laki' : 'Perempuan'),
@@ -449,7 +441,7 @@ class PasienTableSeeder extends Seeder
                     'id_dokter'            => rand(6, 10),
                     'tanggal_pemeriksaan'  => $date,
                     // Waktu pemeriksaan acak antara pukul 08:00 hingga 12:00
-                    'waktu_pemeriksaan'    => date('H:i:s', strtotime('08:00:00') + rand(0, 14400)),
+                    'waktu_pemeriksaan'    => date('H:i', strtotime('08:00') + rand(0, 14400)),
                     'created_at'           => now(),
                     'updated_at'           => now(),
                 ];

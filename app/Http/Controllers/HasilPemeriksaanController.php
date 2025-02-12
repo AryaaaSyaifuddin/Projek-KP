@@ -103,8 +103,8 @@ class HasilPemeriksaanController extends Controller
 
         // Membuat data di tabel status_pemeriksaan secara otomatis
         StatusPemeriksaan::create([
-            'id_hasil_pemeriksaan' => $hasilPemeriksaan->id, // Menggunakan ID hasil_pemeriksaan yang baru dibuat
-            'status' => 'Menunggu Persetujuan', // Status default
+            'id_hasil_pemeriksaan' => $hasilPemeriksaan->id,
+            'status' => 'Menunggu Persetujuan',
         ]);
 
         // Redirect dengan pesan sukses
@@ -299,10 +299,18 @@ class HasilPemeriksaanController extends Controller
 
         $pasien = $hasil->patient;
         $pdf = PDF::loadView('pdf.hasil_pemeriksaan', compact('hasil', 'pasien', 'hasilPemeriksaan'));
-        return $pdf->download('Rekam Medis Dari - ' . $pasien->nama_panjang . '.pdf');
+        return $pdf->download('Hasil Rekam Medis Dari - ' . $pasien->nama_panjang .' - '. $pasien->id_pasien . '.pdf');
     }
 
+    public function destroy($id)
+    {
+        // Cari data berdasarkan ID. Jika tidak ditemukan, akan mengembalikan error 404.
+        $hasil = HasilPemeriksaan::findOrFail($id);
 
+        // Hapus data
+        $hasil->delete();
 
-
+        // Redirect kembali ke halaman index atau daftar dengan pesan sukses.
+        return redirect('/hasil-pemeriksaan')->with('success', 'Hasil pemeriksaan berhasil dihapus.');
+    }
 }

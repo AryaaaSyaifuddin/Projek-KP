@@ -413,7 +413,7 @@
             </div>
 
 
-            <form action="/predict" method="POST" >
+            <form action="/predict" method="POST" style="margin-bottom: 40px;" >
                 @csrf
                 <!-- Personal Information -->
                 <div class="row">
@@ -956,25 +956,44 @@
                 <a href="/hasil-pemeriksaan" class="btn btn-secondary">Back</a>
             </form>
 
-            <!-- Bagian Hasil Pemeriksaan -->
-            <form action="{{ route('update.hasil.prediksi', $prediksiHasilPemeriksaan->id) }}" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="form-group row">
-                    <label for="hasil_pemeriksaan" class="col-sm-4 col-form-label">Hasil Pemeriksaan:</label>
-                    <div class="col-sm-8">
-                        <!-- Dropdown untuk memilih hasil pemeriksaan -->
-                        <select class="form-control" id="hasil_pemeriksaan" name="hasil_pemeriksaan" required>
-                            <option value="" disabled>Pilih Hasil Pemeriksaan</option>
-                            <option value="Fit to Work" {{ $prediksiHasilPemeriksaan->hasil_pemeriksaan == 'Fit to Work' ? 'selected' : '' }}>Fit to Work</option>
-                            <option value="Fit with Note" {{ $prediksiHasilPemeriksaan->hasil_pemeriksaan == 'Fit with Note' ? 'selected' : '' }}>Fit with Note</option>
-                            <option value="Fit with Restriction" {{ $prediksiHasilPemeriksaan->hasil_pemeriksaan == 'Fit with Restriction' ? 'selected' : '' }}>Fit with Restriction</option>
-                            <option value="Unfit" {{ $prediksiHasilPemeriksaan->hasil_pemeriksaan == 'Unfit' ? 'selected' : '' }}>Unfit</option>
-                        </select>
-                    </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="{{ route('update.hasil.prediksi', $prediksiHasilPemeriksaan->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="form-group row">
+                            <label for="hasil_pemeriksaan" class="col-sm-4 col-form-label">Hasil Pemeriksaan:</label>
+                            <div class="col-sm-8">
+                                <!-- Dropdown untuk memilih hasil pemeriksaan -->
+                                <select class="form-control" id="hasil_pemeriksaan" name="hasil_pemeriksaan" required>
+                                    <option value="" disabled>Pilih Hasil Pemeriksaan</option>
+                                    <option value="Fit to Work" {{ $prediksiHasilPemeriksaan->hasil_pemeriksaan == 'Fit to Work' ? 'selected' : '' }}>Fit to Work</option>
+                                    <option value="Fit with Note" {{ $prediksiHasilPemeriksaan->hasil_pemeriksaan == 'Fit with Note' ? 'selected' : '' }}>Fit with Note</option>
+                                    <option value="Fit with Restriction" {{ $prediksiHasilPemeriksaan->hasil_pemeriksaan == 'Fit with Restriction' ? 'selected' : '' }}>Fit with Restriction</option>
+                                    <option value="Unfit" {{ $prediksiHasilPemeriksaan->hasil_pemeriksaan == 'Unfit' ? 'selected' : '' }}>Unfit</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Update Hasil</button>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-primary mt-2">Update Hasil</button>
-            </form>
+                <div class="col-md-6">
+                    <form action="{{ route('delete.hasil.prediksi', $prediksiHasilPemeriksaan->id) }}" method="POST" style="display: inline-block; width: 100%;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline-danger btn-icon-text" style="min-width: 100%;">
+                            Delete
+                            <i class="typcn typcn-trash btn-icon-append"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Bagian Hasil Pemeriksaan -->
+
+
+
+
 
             @if (session('error'))
                 <div class="alert alert-danger">

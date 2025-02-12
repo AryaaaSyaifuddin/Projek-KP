@@ -99,7 +99,7 @@ class PrediksiHasilPemeriksaanController extends Controller
         Session::flash('success', 'Hasil pemeriksaan berhasil dihapus.');
 
         // Redirect kembali ke halaman sebelumnya
-        return redirect()->back();
+        return redirect('/hasil-pemeriksaan');
     }
 
 }
