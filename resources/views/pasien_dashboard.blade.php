@@ -170,14 +170,13 @@
                 <span class="nav-profile-name">{{ Auth::user()->nama ?? 'Anonim' }}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item">
-                <i class="typcn typcn-cog text-primary"></i>
-                Settings
-                </a>
-                <a class="dropdown-item">
-                <i class="typcn typcn-power text-primary"></i>
-                Logout
-                </a>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="dropdown-item">
+                        <i class="typcn typcn-power text-primary"></i>
+                        Logout
+                    </button>
+                </form>
               </div>
             </li>
           </ul>
@@ -494,12 +493,23 @@
                                             <td>
                                                 @php
                                                     $tanggalPemeriksaan = \Carbon\Carbon::parse($pasien->tanggal_pemeriksaan . ' ' . $pasien->waktu_pemeriksaan);
-                                                    $isLate = $tanggalPemeriksaan->isPast(); // Cek apakah tanggal dan waktu pemeriksaan sudah lewat
+                                                    $isLate = $tanggalPemeriksaan->isPast(); // Cek apakah sudah lewat
+                                                    $diffMinutes = $tanggalPemeriksaan->diffInMinutes(now(), false); // Selisih waktu dalam menit (bisa negatif jika belum lewat)
+
+                                                    // Tentukan background color berdasarkan kondisi
+                                                    $bgColor = '';
+                                                    if ($diffMinutes > 0 && $diffMinutes <= 30) {
+                                                        $bgColor = 'color: green;'; // Background hijau jika masih dalam 30 menit terakhir
+                                                    } elseif ($isLate) {
+                                                        $bgColor = 'color: red;'; // Background merah jika sudah lewat lebih dari 30 menit
+                                                    }
                                                 @endphp
-                                                <span class="{{ $isLate ? 'text-danger' : '' }}">
+
+                                                <span style="{{ $bgColor }} font-weight: bold;">
                                                     {{ \Carbon\Carbon::parse($pasien->tanggal_pemeriksaan)->format('d-m-Y') }} {{ $pasien->waktu_pemeriksaan }}
                                                 </span>
                                             </td>
+
                                             <td style="min-width: 190px; align-item= center">
                                                 <!-- Tombol Edit -->
                                                 <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px; min-width: 39%;">

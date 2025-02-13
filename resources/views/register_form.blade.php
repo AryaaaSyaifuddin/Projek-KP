@@ -56,7 +56,6 @@
                <div class="login__box-input">
                   <select name="role" required class="login__input" style="margin: 15px 0px">
                      <option value="" disabled selected>Select Role</option>
-                     <option value="admin">Admin</option>
                      <option value="perawat">Perawat</option>
                      <option value="dokter">Dokter</option>
                   </select>

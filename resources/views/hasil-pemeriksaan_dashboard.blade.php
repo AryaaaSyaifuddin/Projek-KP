@@ -206,14 +206,13 @@
                 <span class="nav-profile-name">{{ Auth::user()->nama ?? 'Anonim' }}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item">
-                <i class="typcn typcn-cog text-primary"></i>
-                Settings
-                </a>
-                <a class="dropdown-item">
-                <i class="typcn typcn-power text-primary"></i>
-                Logout
-                </a>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="dropdown-item">
+                        <i class="typcn typcn-power text-primary"></i>
+                        Logout
+                    </button>
+                </form>
               </div>
             </li>
           </ul>
@@ -483,9 +482,9 @@
             <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Data Pasien</h4>
+                        <h4 class="card-title">Data Rekam Medis Pasien</h4>
 
-                        <button class="scroll-button" onclick="scrollRight()">Scroll Right</button>
+                        <button class="scroll-button" onclick="scrollRight()" style="border-radius: 25px;">Scroll Right</button>
 
                         <!-- Modal Detail Hasil Pemeriksaan -->
                         <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
@@ -560,197 +559,240 @@
 
 
                         <div class="table-responsive pt-3" id="scrollable-container">
-                                <table class="table table-bordered" id="dataTable">
-                                    <thead>
+                            <table class="table table-bordered" id="dataTable">
+                                <thead>
+                                    <!-- Baris header pengelompokkan -->
+                                    <tr>
                                         <tr>
-                                            <th style="min-width: 130px">ID</th>
-                                            <th style="min-width: 130px">ID Pasien</th>
-                                            <th style="min-width: 130px">Gender</th>
-                                            <th style="min-width: 130px">Height</th>
-                                            <th style="min-width: 130px">Weight</th>
-                                            <th style="min-width: 130px">Sistolik</th>
-                                            <th style="min-width: 130px">Diastolik</th>
-                                            <th style="min-width: 130px">Age</th>
-                                            <th style="min-width: 130px">BMI</th>
-                                            <th style="min-width: 130px">BMICat</th>
-                                            <th style="min-width: 130px">Hipertensi Kategori</th>
-                                            <th style="min-width: 130px">Tuberkulosis</th>
-                                            <th style="min-width: 130px">Penyakit Jantung</th>
-                                            <th style="min-width: 130px">Hipertensi</th>
-                                            <th style="min-width: 130px">Diabetes Melitus</th>
-                                            <th style="min-width: 130px">Gangguan Jiwa</th>
-                                            <th style="min-width: 130px">Trauma pada Kepala</th>
-                                            <th style="min-width: 130px">Hepatitis</th>
-                                            <th style="min-width: 130px">Spirometri</th>
-                                            <th style="min-width: 130px">Treadmil</th>
-                                            <th style="min-width: 130px">Audiometri</th>
-                                            <th style="min-width: 130px">Foto Thorax</th>
-                                            <th style="min-width: 130px">Nadi (kali/menit)</th>
-                                            <th style="min-width: 130px">Frekuensi Napas (kali/menit)</th>
-                                            <th style="min-width: 130px">Tingkatan Kesadaran</th>
-                                            <th style="min-width: 130px">Buta Warna</th>
-                                            <th style="min-width: 130px">Jantung</th>
-                                            <th style="min-width: 130px">Hemoglobin</th>
-                                            <th style="min-width: 130px">Leukosit</th>
-                                            <th style="min-width: 130px">Eritrosit</th>
-                                            <th style="min-width: 130px">LED</th>
-                                            <th style="min-width: 130px">Eosinofil</th>
-                                            <th style="min-width: 130px">Basofil</th>
-                                            <th style="min-width: 130px">Neutrofil</th>
-                                            <th style="min-width: 130px">Lymphosit</th>
-                                            <th style="min-width: 130px">Monosit</th>
-                                            <th style="min-width: 130px">Trombosit</th>
-                                            <th style="min-width: 130px">Hematokrit</th>
-                                            <th style="min-width: 130px">MCV</th>
-                                            <th style="min-width: 130px">SGOT</th>
-                                            <th style="min-width: 130px">SGPT</th>
-                                            <th style="min-width: 130px">BUN</th>
-                                            <th style="min-width: 130px">Kreatinin</th>
-                                            <th style="min-width: 130px">Asam Urat</th>
-                                            <th style="min-width: 130px">Kolesterol Total</th>
-                                            <th style="min-width: 130px">Trigliserida</th>
-                                            <th style="min-width: 130px">Kolesterol HDL (Direct)</th>
-                                            <th style="min-width: 130px">Kolesterol LDL (Direct)</th>
-                                            <th style="min-width: 130px">Gula Darah Puasa</th>
-                                            <th style="min-width: 130px">Gula Darah 2 Jam PP</th>
-                                            <th style="min-width: 130px">Anti HBs Ag</th>
-                                            <th style="min-width: 130px">HBs Ag Kuantitatif</th>
-                                            <th style="min-width: 130px">pH pada Urine</th>
-                                            <th style="min-width: 130px">Berat Jenis pada Urine</th>
-                                            <th style="min-width: 130px">Nitrite pada Urine</th>
-                                            <th style="min-width: 130px">Protein pada Urine</th>
-                                            <th style="min-width: 130px">Reduksi pada Urine</th>
-                                            <th style="min-width: 130px">Keton pada Urine</th>
-                                            <th style="min-width: 130px">Urobilinogen pada Urine</th>
-                                            <th style="min-width: 130px">Billirubin pada Urine</th>
-                                            <th style="min-width: 130px">Eritrosit pada Urine</th>
-                                            <th style="min-width: 130px">Leukosit pada Urine</th>
-                                            <th style="min-width: 130px">Silinder pada Urine</th>
-                                            <th style="min-width: 130px">Kristal pada Urine</th>
-                                            <th style="min-width: 130px">Yeast pada Urine</th>
-                                            <th style="min-width: 130px">Bakteri pada Urine</th>
-                                            <th style="min-width: 130px">Hasil</th>
-                                            <th style="min-width: 130px">Status</th>
-                                            <th style="min-width: 200px">Action</th>
+                                            <th colspan="4" class="text-center text-white" style="background-color: rgba(13,110,253, 0.7);">
+                                                Identitas &amp; Data Demografis
+                                            </th>
+                                            <th colspan="10" class="text-center text-white" style="background-color: rgba(25,135,84, 0.7);">
+                                                Tanda Vital &amp; Antropometri
+                                            </th>
+                                            <th colspan="7" class="text-center text-dark" style="background-color: rgba(255,193,7, 0.7);">
+                                                Riwayat Penyakit / Komorbiditas
+                                            </th>
+                                            <th colspan="4" class="text-center text-white" style="background-color: rgba(13,202,240, 0.7);">
+                                                Tes Fungsional / Imaging
+                                            </th>
+                                            <th colspan="2" class="text-center text-white" style="background-color: rgba(108,117,125, 0.7);">
+                                                Pemeriksaan Fisik Tambahan
+                                            </th>
+                                            <th colspan="25" class="text-center text-white" style="background-color: rgba(33,37,41, 0.7);">
+                                                Pemeriksaan Darah (Hematologi &amp; Biokimia)
+                                            </th>
+                                            <th colspan="14" class="text-center text-dark" style="background-color: rgba(248,249,250, 0.7);">
+                                                Pemeriksaan Urine
+                                            </th>
+                                            <th colspan="4" class="text-center text-white" style="background-color: rgba(220,53,69, 0.7);">
+                                                Lainnya
+                                            </th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($hasilPemeriksaan as $hasil)
-                                            <tr>
-                                                <td>{{ $hasil->id }}</td>
-                                                <td>{{ $hasil->id_pasien }}</td>
-                                                <td>{{ $hasil->gender }}</td>
-                                                <td>{{ $hasil->height }}</td>
-                                                <td>{{ $hasil->weight }}</td>
-                                                <td>{{ $hasil->Sistolik }}</td>
-                                                <td>{{ $hasil->Diastolik }}</td>
-                                                <td>{{ $hasil->Age }}</td>
-                                                <td>{{ $hasil->BMI }}</td>
-                                                <td>{{ $hasil->BMICat }}</td>
-                                                <td>{{ $hasil->Hipertensi_Kategori }}</td>
-                                                <td>{{ $hasil->tuberkulosis ? 'Tidak' : 'Ya' }}</td>
-                                                <td>{{ $hasil->penyakit_jantung ? 'Tidak' : 'Ya'  }}</td>
-                                                <td>{{ $hasil->hipertensi ? 'Tidak' : 'Ya' }}</td>
-                                                <td>{{ $hasil->diabetes_melitus ? 'Tidak' : 'Ya' }}</td>
-                                                <td>{{ $hasil->gangguan_jiwa ? 'Tidak' : 'Ya' }}</td>
-                                                <td>{{ $hasil->trauma_pada_kepala ? 'Tidak' : 'Ya' }}</td>
-                                                <td>{{ $hasil->hepatitis ? 'Tidak' : 'Ya' }}</td>
-                                                <td>{{ $hasil->Spirometri ? 'Tidak Normal' : 'Normal' }}</td>
-                                                <td>{{ $hasil->Treadmil ? 'Tidak Normal' : 'Normal' }}</td>
-                                                <td>{{ $hasil->Audiometri ? 'Tidak Normal' : 'Normal' }}</td>
-                                                <td>{{ $hasil->foto_thorax ? 'Tidak Normal' : 'Normal' }}</td>
-                                                <td>{{ $hasil->{'Nadi(kali/menit)'} }}</td>
-                                                <td>{{ $hasil->{'FrekuensiNapas(kali/menit)'} }}</td>
-                                                <td>{{ $hasil->Tingkatan_Kesadaran }}</td>
-                                                <td>{{ $hasil->Buta_Warna ? 'Ya' : 'Tidak' }}</td>
-                                                <td>{{ $hasil->Jantung ? 'Ya' : 'Tidak' }}</td>
-                                                <td>{{ $hasil->hemoglobin }}</td>
-                                                <td>{{ $hasil->leukosit }}</td>
-                                                <td>{{ $hasil->eritrosit }}</td>
-                                                <td>{{ $hasil->LED }}</td>
-                                                <td>{{ $hasil->eosinofil }}</td>
-                                                <td>{{ $hasil->basofil }}</td>
-                                                <td>{{ $hasil->neutrofil }}</td>
-                                                <td>{{ $hasil->lymphosit }}</td>
-                                                <td>{{ $hasil->monosit }}</td>
-                                                <td>{{ $hasil->trombosit }}</td>
-                                                <td>{{ $hasil->hematokrit }}</td>
-                                                <td>{{ $hasil->MCV }}</td>
-                                                <td>{{ $hasil->SGOT }}</td>
-                                                <td>{{ $hasil->SGPT }}</td>
-                                                <td>{{ $hasil->BUN }}</td>
-                                                <td>{{ $hasil->kreatinin }}</td>
-                                                <td>{{ $hasil->asam_urat }}</td>
-                                                <td>{{ $hasil->kolestrol_total }}</td>
-                                                <td>{{ $hasil->trigliserida }}</td>
-                                                <td>{{ $hasil->{'kolestrol_HDL_(direct)'} }}</td>
-                                                <td>{{ $hasil->{'kolestrol_LDL_(direct)'} }}</td>
-                                                <td>{{ $hasil->gula_darah_puasa }}</td>
-                                                <td>{{ $hasil->gula_darah_2_jam_pp }}</td>
-                                                <td>{{ $hasil->anti_HBs ? 'Positif' : 'Negatif' }}</td>
-                                                <td>{{ $hasil->HBs_Ag_Kuantitatif ? 'Positif' : 'Negatif' }}</td>
-                                                <td>{{ $hasil->pH_pada_urine }}</td>
-                                                <td>{{ $hasil->berat_jenis_pada_urine }}</td>
-                                                <td>{{ $hasil->nitrite_pada_urine ? 'Ya' : 'Tidak' }}</td>
-                                                <td>{{ $hasil->protein_pada_urine ? 'Ya' : 'Tidak' }}</td>
-                                                <td>{{ $hasil->reduksi_pada_urine }}</td>
-                                                <td>{{ $hasil->ketone_pada_urine ? 'Ya' : 'Tidak' }}</td>
-                                                <td>{{ $hasil->urobilinogen_pada_urine ? 'Ya' : 'Tidak' }}</td>
-                                                <td>{{ $hasil->billirubin_pada_urine ? 'Ya' : 'Tidak' }}</td>
-                                                <td>{{ $hasil->eritrosit_pada_urine }}</td>
-                                                <td>{{ $hasil->lekosit_pada_urine }}</td>
-                                                <td>{{ $hasil->silinder_pada_urine ? 'Ya' : 'Tidak' }}</td>
-                                                <td>{{ $hasil->kristal_pada_urine ? 'Ya' : 'Tidak' }}</td>
-                                                <td>{{ $hasil->yeast_pada_urine ? 'Ya' : 'Tidak' }}</td>
-                                                <td>{{ $hasil->bakteri_pada_urine ? 'Ya' : 'Tidak' }}</td>
-
-                                                <td>
-                                                    @php
-                                                        $hasilPemeriksaan = $hasilPrediksi->where('id_rekammedis', $hasil->id)->first();
-                                                    @endphp
-                                                    {{ $hasilPemeriksaan ? $hasilPemeriksaan->hasil_pemeriksaan : '-' }}
-                                                </td>
-
-                                                <td>{{ $hasil->statusPemeriksaan->status ?? 'Not available' }}</td>
-                                                <td>
-                                                    <a href="{{ route('edit.hasil.pemeriksaan', $hasil->id) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px; min-width: 100%; margin-bottom: 7px;">
-                                                        Edit
+                                    </tr>
+                                    <!-- Baris header nama field -->
+                                    <tr>
+                                        <!-- Group 1: Identitas & Data Demografis -->
+                                        <th style="min-width: 130px;">ID</th>
+                                        <th style="min-width: 130px;">ID Pasien</th>
+                                        <th style="min-width: 130px;">Gender</th>
+                                        <th style="min-width: 130px;">Age</th>
+                                        <!-- Group 2: Tanda Vital & Antropometri -->
+                                        <th style="min-width: 130px;">Height</th>
+                                        <th style="min-width: 130px;">Weight</th>
+                                        <th style="min-width: 130px;">BMI</th>
+                                        <th style="min-width: 130px;">BMICat</th>
+                                        <th style="min-width: 130px;">Hipertensi Kategori</th>
+                                        <th style="min-width: 130px;">Sistolik</th>
+                                        <th style="min-width: 130px;">Diastolik</th>
+                                        <th style="min-width: 130px;">Nadi (kali/menit)</th>
+                                        <th style="min-width: 130px;">Frekuensi Napas (kali/menit)</th>
+                                        <th style="min-width: 130px;">Tingkatan Kesadaran</th>
+                                        <!-- Group 3: Riwayat Penyakit / Komorbiditas -->
+                                        <th style="min-width: 130px;">Tuberkulosis</th>
+                                        <th style="min-width: 130px;">Penyakit Jantung</th>
+                                        <th style="min-width: 130px;">Hipertensi</th>
+                                        <th style="min-width: 130px;">Diabetes Melitus</th>
+                                        <th style="min-width: 130px;">Gangguan Jiwa</th>
+                                        <th style="min-width: 130px;">Trauma pada Kepala</th>
+                                        <th style="min-width: 130px;">Hepatitis</th>
+                                        <!-- Group 4: Tes Fungsional / Imaging -->
+                                        <th style="min-width: 130px;">Spirometri</th>
+                                        <th style="min-width: 130px;">Treadmil</th>
+                                        <th style="min-width: 130px;">Audiometri</th>
+                                        <th style="min-width: 130px;">Foto Thorax</th>
+                                        <!-- Group 5: Pemeriksaan Fisik Tambahan -->
+                                        <th style="min-width: 130px;">Buta Warna</th>
+                                        <th style="min-width: 130px;">Jantung</th>
+                                        <!-- Group 6: Pemeriksaan Darah (Hematologi & Biokimia) -->
+                                        <th style="min-width: 130px;">Hemoglobin</th>
+                                        <th style="min-width: 130px;">Leukosit</th>
+                                        <th style="min-width: 130px;">Eritrosit</th>
+                                        <th style="min-width: 130px;">LED</th>
+                                        <th style="min-width: 130px;">Eosinofil</th>
+                                        <th style="min-width: 130px;">Basofil</th>
+                                        <th style="min-width: 130px;">Neutrofil</th>
+                                        <th style="min-width: 130px;">Lymphosit</th>
+                                        <th style="min-width: 130px;">Monosit</th>
+                                        <th style="min-width: 130px;">Trombosit</th>
+                                        <th style="min-width: 130px;">Hematokrit</th>
+                                        <th style="min-width: 130px;">MCV</th>
+                                        <th style="min-width: 130px;">SGOT</th>
+                                        <th style="min-width: 130px;">SGPT</th>
+                                        <th style="min-width: 130px;">BUN</th>
+                                        <th style="min-width: 130px;">Kreatinin</th>
+                                        <th style="min-width: 130px;">Asam Urat</th>
+                                        <th style="min-width: 130px;">Kolesterol Total</th>
+                                        <th style="min-width: 130px;">Trigliserida</th>
+                                        <th style="min-width: 130px;">Kolesterol HDL (Direct)</th>
+                                        <th style="min-width: 130px;">Kolesterol LDL (Direct)</th>
+                                        <th style="min-width: 130px;">Gula Darah Puasa</th>
+                                        <th style="min-width: 130px;">Gula Darah 2 Jam PP</th>
+                                        <th style="min-width: 130px;">Anti HBs Ag</th>
+                                        <th style="min-width: 130px;">HBs Ag Kuantitatif</th>
+                                        <!-- Group 7: Pemeriksaan Urine -->
+                                        <th style="min-width: 130px;">pH pada Urine</th>
+                                        <th style="min-width: 130px;">Berat Jenis pada Urine</th>
+                                        <th style="min-width: 130px;">Nitrite pada Urine</th>
+                                        <th style="min-width: 130px;">Protein pada Urine</th>
+                                        <th style="min-width: 130px;">Reduksi pada Urine</th>
+                                        <th style="min-width: 130px;">Keton pada Urine</th>
+                                        <th style="min-width: 130px;">Urobilinogen pada Urine</th>
+                                        <th style="min-width: 130px;">Billirubin pada Urine</th>
+                                        <th style="min-width: 130px;">Eritrosit pada Urine</th>
+                                        <th style="min-width: 130px;">Leukosit pada Urine</th>
+                                        <th style="min-width: 130px;">Silinder pada Urine</th>
+                                        <th style="min-width: 130px;">Kristal pada Urine</th>
+                                        <th style="min-width: 130px;">Yeast pada Urine</th>
+                                        <th style="min-width: 130px;">Bakteri pada Urine</th>
+                                        <!-- Group 8: Lainnya -->
+                                        <th style="min-width: 130px;">Hasil</th>
+                                        <th style="min-width: 130px;">Status</th>
+                                        <th style="min-width: 130px;">Action</th>
+                                        <th style="min-width: 200px;">Detail</th>
+                                    </tr>
+                                </thead>
+                                <!-- Sesuaikan urutan kolom pada <tbody> dengan urutan header di atas -->
+                                <tbody>
+                                    @foreach ($hasilPemeriksaan as $hasil)
+                                        <tr>
+                                            <!-- Group 1 -->
+                                            <td>{{ $hasil->id }}</td>
+                                            <td>{{ $hasil->id_pasien }}</td>
+                                            <td>{{ $hasil->gender }}</td>
+                                            <td>{{ $hasil->Age }}</td>
+                                            <!-- Group 2 -->
+                                            <td>{{ $hasil->height }}</td>
+                                            <td>{{ $hasil->weight }}</td>
+                                            <td>{{ $hasil->BMI }}</td>
+                                            <td>{{ $hasil->BMICat }}</td>
+                                            <td>{{ $hasil->Hipertensi_Kategori }}</td>
+                                            <td>{{ $hasil->Sistolik }}</td>
+                                            <td>{{ $hasil->Diastolik }}</td>
+                                            <td>{{ $hasil->{'Nadi(kali/menit)'} }}</td>
+                                            <td>{{ $hasil->{'FrekuensiNapas(kali/menit)'} }}</td>
+                                            <td>{{ $hasil->Tingkatan_Kesadaran }}</td>
+                                            <!-- Group 3 -->
+                                            <td>{{ $hasil->tuberkulosis ? 'Tidak' : 'Ya' }}</td>
+                                            <td>{{ $hasil->penyakit_jantung ? 'Tidak' : 'Ya' }}</td>
+                                            <td>{{ $hasil->hipertensi ? 'Tidak' : 'Ya' }}</td>
+                                            <td>{{ $hasil->diabetes_melitus ? 'Tidak' : 'Ya' }}</td>
+                                            <td>{{ $hasil->gangguan_jiwa ? 'Tidak' : 'Ya' }}</td>
+                                            <td>{{ $hasil->trauma_pada_kepala ? 'Tidak' : 'Ya' }}</td>
+                                            <td>{{ $hasil->hepatitis ? 'Tidak' : 'Ya' }}</td>
+                                            <!-- Group 4 -->
+                                            <td>{{ $hasil->Spirometri ? 'Tidak Normal' : 'Normal' }}</td>
+                                            <td>{{ $hasil->Treadmil ? 'Tidak Normal' : 'Normal' }}</td>
+                                            <td>{{ $hasil->Audiometri ? 'Tidak Normal' : 'Normal' }}</td>
+                                            <td>{{ $hasil->foto_thorax ? 'Tidak Normal' : 'Normal' }}</td>
+                                            <!-- Group 5 -->
+                                            <td>{{ $hasil->Buta_Warna ? 'Ya' : 'Tidak' }}</td>
+                                            <td>{{ $hasil->Jantung ? 'Ya' : 'Tidak' }}</td>
+                                            <!-- Group 6 -->
+                                            <td>{{ $hasil->hemoglobin }}</td>
+                                            <td>{{ $hasil->leukosit }}</td>
+                                            <td>{{ $hasil->eritrosit }}</td>
+                                            <td>{{ $hasil->LED }}</td>
+                                            <td>{{ $hasil->eosinofil }}</td>
+                                            <td>{{ $hasil->basofil }}</td>
+                                            <td>{{ $hasil->neutrofil }}</td>
+                                            <td>{{ $hasil->lymphosit }}</td>
+                                            <td>{{ $hasil->monosit }}</td>
+                                            <td>{{ $hasil->trombosit }}</td>
+                                            <td>{{ $hasil->hematokrit }}</td>
+                                            <td>{{ $hasil->MCV }}</td>
+                                            <td>{{ $hasil->SGOT }}</td>
+                                            <td>{{ $hasil->SGPT }}</td>
+                                            <td>{{ $hasil->BUN }}</td>
+                                            <td>{{ $hasil->kreatinin }}</td>
+                                            <td>{{ $hasil->asam_urat }}</td>
+                                            <td>{{ $hasil->kolestrol_total }}</td>
+                                            <td>{{ $hasil->trigliserida }}</td>
+                                            <td>{{ $hasil->{'kolestrol_HDL_(direct)'} }}</td>
+                                            <td>{{ $hasil->{'kolestrol_LDL_(direct)'} }}</td>
+                                            <td>{{ $hasil->gula_darah_puasa }}</td>
+                                            <td>{{ $hasil->gula_darah_2_jam_pp }}</td>
+                                            <td>{{ $hasil->anti_HBs ? 'Positif' : 'Negatif' }}</td>
+                                            <td>{{ $hasil->HBs_Ag_Kuantitatif ? 'Positif' : 'Negatif' }}</td>
+                                            <!-- Group 7 -->
+                                            <td>{{ $hasil->pH_pada_urine }}</td>
+                                            <td>{{ $hasil->berat_jenis_pada_urine }}</td>
+                                            <td>{{ $hasil->nitrite_pada_urine ? 'Ya' : 'Tidak' }}</td>
+                                            <td>{{ $hasil->protein_pada_urine ? 'Ya' : 'Tidak' }}</td>
+                                            <td>{{ $hasil->reduksi_pada_urine }}</td>
+                                            <td>{{ $hasil->ketone_pada_urine ? 'Ya' : 'Tidak' }}</td>
+                                            <td>{{ $hasil->urobilinogen_pada_urine ? 'Ya' : 'Tidak' }}</td>
+                                            <td>{{ $hasil->billirubin_pada_urine ? 'Ya' : 'Tidak' }}</td>
+                                            <td>{{ $hasil->eritrosit_pada_urine }}</td>
+                                            <td>{{ $hasil->lekosit_pada_urine }}</td>
+                                            <td>{{ $hasil->silinder_pada_urine ? 'Ya' : 'Tidak' }}</td>
+                                            <td>{{ $hasil->kristal_pada_urine ? 'Ya' : 'Tidak' }}</td>
+                                            <td>{{ $hasil->yeast_pada_urine ? 'Ya' : 'Tidak' }}</td>
+                                            <td>{{ $hasil->bakteri_pada_urine ? 'Ya' : 'Tidak' }}</td>
+                                            <!-- Group 8 -->
+                                            <td>
+                                                @php
+                                                    $hasilPemeriksaan = $hasilPrediksi->where('id_rekammedis', $hasil->id)->first();
+                                                @endphp
+                                                {{ $hasilPemeriksaan ? $hasilPemeriksaan->hasil_pemeriksaan : '-' }}
+                                            </td>
+                                            <td>{{ $hasil->statusPemeriksaan->status ?? 'Not available' }}</td>
+                                            <td>
+                                                <a href="{{ route('edit.hasil.pemeriksaan', $hasil->id) }}" class="btn btn-outline-secondary btn-icon-text" style="border-radius: 7px; padding: 8px; min-width: 100%; margin-bottom: 7px;">
+                                                    Edit
+                                                    <i class="typcn typcn-edit btn-icon-append"></i>
+                                                </a>
+                                                @if($hasilPemeriksaan)
+                                                    <a href="{{ route('edit.hasil.prediksi', $hasilPemeriksaan->id) }}" class="btn btn-outline-secondary btn-icon-text" style="border-radius: 7px; padding: 8px; min-width: 100%; margin-bottom: 7px;">
+                                                        Edit &amp; Delete Hasil
                                                         <i class="typcn typcn-edit btn-icon-append"></i>
                                                     </a>
-
-                                                    <button class="btn btn-info btn-icon-text" style="padding: 8px 8px; margin-bottom: 7px;min-width: 100%" onclick="viewDetail({{ $hasil->id }})">
-                                                        View Detail
-                                                        <i class="typcn typcn-eye btn-icon-append"></i>
+                                                @else
+                                                    <a href="{{ route('hasilPemeriksaan.predict', $hasil->id) }}" class="btn btn-outline-secondary btn-icon-text" style="border-radius: 7px; padding: 8px; min-width: 100%;">
+                                                        Prediction
+                                                        <i class="fa-solid fa-chart-bar btn-icon-append"></i>
+                                                    </a>
+                                                @endif
+                                                <form action="{{ route('hasil-pemeriksaan.destroy', $hasil->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus hasil pemeriksaan ini?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-outline-danger btn-icon-text" style="border-radius: 7px; padding: 8px; min-width: 169px;">
+                                                        Delete
+                                                        <i class="typcn typcn-trash btn-icon-append"></i>
                                                     </button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-info btn-icon-text" style="border-radius: 7px; margin-bottom: 7px; min-width: 100%;padding: 9px" onclick="viewDetail({{ $hasil->id }})">
+                                                    View Detail
+                                                    <i class="typcn typcn-eye btn-icon-append"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
 
-                                                    @if($hasilPemeriksaan)
-                                                        <a href="{{ route('edit.hasil.prediksi', $hasilPemeriksaan->id) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px; min-width: 100%; margin-bottom: 7px;">
-                                                            Edit & Delete Hasil
-                                                            <i class="typcn typcn-edit btn-icon-append"></i>
-                                                        </a>
-                                                    @else
-                                                        <a href="{{ route('hasilPemeriksaan.predict', $hasil->id) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px; min-width: 100%;">
-                                                            Prediction
-                                                            <i class="fa-solid fa-chart-bar btn-icon-append"></i>
-                                                        </a>
-                                                    @endif
-
-                                                    <!-- Tombol Edit dan View Detail sudah ada, selanjutnya tombol Hapus -->
-                                                    <form action="{{ route('hasil-pemeriksaan.destroy', $hasil->id) }}" method="POST" style="display: inline-block;"
-                                                          onsubmit="return confirm('Apakah Anda yakin ingin menghapus hasil pemeriksaan ini?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px; margin-top: 7px;min-width: 169px">
-                                                            Delete
-                                                            <i class="typcn typcn-trash btn-icon-append"></i>
-                                                        </button>
-                                                    </form>
-
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>

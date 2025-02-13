@@ -160,14 +160,13 @@
                 <span class="nav-profile-name">{{ Auth::user()->nama ?? 'Anonim' }}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item">
-                <i class="typcn typcn-cog text-primary"></i>
-                Settings
-                </a>
-                <a class="dropdown-item">
-                <i class="typcn typcn-power text-primary"></i>
-                Logout
-                </a>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="dropdown-item">
+                        <i class="typcn typcn-power text-primary"></i>
+                        Logout
+                    </button>
+                </form>
               </div>
             </li>
           </ul>
@@ -434,7 +433,7 @@
                 <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Data Users</h4>
+                            <h4 class="card-title">Data Perawat</h4>
                             <div class="table-responsive pt-3">
                                 <table class="table table-bordered">
                                     <thead>

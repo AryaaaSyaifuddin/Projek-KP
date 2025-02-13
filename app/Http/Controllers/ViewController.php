@@ -72,12 +72,22 @@ class ViewController extends Controller
 
     public function dashboardJadwal()
     {
-        $dataPasien = Pasien::join('users', 'pasien.id_perawat', '=', 'users.id_user')
-            ->select('pasien.*', 'users.nama as nama_perawat')
+        // Periksa apakah ingin menampilkan form create, edit, atau tabel
+        $showForm = session('showForm', true); // Default true (form create)
+        $pasien = session('pasien', null); // Data pasien untuk edit
+        $dokterList = Users::where('role', 'dokter')->get();
+
+        // Ambil data pasien dengan informasi perawat dan dokter, lalu urutkan:
+        // 1. Pasien dengan jadwal pemeriksaan yang belum lewat (upcoming) muncul di atas
+        // 2. Pasien yang sudah lewat muncul di bawah, keduanya diurutkan berdasarkan tanggal dan waktu pemeriksaan secara ascending
+        $dataPasien = Pasien::join('users as perawat', 'pasien.id_perawat', '=', 'perawat.id_user')
+            ->join('users as dokter', 'pasien.id_dokter', '=', 'dokter.id_user')
+            ->select('pasien.*', 'perawat.nama as nama_perawat', 'dokter.nama as nama_dokter')
             ->orderByRaw("
                 CASE
-                    WHEN (pasien.tanggal_pemeriksaan || ' ' || pasien.waktu_pemeriksaan)::timestamp >= NOW() THEN 0
-                    ELSE 1
+                    WHEN pasien.tanggal_pemeriksaan = CURRENT_DATE THEN 0  -- Jika hari ini, tetap di atas
+                    WHEN (pasien.tanggal_pemeriksaan || ' ' || pasien.waktu_pemeriksaan)::timestamp >= NOW() THEN 1
+                    ELSE 2
                 END
             ")
             ->orderBy('pasien.tanggal_pemeriksaan', 'asc')
@@ -85,7 +95,7 @@ class ViewController extends Controller
             ->get();
 
         // Pass data ke view
-        return view('jadwal_dashboard', compact('dataPasien'));
+        return view('jadwal_dashboard', compact('showForm', 'dataPasien', 'pasien', 'dokterList'));
     }
 
 
