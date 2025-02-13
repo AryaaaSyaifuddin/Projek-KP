@@ -10,6 +10,133 @@
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* Styling Badge */
+        .badge {
+          font-size: 14px;
+          padding: 6px 12px;
+          border-radius: 12px;
+          display: inline-block;
+          transition: transform 0.3s ease;
+        }
+        .badge-success {
+          background-color: rgba(40, 167, 69, 0.7);
+          color: #fff;
+        }
+        .badge-warning {
+          background-color: rgba(255, 193, 7, 0.7);
+          color: #212529;
+        }
+        .badge:hover {
+          transform: scale(1.1);
+        }
+
+        /* Styling tombol dasar */
+        .cool-btn {
+          position: relative; /* untuk ripple effect */
+          overflow: hidden;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          border: none;
+          border-radius: 25px;
+          padding: 10px 20px;
+          font-size: 14px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          cursor: pointer;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .cool-btn:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Ripple effect */
+        .ripple {
+          position: absolute;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.6);
+          transform: scale(0);
+          animation: ripple 0.6s linear;
+          pointer-events: none;
+        }
+        @keyframes ripple {
+          to {
+            transform: scale(4);
+            opacity: 0;
+          }
+        }
+
+        /* Tombol berdasarkan kategori aksi */
+        .btn-outline-secondary {
+          background: linear-gradient(45deg, #000000, #515151);
+          color: #fff;
+        }
+        .btn-info {
+          background: linear-gradient(45deg, #0d1893, #2034c9);
+          color: #fff;
+        }
+        .btn-danger {
+          background: linear-gradient(45deg, #dc3545, #e4606d);
+          color: #fff;
+        }
+
+        /* Styling untuk ikon di dalam tombol */
+        .btn-icon-text i {
+          margin-left: 8px;
+          transition: transform 0.3s ease;
+        }
+        .btn-icon-text:hover i {
+          transform: translateX(5px);
+        }
+
+        .cool-generate-btn {
+            background-color: #343a40; /* Warna dasar gelap minimalis */
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            text-decoration: none;
+        }
+
+
+        .cool-generate-btn:hover {
+            background-color: #495057; /* Tetap dalam nuansa abu-abu, tidak biru */
+            color: #fff; /* Pastikan teks tetap putih */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tetap gunakan styling ripple jika diperlukan pada tombol lainnya */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple {
+            to {
+            transform: scale(4);
+            opacity: 0;
+            }
+        }
+    </style>
     <!-- endinject -->
     <!-- plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -67,104 +194,6 @@
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item d-none d-lg-flex  mr-2">
-              <a class="nav-link" href="#">
-                Help
-              </a>
-            </li>
-            <li class="nav-item dropdown d-flex">
-              <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
-                <i class="typcn typcn-message-typing"></i>
-                <span class="count bg-success">2</span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-                <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <img src="img/faces/face4.jpg" alt="image" class="profile-pic">
-                  </div>
-                  <div class="preview-item-content flex-grow">
-                    <h6 class="preview-subject ellipsis font-weight-normal">David Grey
-                    </h6>
-                    <p class="font-weight-light small-text mb-0">
-                      The meeting is cancelled
-                    </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <img src="img/faces/face2.jpg" alt="image" class="profile-pic">
-                  </div>
-                  <div class="preview-item-content flex-grow">
-                    <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
-                    </h6>
-                    <p class="font-weight-light small-text mb-0">
-                      New product launch
-                    </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <img src="img/faces/face3.jpg" alt="image" class="profile-pic">
-                  </div>
-                  <div class="preview-item-content flex-grow">
-                    <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
-                    </h6>
-                    <p class="font-weight-light small-text mb-0">
-                      Upcoming board meeting
-                    </p>
-                  </div>
-                </a>
-              </div>
-            </li>
-            <li class="nav-item dropdown  d-flex">
-              <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
-                <i class="typcn typcn-bell mr-0"></i>
-                <span class="count bg-danger">2</span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-success">
-                      <i class="typcn typcn-info-large mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                    <p class="font-weight-light small-text mb-0">
-                      Just now
-                    </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-warning">
-                      <i class="typcn typcn-cog mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal">Settings</h6>
-                    <p class="font-weight-light small-text mb-0">
-                      Private message
-                    </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-info">
-                      <i class="typcn typcn-user-outline mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                    <p class="font-weight-light small-text mb-0">
-                      2 days ago
-                    </p>
-                  </div>
-                </a>
-              </div>
-            </li>
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
                 <i class="typcn typcn-user-outline mr-0"></i>
@@ -496,7 +525,7 @@
                                         <th>Hasil Pemeriksaan</th>
                                         <th>Status Pemeriksaan</th>
                                         <th>Rekomendasi Medis</th> <!-- Kolom baru -->
-                                        <th>Action</th>
+                                        <th style="width: 319px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -509,35 +538,45 @@
                                             <td>{{ $hasil->statusPemeriksaan->status ?? 'Not available' }}</td>
                                             <td>
                                                 @if($hasil->rekomMedis)
-                                                    <!-- Opsional: Pastikan kedua field tidak kosong -->
-                                                    @if($hasil->rekomMedis->diagnosis && $hasil->rekomMedis->rekomendasi)
-                                                        <span class="badge badge-success">Sudah Diisi</span>
-                                                    @else
-                                                        <span class="badge badge-warning">Data Tidak Lengkap</span>
-                                                    @endif
+                                                  <!-- Opsional: Pastikan kedua field tidak kosong -->
+                                                  @if($hasil->rekomMedis->diagnosis && $hasil->rekomMedis->rekomendasi)
+                                                    <span class="badge badge-success">Sudah Diisi</span>
+                                                  @else
+                                                    <span class="badge badge-warning">Data Tidak Lengkap</span>
+                                                  @endif
                                                 @else
-                                                    <span class="badge badge-warning">Belum Diisi</span>
+                                                  <span class="badge badge-warning">Belum Diisi</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('rekomendasimedis.view', $hasil->id) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px; margin-bottom: 7px;">
-                                                    Generate Rekom Medis
-                                                    <i class="typcn typcn-edit btn-icon-append"></i>
-                                                </a>
+                                                <!-- Tombol Generate Rekom Medis -->
+                                                <a href="{{ route('rekomendasimedis.view', $hasil->id) }}"
+                                                    class="cool-generate-btn btn-icon-text"
+                                                    style="margin-bottom: 7px; width: 100%;">
+                                                   Generate Rekom Medis
+                                                   <i class="typcn typcn-edit"></i>
+                                                 </a>
 
-                                                <button class="btn btn-info btn-icon-text" style="padding: 8px 8px; margin-bottom: 7px;" onclick="viewDetail({{ $hasil->id }})">
-                                                    View Detail
-                                                    <i class="typcn typcn-eye btn-icon-append"></i>
+                                                <!-- Tombol View Detail -->
+                                                <button type="button"
+                                                        class="cool-btn btn-info btn-icon-text"
+                                                        style="margin-bottom: 7px; padding: 10px 25px;"
+                                                        onclick="viewDetail({{ $hasil->id }})">
+                                                  View Detail
+                                                  <i class="typcn typcn-eye"></i>
                                                 </button>
 
+                                                <!-- Tombol Delete -->
                                                 <form action="{{ route('rekomendasimedis.destroy', $hasil->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-icon-text" style="padding: 8px 8px; margin-bottom: 7px;"
-                                                            onclick="return confirm('Apakah Anda yakin ingin menghapus data rekomendasi medis ini?')">
-                                                        Delete
-                                                        <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                                    </button>
+                                                  @csrf
+                                                  @method('DELETE')
+                                                  <button type="submit"
+                                                          class="cool-btn btn-danger btn-icon-text"
+                                                          style="margin-bottom: 7px; padding: 10px 25px;"
+                                                          onclick="return confirm('Apakah Anda yakin ingin menghapus data rekomendasi medis ini?')">
+                                                    Delete
+                                                    <i class="typcn typcn-delete-outline"></i>
+                                                  </button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -657,6 +696,31 @@
         });
     }
     </script>
+    <script>
+        // Tambahkan ripple effect pada setiap tombol dengan kelas .cool-btn
+        document.querySelectorAll('.cool-btn').forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            // Buat elemen ripple
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+
+            // Hitung ukuran dan posisi klik
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+
+            // Tambahkan ripple ke tombol
+            this.appendChild(ripple);
+
+            // Hapus ripple setelah animasi selesai
+            setTimeout(() => {
+              ripple.remove();
+            }, 600);
+          });
+        });
+      </script>
     <script src="js/off-canvas.js"></script>
     <script src="js/hoverable-collapse.js"></script>
     <script src="js/template.js"></script>

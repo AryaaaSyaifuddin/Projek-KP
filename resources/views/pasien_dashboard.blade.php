@@ -10,6 +10,125 @@
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Style dasar untuk semua tombol */
+        .btn-outline-secondary, .btn-outline-danger, .btn-outline-success, .btn-success {
+            border: none;
+            border-radius: 7px;
+            padding: 8px 15px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        /* Tombol Edit */
+        .btn-outline-secondary {
+            background-color: #2575fc;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(37, 117, 252, 0.2);
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #1a5bbf;
+            box-shadow: 0 6px 12px rgba(37, 117, 252, 0.3);
+        }
+
+        /* Tombol Delete */
+        .btn-outline-danger {
+            background-color: #ff4b2b;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(255, 75, 43, 0.2);
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #e03a1d;
+            box-shadow: 0 6px 12px rgba(255, 75, 43, 0.3);
+        }
+
+        /* Tombol Rekam Medis */
+        .btn-outline-success {
+            background-color: #28a745;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+        }
+
+        .btn-outline-success:hover {
+            background-color: #218838;
+            box-shadow: 0 6px 12px rgba(40, 167, 69, 0.3);
+        }
+
+        /* Tombol Export PDF */
+        .btn-success {
+            background-color: #17a2b8;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(23, 162, 184, 0.2);
+        }
+
+        .btn-success:hover {
+            background-color: #138496;
+            box-shadow: 0 6px 12px rgba(23, 162, 184, 0.3);
+        }
+
+        /* Efek hover untuk ikon */
+        .btn-icon-append {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-outline-secondary:hover .btn-icon-append,
+        .btn-outline-danger:hover .btn-icon-append,
+        .btn-outline-success:hover .btn-icon-append,
+        .btn-success:hover .btn-icon-append {
+            transform: translateX(5px); /* Ikon bergeser sedikit ke kanan saat hover */
+        }
+
+        /* Style dasar untuk input field */
+        .search-input {
+            max-width: 40%;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style saat input field focus */
+        .search-input:focus {
+            border-color: #007bff;
+            box-shadow: 0 2px 10px rgba(0, 123, 255, 0.5);
+            transform: scale(1.02);
+        }
+
+        /* Animasi saat hover */
+        .search-input:hover {
+            border-color: #007bff;
+            box-shadow: 0 2px 10px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Style untuk placeholder */
+        .search-input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Animasi saat placeholder hilang saat focus */
+        .search-input:focus::placeholder {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+    </style>
     <!-- endinject -->
     <!-- plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -66,104 +185,6 @@
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item d-none d-lg-flex  mr-2">
-              <a class="nav-link" href="#">
-                Help
-              </a>
-            </li>
-            <li class="nav-item dropdown d-flex">
-              <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
-                <i class="typcn typcn-message-typing"></i>
-                <span class="count bg-success">2</span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-                <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <img src="img/faces/face4.jpg" alt="image" class="profile-pic">
-                  </div>
-                  <div class="preview-item-content flex-grow">
-                    <h6 class="preview-subject ellipsis font-weight-normal">David Grey
-                    </h6>
-                    <p class="font-weight-light small-text mb-0">
-                      The meeting is cancelled
-                    </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <img src="img/faces/face2.jpg" alt="image" class="profile-pic">
-                  </div>
-                  <div class="preview-item-content flex-grow">
-                    <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
-                    </h6>
-                    <p class="font-weight-light small-text mb-0">
-                      New product launch
-                    </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <img src="img/faces/face3.jpg" alt="image" class="profile-pic">
-                  </div>
-                  <div class="preview-item-content flex-grow">
-                    <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
-                    </h6>
-                    <p class="font-weight-light small-text mb-0">
-                      Upcoming board meeting
-                    </p>
-                  </div>
-                </a>
-              </div>
-            </li>
-            <li class="nav-item dropdown  d-flex">
-              <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
-                <i class="typcn typcn-bell mr-0"></i>
-                <span class="count bg-danger">2</span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-success">
-                      <i class="typcn typcn-info-large mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                    <p class="font-weight-light small-text mb-0">
-                      Just now
-                    </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-warning">
-                      <i class="typcn typcn-cog mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal">Settings</h6>
-                    <p class="font-weight-light small-text mb-0">
-                      Private message
-                    </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-info">
-                      <i class="typcn typcn-user-outline mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                    <p class="font-weight-light small-text mb-0">
-                      2 days ago
-                    </p>
-                  </div>
-                </a>
-              </div>
-            </li>
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
                 <i class="typcn typcn-user-outline mr-0"></i>
@@ -431,21 +452,27 @@
 
                 <!-- Tabel -->
                 <div class="form-group" style="margin: 20px 0; display: flex; justify-content: space-between;">
-                        <button
-                    type="button"
-                    class="btn btn-outline-primary btn-icon-text"
-                    style="padding: 8px 15px; min-width: 8%;"
-                    onclick="window.location='{{ route('showCreateForm') }}'">
-                    Create
-                    <i class="typcn typcn-folder btn-icon-prepend"></i>
+                    <button
+                        type="button"
+                        class="btn btn-outline-primary btn-icon-text"
+                        style="padding: 8px 15px; min-width: 8%;"
+                        onclick="window.location='{{ route('showCreateForm') }}'">
+                        Create
+                        <i class="typcn typcn-folder btn-icon-prepend"></i>
                     </button>
-                    <input
-                    type="text"
-                    id="searchInput"
-                    class="form-control"
-                    style="max-width: 40%;"
-                    placeholder="Cari pasien berdasarkan nama, nomor HP, atau lainnya..."
-                    onkeyup="filterTable()">
+                    <div class="input-group" style="justify-content: end;">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </div>
+                        <input
+                            type="text"
+                            id="searchInput"
+                            class="form-control search-input"
+                            placeholder="Cari pasien berdasarkan nama, nomor HP, atau lainnya..."
+                            onkeyup="filterTable()">
+                    </div>
                 </div>
 
         </div>
@@ -469,7 +496,7 @@
                                         <th>Perawat</th>
                                         <th>Dokter</th>
                                         <th>Jadwal Pemeriksaan</th>
-                                        <th>Action</th>
+                                        <th style="min-width: 250px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -510,9 +537,9 @@
                                                 </span>
                                             </td>
 
-                                            <td style="min-width: 190px; align-item= center">
+                                            <td style="min-width: 190px; align-items: center;">
                                                 <!-- Tombol Edit -->
-                                                <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px; min-width: 39%;">
+                                                <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 15px; width: 105px;">
                                                     Edit
                                                     <i class="typcn typcn-edit btn-icon-append"></i>
                                                 </a>
@@ -521,27 +548,26 @@
                                                 <form action="{{ route('pasien.destroy', $pasien->id_pasien) }}" method="POST" style="display:inline;" id="delete-form-{{ $pasien->id_pasien }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px; min-width: 39%;" onclick="confirmDelete({{ $pasien->id_pasien }})">
+                                                    <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px; width: 110px;" onclick="confirmDelete({{ $pasien->id_pasien }})">
                                                         Delete
                                                         <i class="typcn typcn-delete-outline btn-icon-append"></i>
                                                     </button>
                                                 </form>
 
                                                 <!-- Tombol Rekam Medis -->
-                                                <a href="{{ route('rekam_medis.create', $pasien->id_pasien) }}" class="btn btn-outline-success btn-icon-text" style="padding: 8px 8px; margin-top: 4PX; width: 80%;">
+                                                <a href="{{ route('rekam_medis.create', $pasien->id_pasien) }}" class="btn btn-outline-success btn-icon-text" style="padding: 8px 8px; margin-top: 4px; width: 100%;">
                                                     Rekam Medis
                                                     <i class="typcn typcn-plus btn-icon-append"></i>
                                                 </a>
 
                                                 @if($pasien->hasilPemeriksaan)
-                                                    <a href="{{ route('hasilpemeriksaan.exportPdf', $pasien->hasilPemeriksaan->id) }}" class="btn btn-success btn-icon-text" style="padding: 8px 8px; margin-top: 4PX; width: 80%;">
+                                                    <!-- Tombol Export PDF -->
+                                                    <a href="{{ route('hasilpemeriksaan.exportPdf', $pasien->hasilPemeriksaan->id) }}" class="btn btn-success btn-icon-text" style="padding: 8px 8px; margin-top: 4px; width: 100%;">
                                                         Export PDF
                                                         <i class="typcn typcn-document-text btn-icon-append"></i>
                                                     </a>
                                                 @endif
-
                                             </td>
-
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -754,6 +780,15 @@
                 rows[i].style.display = match ? '' : 'none';
             }
         }
+    </script>
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            if (this.value.length > 0) {
+                this.style.backgroundColor = '#f0f8ff'; // Warna background saat ada input
+            } else {
+                this.style.backgroundColor = '#fff'; // Warna background default
+            }
+        });
     </script>
     <script src="js/off-canvas.js"></script>
     <script src="js/hoverable-collapse.js"></script>

@@ -7,17 +7,15 @@
     <title>Dashboard</title>
     <!-- base:css -->
     <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
-    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Font Awesome (untuk ikon) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
 
-    <!-- jQuery dan Bootstrap JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
@@ -44,18 +42,114 @@
         padding: 10px;
         }
 
-        /* Tombol scroll */
         .scroll-button {
-        margin-top: 10px;
-        padding: 8px 16px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            padding: 10px 24px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
+        .scroll-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .scroll-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .cool-view-button {
+            background: linear-gradient(45deg, #2542d3, #394dcf);
+            color: #fff;
+            border: none;
+            border-radius: 7px;
+            padding: 10px 24px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .cool-view-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .cool-view-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        /* Opsional: custom style untuk ikon */
+        .cool-view-button i {
+            font-size: 18px;
+        }
+
+        .btn-outline-secondary, .btn-outline-danger {
+            border: none;
+            border-radius: 7px;
+            padding: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        /* Tombol Edit dan Prediction */
+        .btn-outline-secondary {
+            background-color: #2575fc;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(37, 117, 252, 0.2);
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #1a5bbf;
+            box-shadow: 0 6px 12px rgba(37, 117, 252, 0.3);
+        }
+
+        /* Tombol Delete */
+        .btn-outline-danger {
+            background-color: #ff4b2b;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(255, 75, 43, 0.2);
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #e03a1d;
+            box-shadow: 0 6px 12px rgba(255, 75, 43, 0.3);
+        }
+
+        /* Efek hover untuk ikon */
+        .btn-icon-append {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-outline-secondary:hover .btn-icon-append,
+        .btn-outline-danger:hover .btn-icon-append {
+            transform: translateX(5px); /* Ikon bergeser sedikit ke kanan saat hover */
+        }
     </style>
+
     <!-- endinject -->
     <!-- plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -65,6 +159,7 @@
     <link rel="shortcut icon" href="img/favicon.jpg" />
   </head>
   <body>
+
     @if (session('error'))
    <script>
       Swal.fire({
@@ -90,6 +185,7 @@
       });
    </script>
    @endif
+
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -102,118 +198,20 @@
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item d-none d-lg-flex  mr-2">
-              <a class="nav-link" href="#">
-                Help
-              </a>
-            </li>
-            <li class="nav-item dropdown d-flex">
-              <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
-                <i class="typcn typcn-message-typing"></i>
-                <span class="count bg-success">2</span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-                <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <img src="img/faces/face4.jpg" alt="image" class="profile-pic">
-                  </div>
-                  <div class="preview-item-content flex-grow">
-                    <h6 class="preview-subject ellipsis font-weight-normal">David Grey
-                    </h6>
-                    <p class="font-weight-light small-text mb-0">
-                      The meeting is cancelled
-                    </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <img src="img/faces/face2.jpg" alt="image" class="profile-pic">
-                  </div>
-                  <div class="preview-item-content flex-grow">
-                    <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
-                    </h6>
-                    <p class="font-weight-light small-text mb-0">
-                      New product launch
-                    </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <img src="img/faces/face3.jpg" alt="image" class="profile-pic">
-                  </div>
-                  <div class="preview-item-content flex-grow">
-                    <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
-                    </h6>
-                    <p class="font-weight-light small-text mb-0">
-                      Upcoming board meeting
-                    </p>
-                  </div>
-                </a>
-              </div>
-            </li>
-            <li class="nav-item dropdown  d-flex">
-              <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
-                <i class="typcn typcn-bell mr-0"></i>
-                <span class="count bg-danger">2</span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-success">
-                      <i class="typcn typcn-info-large mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                    <p class="font-weight-light small-text mb-0">
-                      Just now
-                    </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-warning">
-                      <i class="typcn typcn-cog mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal">Settings</h6>
-                    <p class="font-weight-light small-text mb-0">
-                      Private message
-                    </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-info">
-                      <i class="typcn typcn-user-outline mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                    <p class="font-weight-light small-text mb-0">
-                      2 days ago
-                    </p>
-                  </div>
-                </a>
-              </div>
-            </li>
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
                 <i class="typcn typcn-user-outline mr-0"></i>
                 <span class="nav-profile-name">{{ Auth::user()->nama ?? 'Anonim' }}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="dropdown-item">
-                        <i class="typcn typcn-power text-primary"></i>
-                        Logout
-                    </button>
-                </form>
-              </div>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="dropdown-item">
+                    <i class="typcn typcn-power text-primary"></i>
+                    Logout
+                </button>
+            </form>
+        </div>
             </li>
           </ul>
           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -273,13 +271,16 @@
                 <input type="text" class="form-control" placeholder="Type to search..." aria-label="search" aria-describedby="search">
                 <div class="input-group-append">
                   <span class="input-group-text" id="search">
-                    <i class="typcn typcn-zoom"></i>
-                  </span>
+                      <i class="typcn typcn-zoom"></i>
+                    </span>
                 </div>
               </div>
             </div>
             <p class="sidebar-menu-title">Dashboard menu</p>
           </li>
+
+
+          {{-- INI TAMPILAN JIKA ROLE DARI USER == 'Admin' --}}
           @if(Auth::user()->role === 'admin')
           <li class="nav-item">
             <a class="nav-link" href="/dashboard">
@@ -296,7 +297,6 @@
             <div class="collapse" id="dokter">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="/dokter">Data Dokter</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="">Jadwal Perawat</a></li>
                 </ul>
             </div>
         </li>
@@ -309,11 +309,9 @@
             <div class="collapse" id="perawat">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="/perawat">Data Perawat</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">Jadwal Perawat</a></li>
                 </ul>
             </div>
         </li>
-
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="akun">
               <i class="fas fa-user-circle menu-icon"></i>
@@ -345,7 +343,7 @@
               <span class="menu-title">Hasil Pemeriksaan</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="hasil_pemeriksaan">
+            <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/hasil-pemeriksaan">Hasil Pemeriksaan</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/persetujuan_hasil_pemeriksaan">Status Hasil Pemeriksaan</a></li>
@@ -355,6 +353,8 @@
           </li>
         @endif
 
+
+        {{-- INI TAMPILAN JIKA ROLE DARI USER == 'Perawat' --}}
         @if (Auth::user()->role === 'perawat')
           <li class="nav-item">
             <a class="nav-link" href="/dashboard">
@@ -389,6 +389,9 @@
           </li>
           @endif
 
+
+
+          {{-- INI TAMPILAN JIKA ROLE DARI USER == 'Dokter' --}}
           @if (Auth::user()->role === 'dokter')
           <li class="nav-item">
             <a class="nav-link" href="/dashboard">
@@ -457,17 +460,6 @@
         @if($showForm === true)
             <!-- Tombol Create -->
             <div class="button-action">
-
-                {{-- <button
-                type="button"
-                class="btn btn-outline-primary btn-icon-text"
-                style="padding: 8px 15px;"
-                onclick="window.location='{{ route('showCreateForm') }}'">
-                Create
-                <i class="typcn typcn-folder btn-icon-prepend"></i>
-                </button> --}}
-
-                <!-- Tabel -->
                 <div class="form-group" style="margin: 20px 0; display: flex; justify-content: space-between;">
                     <input
                     type="text"
@@ -484,7 +476,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Data Rekam Medis Pasien</h4>
 
-                        <button class="scroll-button" onclick="scrollRight()" style="border-radius: 25px;">Scroll Right</button>
+                        <button class="scroll-button" onclick="scrollRight()" style="border-radius: 25px;background-color: rgba(13, 110, 253, 0.7);">Scroll Right -></button>
 
                         <!-- Modal Detail Hasil Pemeriksaan -->
                         <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
@@ -763,7 +755,7 @@
                                                     <i class="typcn typcn-edit btn-icon-append"></i>
                                                 </a>
                                                 @if($hasilPemeriksaan)
-                                                    <a href="{{ route('edit.hasil.prediksi', $hasilPemeriksaan->id) }}" class="btn btn-outline-secondary btn-icon-text" style="border-radius: 7px; padding: 8px; min-width: 100%; margin-bottom: 7px;">
+                                                    <a href="{{ route('edit.hasil.prediksi', $hasilPemeriksaan->id) }}" class="btn btn-outline-secondary btn-icon-text" style="border-radius: 7px; padding: 8px; min-width: 100%;">
                                                         Edit &amp; Delete Hasil
                                                         <i class="typcn typcn-edit btn-icon-append"></i>
                                                     </a>
@@ -776,16 +768,16 @@
                                                 <form action="{{ route('hasil-pemeriksaan.destroy', $hasil->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus hasil pemeriksaan ini?');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger btn-icon-text" style="border-radius: 7px; padding: 8px; min-width: 169px;">
+                                                    <button type="submit" class="btn btn-outline-danger btn-icon-text" style="border-radius: 7px; padding: 8px; min-width: 169px; margin-top: 7px">
                                                         Delete
                                                         <i class="typcn typcn-trash btn-icon-append"></i>
                                                     </button>
                                                 </form>
                                             </td>
                                             <td>
-                                                <button class="btn btn-info btn-icon-text" style="border-radius: 7px; margin-bottom: 7px; min-width: 100%;padding: 9px" onclick="viewDetail({{ $hasil->id }})">
+                                                <button class="cool-view-button" onclick="viewDetail({{ $hasil->id }})">
                                                     View Detail
-                                                    <i class="typcn typcn-eye btn-icon-append"></i>
+                                                    <i class="typcn typcn-eye"></i>
                                                 </button>
                                             </td>
                                         </tr>
@@ -853,10 +845,11 @@
         function filterTable() {
             const input = document.getElementById('searchInput');
             const filter = input.value.toLowerCase();
-            const table = document.getElementById('dataTable');
-            const rows = table.getElementsByTagName('tr');
+            // Ambil tbody saja agar hanya memproses baris data
+            const tbody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+            const rows = tbody.getElementsByTagName('tr');
 
-            for (let i = 1; i < rows.length; i++) { // Mulai dari 1 untuk melewati header
+            for (let i = 0; i < rows.length; i++) {
                 const cells = rows[i].getElementsByTagName('td');
                 let match = false;
 
@@ -869,11 +862,11 @@
                         }
                     }
                 }
-
                 rows[i].style.display = match ? '' : 'none';
             }
         }
     </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const deleteButtons = document.querySelectorAll('.btn-outline-danger');
@@ -1033,6 +1026,21 @@
             behavior: 'smooth'
           });
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.btn-outline-secondary, .btn-outline-danger');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Efek feedback saat tombol diklik
+                button.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    button.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+    });
     </script>
     <script src="js/off-canvas.js"></script>
     <script src="js/hoverable-collapse.js"></script>
