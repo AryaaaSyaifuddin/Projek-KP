@@ -11,6 +11,45 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* Style dasar untuk input field */
+        .search-input {
+            max-width: 40%;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style saat input field focus */
+        .search-input:focus {
+            border-color: #007bff;
+            box-shadow: 0 2px 10px rgba(0, 123, 255, 0.5);
+            transform: scale(1.02);
+        }
+
+        /* Animasi saat hover */
+        .search-input:hover {
+            border-color: #007bff;
+            box-shadow: 0 2px 10px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Style untuk placeholder */
+        .search-input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Animasi saat placeholder hilang saat focus */
+        .search-input:focus::placeholder {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+    </style>
     <!-- endinject -->
     <!-- plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -266,14 +305,31 @@
 
             @if($showForm === true)
             <!-- Tombol Create -->
-            <button
-                type="button"
-                class="btn btn-outline-primary btn-icon-text"
-                style="padding: 8px 15px;"
-                onclick="window.location='{{ route('showCreateFormAkun') }}'">
-                Create
-                <i class="typcn typcn-folder btn-icon-prepend"></i>
-            </button>
+
+            <div class="form-group" style="margin: 20px 0; display: flex; justify-content: space-between;">
+                <button
+                    type="button"
+                    class="btn btn-outline-primary btn-icon-text"
+                    style="padding: 8px 15px; width: 8%;"
+                    onclick="window.location='{{ route('showCreateFormAkun') }}'">
+                    Create
+                    <i class="typcn typcn-folder btn-icon-prepend"></i>
+                </button>
+                <div class="input-group" style="justify-content: end;">
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                    <input
+                        type="text"
+                        id="searchInput"
+                        class="form-control search-input"
+                        placeholder="Cari pasien berdasarkan nama, nomor HP, atau lainnya..."
+                        onkeyup="filterTable()">
+                </div>
+            </div>
+
 
             <!-- Tabel -->
             <div class="col-lg-12 grid-margin stretch-card" style="padding: 15px 0px">

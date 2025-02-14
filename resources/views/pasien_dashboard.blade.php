@@ -781,7 +781,7 @@
             }
         }
     </script>
-    <script>
+    {{-- <script>
         document.getElementById('searchInput').addEventListener('input', function() {
             if (this.value.length > 0) {
                 this.style.backgroundColor = '#f0f8ff'; // Warna background saat ada input
@@ -789,7 +789,7 @@
                 this.style.backgroundColor = '#fff'; // Warna background default
             }
         });
-    </script>
+    </script> --}}
     <script src="js/off-canvas.js"></script>
     <script src="js/hoverable-collapse.js"></script>
     <script src="js/template.js"></script>
