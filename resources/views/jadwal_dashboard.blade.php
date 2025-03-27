@@ -12,6 +12,49 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
     <style>
+        .cool-edit-button,
+        .cool-delete-button {
+            border: none;
+            border-radius: 25px;
+            padding: 13px 25px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .cool-edit-button {
+            background: linear-gradient(45deg, #1a167f, #0c2aa1);
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            border: none;
+            width: 125px;
+        }
+
+        .cool-edit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .cool-delete-button {
+            background: linear-gradient(45deg, #d80939, #dd2a0a);
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(220, 20, 60, 0.4);
+        }
+
+        .cool-delete-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
         /* Style dasar untuk input field */
         .search-input {
             max-width: 40%;
@@ -366,7 +409,7 @@
                                         <th>Nama</th>
                                         <th>Jadwal Pemeriksaan</th>
                                         <th>Perawat</th>
-                                        <th>Action</th>
+                                        <th style="width: 284px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -398,18 +441,18 @@
                                                 {{-- {{ $pasien->perawat->nama ?? 'Tidak Diketahui' }} Jika menggunakan relationship --}}
                                             </td>
                                             <td>
-                                                <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 15px;">
-                                                    Edit
-                                                    <i class="typcn typcn-edit btn-icon-append"></i>
+                                                <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="cool-edit-button">
+                                                  Edit
+                                                  <i class="typcn typcn-edit"></i>
                                                 </a>
 
                                                 <form action="{{ route('pasien.destroy', $pasien->id_pasien) }}" method="POST" style="display:inline;" id="delete-form-{{ $pasien->id_pasien }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 15px;" onclick="confirmDelete({{ $pasien->id_pasien }})">
-                                                        Delete
-                                                        <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                                    </button>
+                                                  @csrf
+                                                  @method('DELETE')
+                                                  <button type="button" class="cool-delete-button" onclick="confirmDelete({{ $pasien->id_pasien }})">
+                                                    Delete
+                                                    <i class="typcn typcn-delete-outline"></i>
+                                                  </button>
                                                 </form>
                                             </td>
                                         </tr>

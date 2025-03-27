@@ -185,6 +185,76 @@
         .btn-outline-danger:hover .btn-icon-append {
             transform: translateX(5px); /* Ikon bergeser sedikit ke kanan saat hover */
         }
+
+         /* Base styling untuk semua tombol */
+        .cool-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Tombol Edit */
+        .cool-edit-button {
+            background: linear-gradient(45deg, #1a167f, #0c2aa1);
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            border: none;
+        }
+        .cool-edit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Tombol Prediction */
+        .cool-prediction-button {
+            background: linear-gradient(45deg, #FF8C00, #FFA500);
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(255, 140, 0, 0.4);
+            border: none;
+        }
+        .cool-prediction-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(255, 140, 0, 0.6);
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Tombol Delete */
+        .cool-delete-button {
+            background: linear-gradient(45deg, #d80939, #dd2a0a);
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(220, 20, 60, 0.4);
+        }
+        .cool-delete-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(220, 20, 60, 0.6);
+        }
+
+        /* Tombol View Detail (sudah pernah dibuat sebelumnya) */
+        .cool-view-button {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(255, 65, 108, 0.4);
+            padding: 10px 20px;
+        }
+        .cool-view-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(255, 65, 108, 0.6);
+        }
     </style>
 
     <!-- endinject -->
@@ -788,39 +858,58 @@
                                             <td>
                                                 @php
                                                     $hasilPemeriksaan = $hasilPrediksi->where('id_rekammedis', $hasil->id)->first();
+                                                    $hasilText = $hasilPemeriksaan ? $hasilPemeriksaan->hasil_pemeriksaan : '-';
+                                                    $color = '';
+
+                                                    if ($hasilText == 'Fit to Work') {
+                                                        $color = 'green';
+                                                    } elseif ($hasilText == 'Fit with Note') {
+                                                        $color = '#dadc0a';
+                                                    } elseif ($hasilText == 'Fit with Restriction') {
+                                                        $color = 'orange';
+                                                    } elseif ($hasilText == 'Unfit') {
+                                                        $color = 'red';
+                                                    }
                                                 @endphp
-                                                {{ $hasilPemeriksaan ? $hasilPemeriksaan->hasil_pemeriksaan : '-' }}
+                                                <span style="color: {{ $color }}; font-weight: bold;">{{ $hasilText }}</span>
                                             </td>
+
                                             <td>{{ $hasil->statusPemeriksaan->status ?? 'Not available' }}</td>
                                             <td>
-                                                <a href="{{ route('edit.hasil.pemeriksaan', $hasil->id) }}" class="btn btn-outline-secondary btn-icon-text" style="border-radius: 7px; padding: 8px; min-width: 100%; margin-bottom: 7px;">
-                                                    Edit
-                                                    <i class="typcn typcn-edit btn-icon-append"></i>
+                                                <!-- Tombol Edit -->
+                                                <a href="{{ route('edit.hasil.pemeriksaan', $hasil->id) }}" class="cool-btn cool-edit-button" style="min-width: 100%; margin-bottom: 7px;">
+                                                  Edit
+                                                  <i class="typcn typcn-edit"></i>
                                                 </a>
+
+                                                <!-- Tombol Edit & Delete Hasil / Prediction -->
                                                 @if($hasilPemeriksaan)
-                                                    <a href="{{ route('edit.hasil.prediksi', $hasilPemeriksaan->id) }}" class="btn btn-outline-secondary btn-icon-text" style="border-radius: 7px; padding: 8px; min-width: 100%;">
-                                                        Edit &amp; Delete Hasil
-                                                        <i class="typcn typcn-edit btn-icon-append"></i>
-                                                    </a>
+                                                  <a href="{{ route('edit.hasil.prediksi', $hasilPemeriksaan->id) }}" class="cool-btn cool-edit-button" style="min-width: 100%;">
+                                                    Edit &amp; Delete Hasil
+                                                    <i class="typcn typcn-edit"></i>
+                                                  </a>
                                                 @else
-                                                    <a href="{{ route('hasilPemeriksaan.predict', $hasil->id) }}" class="btn btn-outline-secondary btn-icon-text" style="border-radius: 7px; padding: 8px; min-width: 100%;">
-                                                        Prediction
-                                                        <i class="fa-solid fa-chart-bar btn-icon-append"></i>
-                                                    </a>
+                                                  <a href="{{ route('hasilPemeriksaan.predict', $hasil->id) }}" class="cool-btn cool-prediction-button" style="min-width: 100%;">
+                                                    Prediction
+                                                    <i class="fa-solid fa-chart-bar"></i>
+                                                  </a>
                                                 @endif
+
+                                                <!-- Tombol Delete -->
                                                 <form action="{{ route('hasil-pemeriksaan.destroy', $hasil->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus hasil pemeriksaan ini?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger btn-icon-text" style="border-radius: 7px; padding: 8px; min-width: 169px; margin-top: 7px">
-                                                        Delete
-                                                        <i class="typcn typcn-trash btn-icon-append"></i>
-                                                    </button>
+                                                  @csrf
+                                                  @method('DELETE')
+                                                  <button type="submit" class="cool-btn cool-delete-button" style="min-width: 169px; margin-top: 7px;">
+                                                    Delete
+                                                    <i class="typcn typcn-trash"></i>
+                                                  </button>
                                                 </form>
                                             </td>
                                             <td>
-                                                <button class="cool-view-button" onclick="viewDetail({{ $hasil->id }})">
-                                                    View Detail
-                                                    <i class="typcn typcn-eye"></i>
+                                                <!-- Tombol View Detail -->
+                                                <button class="cool-btn cool-view-button" onclick="viewDetail({{ $hasil->id }})" style="min-width: 100%;">
+                                                  View Detail
+                                                  <i class="typcn typcn-eye"></i>
                                                 </button>
                                             </td>
                                         </tr>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\adminController;
+use App\Http\Controllers\EditRekamMedisController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PasienController;
 use App\Http\Middleware\PerawatMiddleware;
@@ -38,6 +39,8 @@ Route::middleware([UsersMiddleware::class])->group(function () {
     // ==========================================================================================================================================================
 
     Route::get('/error', [viewController::class, 'error']);
+
+    Route::get('/error1', [viewController::class, 'apalah']);
 
     // ==========================================================================================================================================================
 
@@ -115,8 +118,11 @@ Route::middleware([UsersMiddleware::class])->group(function () {
 
     Route::get('/rekomendasimedis/detail/{id}', [RekomendasiMedisController::class, 'detail'])->name('rekomendasimedis.detail')->middleware(DokMinMiddleware::class);
 
-    Route::delete('/rekomendasimedis/{id}', [RekomendasiMedisController::class, 'destroy'])->name('rekomendasimedis.destroy');
+    Route::delete('/rekomendasimedis/{id}', [RekomendasiMedisController::class, 'destroy'])->name('rekomendasimedis.destroy')->middleware(DokMinMiddleware::class);
 
+    Route::get('/rekomendasimedis/detail/{id}', [RekomendasiMedisController::class, 'show'])->name('rekomendasimedis.detail');
+    
+    Route::put('/rekomendasimedis/{id}', [RekomendasiMedisController::class, 'update'])->name('rekomendasimedis.update');
 
     // ==========================================================================================================================================================
 

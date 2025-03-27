@@ -49,6 +49,61 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
+
+        .cool-edit-button,
+        .cool-delete-button {
+            border: none;
+            border-radius: 7px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            width: 125px;
+        }
+
+        .cool-edit-button {
+            background: linear-gradient(45deg, #1a167f, #0c2aa1);
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            border: none;
+            border-radius: 25px;
+            width: 125px;
+        }
+
+        .cool-edit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgb(0, 0, 0, 0.3);
+            color: #fff;
+            text-decoration: none;
+
+        }
+
+        .cool-delete-button {
+            background: linear-gradient(45deg, #d80939, #dd2a0a);
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(220, 20, 60, 0.4);
+            width: 110px;
+            border-radius: 25px;
+            width: 125px;
+        }
+
+        .cool-delete-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .cool-icon {
+            margin-left: 8px;
+            font-size: 16px;
+        }
     </style>
     <!-- endinject -->
     <!-- plugin css for this page -->
@@ -310,7 +365,7 @@
                 <button
                     type="button"
                     class="btn btn-outline-primary btn-icon-text"
-                    style="padding: 8px 15px; width: 8%;"
+                    style="padding: 8px 15px; width: 8%; border-radius: 25px;"
                     onclick="window.location='{{ route('showCreateFormAkun') }}'">
                     Create
                     <i class="typcn typcn-folder btn-icon-prepend"></i>
@@ -347,7 +402,7 @@
                                         <th>Email</th>
                                         <th>No HP</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+                                        <th style="width: 285px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -361,17 +416,18 @@
                                             <td>{{ $user->no_hp }}</td>
                                             <td>{{ $user->status }}</td>
                                             <td style="min-width: 190px">
-                                                <a href="{{ route('editAkun', $user->id_user) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px;">
+                                                <a href="{{ route('editAkun', $user->id_user) }}" class="cool-edit-button">
                                                     Edit
-                                                    <i class="typcn typcn-edit btn-icon-append"></i>
+                                                    <i class="typcn typcn-edit cool-icon"></i>
                                                 </a>
 
+                                                <!-- Tombol Delete -->
                                                 <form action="{{ route('destroyAkun', $user->id_user) }}" method="POST" style="display:inline;" id="delete-form-{{ $user->id_user }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px;" onclick="confirmDelete({{ $user->id_user }})">
+                                                    <button type="button" class="cool-delete-button" onclick="confirmDelete({{ $user->id_user }})">
                                                         Delete
-                                                        <i class="typcn typcn-delete-outline btn-icon-append"></i>
+                                                        <i class="typcn typcn-delete-outline cool-icon"></i>
                                                     </button>
                                                 </form>
                                             </td>

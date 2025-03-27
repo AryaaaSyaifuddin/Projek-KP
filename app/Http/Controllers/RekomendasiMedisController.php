@@ -728,5 +728,41 @@ class RekomendasiMedisController extends Controller
         return redirect()->back()->with('success', 'Data rekomendasi medis berhasil dihapus!');
     }
 
+    public function show($id)
+    {
+        $rekomendasi = RekomendasiMedis::where('hasil_pemeriksaan_id', $id)->first();
 
+        if ($rekomendasi) {
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'diagnosis' => $rekomendasi->diagnosis,
+                    'rekomendasi' => $rekomendasi->rekomendasi
+                ]
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'data' => [
+                    'diagnosis' => null,
+                    'rekomendasi' => null
+                ]
+            ]);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'diagnosis' => 'required|string',
+            'rekomendasi' => 'required|string'
+        ]);
+
+        $rekomendasi = RekomendasiMedis::updateOrCreate(
+            ['hasil_pemeriksaan_id' => $id],
+            $request->only(['diagnosis', 'rekomendasi'])
+        );
+
+        return response()->json(['success' => true]);
+    }
 }

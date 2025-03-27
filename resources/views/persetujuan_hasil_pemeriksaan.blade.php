@@ -17,7 +17,7 @@
           border: none;
           color: #fff;
           border-radius: 25px;
-          padding: 8px 16px;
+          padding: 11px 26px;
           font-size: 14px;
           text-transform: uppercase;
           letter-spacing: 0.5px;
@@ -34,6 +34,8 @@
         /* Tombol Setujui dengan gradient biru gelap */
         .cool-approve-btn {
           background: linear-gradient(45deg, #086f1d, #074d05);
+          margin-right: 5px;
+          width: 170px;
         }
         .cool-approve-btn:hover {
           transform: translateY(-2px);
@@ -42,7 +44,11 @@
 
         /* Tombol Kembalikan dengan gradient abu-abu elegan */
         .cool-revert-btn {
-          background: linear-gradient(45deg, #630b0b, #ae4b4b);
+            background: linear-gradient(45deg, #d80939, #dd2a0a);
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(220, 20, 60, 0.4);
+            width: 170px;
         }
         .cool-revert-btn:hover {
           transform: translateY(-2px);
@@ -437,7 +443,7 @@
                                             <td>{{ $hasil->patient->nama_panjang ?? 'Not available' }}</td>
                                             <td>{{ $hasil->prediksi->hasil_pemeriksaan ?? 'Not available' }}</td>
                                             <td>{{ $hasil->statusPemeriksaan->status ?? 'Not available' }}</td>
-                                            <td>
+                                            <td style="justify-content: space-between; display: flex;">
                                                 <!-- Tombol Setujui -->
                                                 <form action="{{ route('status_pemeriksaan.update', $hasil->statusPemeriksaan->id) }}" method="POST" class="d-inline">
                                                   @csrf

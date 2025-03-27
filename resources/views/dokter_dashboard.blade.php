@@ -48,6 +48,57 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
+
+        .cool-edit-button,
+        .cool-delete-button {
+            border: none;
+            border-radius: 7px;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            width: 100px;
+            justify-content: space-around;
+            width: 125px;
+        }
+
+        .cool-edit-button {
+            background: linear-gradient(45deg, #1a167f, #0c2aa1);
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            border: none;
+            border-radius: 25px;
+        }
+
+        .cool-edit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .cool-delete-button {
+            background: linear-gradient(45deg, #d80939, #dd2a0a);
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(220, 20, 60, 0.4);
+            border-radius: 25px;
+        }
+
+        .cool-delete-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            color: #fff;
+            text-decoration: none;
+        }
     </style>
     <!-- endinject -->
     <!-- plugin css for this page -->
@@ -338,7 +389,7 @@
                                             <th>Username</th>
                                             <th>Email</th>
                                             <th>No HP</th>
-                                            <th>Action</th>
+                                            <th style="    width: 285px;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -351,18 +402,18 @@
                                                 <td>{{ $user->email }}</td>
                                                 <td>{{ $user->no_hp }}</td>
                                                 <td style="min-width: 190px">
-                                                    <a href="{{ route('editAkun', $user->id_user) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 8px;">
-                                                        Edit
-                                                        <i class="typcn typcn-edit btn-icon-append"></i>
+                                                    <a href="{{ route('editAkun', $user->id_user) }}" class="cool-edit-button">
+                                                      Edit
+                                                      <i class="typcn typcn-edit"></i>
                                                     </a>
 
                                                     <form action="{{ route('destroyAkun', $user->id_user) }}" method="POST" style="display:inline;" id="delete-form-{{ $user->id_user }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px;" onclick="confirmDelete({{ $user->id_user }})">
-                                                            Delete
-                                                            <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                                        </button>
+                                                      @csrf
+                                                      @method('DELETE')
+                                                      <button type="button" class="cool-delete-button" onclick="confirmDelete({{ $user->id_user }})">
+                                                        Delete
+                                                        <i class="typcn typcn-delete-outline"></i>
+                                                      </button>
                                                     </form>
                                                 </td>
                                             </tr>

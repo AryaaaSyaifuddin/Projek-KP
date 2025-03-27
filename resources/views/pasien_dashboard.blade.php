@@ -12,85 +12,63 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Style dasar untuk semua tombol */
-        .btn-outline-secondary, .btn-outline-danger, .btn-outline-success, .btn-success {
-            border: none;
-            border-radius: 7px;
-            padding: 8px 15px;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            text-align: center;
-            margin-bottom: 4px;
-        }
+         /* Style dasar untuk semua tombol aksi */
+            .action-btn {
+                border: none;
+                border-radius: 7px;
+                padding: 8px 15px;
+                font-size: 14px;
+                font-weight: bold;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                cursor: pointer;
+                /* Ukuran lebar auto supaya responsive */
+                width: auto;
+            }
+            .action-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                text-decoration: none;
+                color: #fff
+            }
 
-        /* Tombol Edit */
-        .btn-outline-secondary {
-            background-color: #2575fc;
-            color: #fff;
-            box-shadow: 0 4px 8px rgba(37, 117, 252, 0.2);
-        }
-
-        .btn-outline-secondary:hover {
-            background-color: #1a5bbf;
-            box-shadow: 0 6px 12px rgba(37, 117, 252, 0.3);
-        }
-
-        /* Tombol Delete */
-        .btn-outline-danger {
-            background-color: #ff4b2b;
-            color: #fff;
-            box-shadow: 0 4px 8px rgba(255, 75, 43, 0.2);
-        }
-
-        .btn-outline-danger:hover {
-            background-color: #e03a1d;
-            box-shadow: 0 6px 12px rgba(255, 75, 43, 0.3);
-        }
-
-        /* Tombol Rekam Medis */
-        .btn-outline-success {
-            background-color: #28a745;
-            color: #fff;
-            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
-        }
-
-        .btn-outline-success:hover {
-            background-color: #218838;
-            box-shadow: 0 6px 12px rgba(40, 167, 69, 0.3);
-        }
-
-        /* Tombol Export PDF */
-        .btn-success {
-            background-color: #17a2b8;
-            color: #fff;
-            box-shadow: 0 4px 8px rgba(23, 162, 184, 0.2);
-        }
-
-        .btn-success:hover {
-            background-color: #138496;
-            box-shadow: 0 6px 12px rgba(23, 162, 184, 0.3);
-        }
-
-        /* Efek hover untuk ikon */
-        .btn-icon-append {
-            transition: transform 0.3s ease;
-        }
-
-        .btn-outline-secondary:hover .btn-icon-append,
-        .btn-outline-danger:hover .btn-icon-append,
-        .btn-outline-success:hover .btn-icon-append,
-        .btn-success:hover .btn-icon-append {
-            transform: translateX(5px); /* Ikon bergeser sedikit ke kanan saat hover */
-        }
+            /* Tombol Edit */
+            .btn-edit {
+                background: linear-gradient(45deg, #1a167f, #0c2aa1);
+                color: #fff;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+                border: none;
+                width: 100%;
+                border-radius: 25px;
+            }
+            /* Tombol Delete */
+            .btn-delete {
+                background: linear-gradient(45deg, #d80939, #dd2a0a);
+                color: #fff;
+                border: none;
+                box-shadow: 0 4px 8px rgba(220, 20, 60, 0.4);
+                width: 217px;
+                border-radius: 25px;
+            }
+            /* Tombol Rekam Medis */
+            .btn-rekam {
+                background: linear-gradient(45deg, #14704f, #156f36);
+                color: #fff;
+                width: 100%;
+                border-radius: 25px;
+            }
+            /* Tombol Export PDF */
+            .btn-export {
+                background: linear-gradient(45deg, #FF8C00, #FFA500);
+                color: #fff;
+                width: 100%;
+                border-radius: 25px;
+            }
 
         /* Style dasar untuk input field */
         .search-input {
@@ -455,7 +433,7 @@
                     <button
                         type="button"
                         class="btn btn-outline-primary btn-icon-text"
-                        style="padding: 8px 15px; min-width: 8%;"
+                        style="padding: 8px 15px; min-width: 8%; border-radius: 25px;"
                         onclick="window.location='{{ route('showCreateForm') }}'">
                         Create
                         <i class="typcn typcn-folder btn-icon-prepend"></i>
@@ -537,35 +515,31 @@
                                                 </span>
                                             </td>
 
-                                            <td style="min-width: 190px; align-items: center;">
+                                            <td style="min-width: 190px; display: flex; flex-direction: column; gap: 6px; align-items: center;">
                                                 <!-- Tombol Edit -->
-                                                <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="btn btn-outline-secondary btn-icon-text" style="padding: 8px 15px; width: 105px;">
-                                                    Edit
-                                                    <i class="typcn typcn-edit btn-icon-append"></i>
+                                                <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="action-btn btn-edit">
+                                                    Edit <i class="typcn typcn-edit"></i>
                                                 </a>
 
-                                                <!-- Tombol Delete -->
-                                                <form action="{{ route('pasien.destroy', $pasien->id_pasien) }}" method="POST" style="display:inline;" id="delete-form-{{ $pasien->id_pasien }}">
+                                                  <!-- Tombol Delete -->
+                                                <form action="{{ route('pasien.destroy', $pasien->id_pasien) }}" method="POST" id="delete-form-{{ $pasien->id_pasien }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-outline-danger btn-icon-text" style="padding: 8px 8px; width: 110px;" onclick="confirmDelete({{ $pasien->id_pasien }})">
-                                                        Delete
-                                                        <i class="typcn typcn-delete-outline btn-icon-append"></i>
+                                                    <button type="button" class="action-btn btn-delete" onclick="confirmDelete({{ $pasien->id_pasien }})">
+                                                      Delete <i class="typcn typcn-delete-outline"></i>
                                                     </button>
                                                 </form>
 
-                                                <!-- Tombol Rekam Medis -->
-                                                <a href="{{ route('rekam_medis.create', $pasien->id_pasien) }}" class="btn btn-outline-success btn-icon-text" style="padding: 8px 8px; margin-top: 4px; width: 100%;">
-                                                    Rekam Medis
-                                                    <i class="typcn typcn-plus btn-icon-append"></i>
+                                                  <!-- Tombol Rekam Medis -->
+                                                <a href="{{ route('rekam_medis.create', $pasien->id_pasien) }}" class="action-btn btn-rekam">
+                                                    Rekam Medis <i class="typcn typcn-plus"></i>
                                                 </a>
 
                                                 @if($pasien->hasilPemeriksaan)
                                                     <!-- Tombol Export PDF -->
-                                                    <a href="{{ route('hasilpemeriksaan.exportPdf', $pasien->hasilPemeriksaan->id) }}" class="btn btn-success btn-icon-text" style="padding: 8px 8px; margin-top: 4px; width: 100%;">
-                                                        Export PDF
-                                                        <i class="typcn typcn-document-text btn-icon-append"></i>
-                                                    </a>
+                                                <a href="{{ route('hasilpemeriksaan.exportPdf', $pasien->hasilPemeriksaan->id) }}" class="action-btn btn-export">
+                                                    Export PDF <i class="typcn typcn-document-text"></i>
+                                                </a>
                                                 @endif
                                             </td>
                                         </tr>

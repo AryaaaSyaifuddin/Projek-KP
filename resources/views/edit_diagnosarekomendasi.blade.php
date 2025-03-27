@@ -28,7 +28,7 @@
     </style>
   </head>
   <body>
-    @if (session('error'))
+    {{-- @if (session('error'))
    <script>
       Swal.fire({
          title: 'Error!',
@@ -65,6 +65,7 @@
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul class="navbar-nav navbar-nav-right">
+
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
                 <i class="typcn typcn-user-outline mr-0"></i>
@@ -251,7 +252,7 @@
           </li>
           @endif
 
-          @if (Auth::user()->role === 'dokter')
+        @if (Auth::user()->role === 'dokter')
           <li class="nav-item">
             <a class="nav-link" href="/dashboard">
               <i class="typcn typcn-device-desktop menu-icon"></i>
@@ -311,11 +312,10 @@
                 <h3 class="mb-0 font-weight-bold">{{ Auth::user()->nama ?? 'Anonim' }}</h3>
                 <p>Selamat satang di Sistem Manajemen Check Up</p>
               </div>
-
             </div>
 
 
-            <form action="/predict" method="POST" >
+            <form action="/predict" method="POST" style="margin-bottom: 40px;" >
                 @csrf
                 <!-- Personal Information -->
                 <div class="row">
@@ -742,7 +742,6 @@
                                 <input type="number" id="berat_jenis_pada_urine" name="berat_jenis_pada_urine" class="form-control" step="0.001" value="{{ $hasilPemeriksaan->berat_jenis_pada_urine }}" required>
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <label for="nitrite_pada_urine" class="col-sm-4 col-form-label">Nitrite pada urine:</label>
                             <div class="col-sm-8">
@@ -854,36 +853,57 @@
                                 </select>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
-                <!-- Tombol Submit -->
-                <button type="submit" name="action" class="btn btn-primary">Predict</button>
-                <a href="/hasil-pemeriksaan" class="btn btn-secondary">Batal</a>
+                <a href="/hasil-pemeriksaan" class="btn btn-secondary">Back</a>
             </form>
+
+            <div class="container">
+                <h1>Edit Diagnosa dan Rekomendasi Medis</h1>
+                <div class="row">
+                    <div class="col-md-6">
+                        <form action="{{ route('rekomendasimedis.update', $rekomendasi->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <!-- Field Diagnosa -->
+                            <div class="form-group row">
+                                <label for="diagnosa" class="col-sm-4 col-form-label">Diagnosa:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="diagnosa" name="diagnosa" value="{{ $rekomendasi->diagnosa }}" required>
+                                </div>
+                            </div>
+
+                            <!-- Field Rekomendasi -->
+                            <div class="form-group row">
+                                <label for="rekomendasi" class="col-sm-4 col-form-label">Rekomendasi:</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control" id="rekomendasi" name="rekomendasi" rows="4" required>{{ $rekomendasi->rekomendasi }}</textarea>
+                                </div>
+                            </div>
+
+                            <!-- Tombol Submit -->
+                            <div class="form-group row">
+                                <div class="col-sm-8 offset-sm-4">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <a href="{{ route('rekomendasimedis.view', $rekomendasi->id) }}" class="btn btn-secondary">Batal</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
             <!-- Bagian Hasil Pemeriksaan -->
-            <form action="{{ route('simpan.hasil.pemeriksaan') }}" method="POST">
-                @csrf
-                <div class="form-group row">
-                    <label for="hasil_pemeriksaan" class="col-sm-4 col-form-label">Hasil Prediksi:</label>
-                    <div class="col-sm-8">
-                        <input type="hidden" name="id_rekammedis" value="{{ $hasilPemeriksaan->id }}">
-                        <input type="text" class="form-control" id="hasil_pemeriksaan" name="hasil_pemeriksaan"
-                            placeholder="Hasil akan muncul di sini" value="{{ session('success') }}" readonly>
-                    </div>
-                </div>
-                @if (session('success'))
-                <button type="submit" class="btn btn-primary">Simpan Hasil</button>
-                @endif
-            </form>
 
-                @if (session('error'))
+
+
+
+
+            @if (session('error'))
                 <div class="alert alert-danger">
                     {{ session('error') }}
                 </div>
-                @endif
+            @endif
 
 
           <!-- partial:partials/_footer.html -->
@@ -925,6 +945,6 @@
     <!-- End plugin js for this page -->
     <!-- Custom js for this page-->
     <script src="js/dashboard.js"></script>
-    <!-- End custom js for this page-->
+    <!-- End custom js for this page--> --}}
   </body>
 </html>

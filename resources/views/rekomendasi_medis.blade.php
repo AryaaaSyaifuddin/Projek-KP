@@ -14,6 +14,7 @@
     <style>
         /* Styling Badge */
         .badge {
+          border-radius: 25px;
           font-size: 14px;
           padding: 6px 12px;
           border-radius: 12px;
@@ -72,16 +73,20 @@
 
         /* Tombol berdasarkan kategori aksi */
         .btn-outline-secondary {
-          background: linear-gradient(45deg, #000000, #515151);
+          background-color: #fff;
           color: #fff;
         }
         .btn-info {
-          background: linear-gradient(45deg, #0d1893, #2034c9);
-          color: #fff;
+            background: linear-gradient(45deg, #1a167f, #0c2aa1);
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            border: none;
         }
         .btn-danger {
-          background: linear-gradient(45deg, #dc3545, #e4606d);
-          color: #fff;
+            background: linear-gradient(45deg, #d80939, #dd2a0a);
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(220, 20, 60, 0.4);
         }
 
         /* Styling untuk ikon di dalam tombol */
@@ -94,11 +99,11 @@
         }
 
         .cool-generate-btn {
-            background-color: #343a40; /* Warna dasar gelap minimalis */
+            background-color: #18572a;; /* Warna dasar gelap minimalis */
             color: #fff;
             border: none;
             border-radius: 25px;
-            padding: 8px 16px;
+            padding: 12px 25px;
             font-size: 14px;
             font-weight: 600;
             text-transform: uppercase;
@@ -110,15 +115,15 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
-            text-decoration: none;
         }
 
 
         .cool-generate-btn:hover {
-            background-color: #495057; /* Tetap dalam nuansa abu-abu, tidak biru */
+            background-color: rgb(6, 80, 17); /* Tetap dalam nuansa abu-abu, tidak biru */
             color: #fff; /* Pastikan teks tetap putih */
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
         }
 
         /* Tetap gunakan styling ripple jika diperlukan pada tombol lainnya */
@@ -508,49 +513,70 @@
                         <h4 class="card-title">Data Rekomendasi Medis</h4>
                         <div class="table-responsive pt-3">
 
-                            <!-- Modal Detail (Atas-Bawah) dengan Format Baris -->
                             <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 600px;">
-                                <div class="modal-content shadow-lg border-0">
-                                    <!-- Header Modal -->
-                                    <div class="modal-header bg-primary text-white">
-                                    <h5 class="modal-title" id="detailModalLabel">
-                                        <i class="fas fa-notes-medical"></i> Detail Rekomendasi Medis
-                                    </h5>
-                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Tutup">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                    <div class="modal-content shadow-lg border-0">
+                                        <form id="editForm" method="POST" action="">
+                                            @csrf
+                                            @method('PUT')
+                                            <!-- Header Modal -->
+                                            <div class="modal-header bg-primary text-white">
+                                                <h5 class="modal-title" id="modalTitle">
+                                                    <i class="fas fa-notes-medical"></i> Detail Rekomendasi Medis
+                                                </h5>
+                                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Tutup">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+
+                                            <!-- Body Modal -->
+                                            <div class="modal-body">
+                                                <!-- Card Diagnosa -->
+                                                <div class="card mb-3">
+                                                    <div class="card-header bg-primary text-white">
+                                                        <i class="fas fa-stethoscope"></i> Diagnosa
+                                                    </div>
+                                                        <textarea class="form-control"
+                                                                id="detailDiagnosis"
+                                                                name="diagnosis"
+                                                                rows="4"
+                                                                readonly
+                                                                style="resize: none; font-size: 1.1em; height: 230px; font-family: monospace; line-height: 1.4;"></textarea>
+
+                                                </div>
+
+                                                <!-- Card Rekomendasi Medis -->
+                                                <div class="card">
+                                                    <div class="card-header bg-success text-white">
+                                                        <i class="fas fa-heartbeat"></i> Rekomendasi Medis
+                                                    </div>
+                                                        <textarea class="form-control"
+                                                                id="detailRekomendasi"
+                                                                name="rekomendasi"
+                                                                rows="4"
+                                                                readonly
+                                                                style="resize: none; font-size: 1.1em; height: 230px; font-family: monospace; line-height: 1.4;"></textarea>
+
+                                                </div>
+                                            </div>
+
+                                            <!-- Footer Modal -->
+                                            <div class="modal-footer border-top-0">
+                                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+                                                    <i class="fas fa-times-circle"></i> Tutup
+                                                </button>
+                                                <button type="button" class="btn btn-warning" id="editToggleBtn">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </button>
+                                                <button type="submit" class="btn btn-success" id="saveBtn" style="display: none;">
+                                                    <i class="fas fa-save"></i> Simpan
+                                                </button>
+                                                <button type="button" class="btn btn-secondary" id="cancelBtn" style="display: none;">
+                                                    <i class="fas fa-undo"></i> Batal
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <!-- Body Modal -->
-                                    <div class="modal-body">
-                                    <!-- Card Diagnosa -->
-                                    <div class="card mb-3">
-                                        <div class="card-header bg-primary text-white">
-                                        <i class="fas fa-stethoscope"></i> Diagnosa
-                                        </div>
-                                        <div class="card-body">
-                                        <!-- Menggunakan white-space: pre-line untuk memunculkan enter -->
-                                        <p class="card-text" id="detailDiagnosis" style="font-size: 1.1em; white-space: pre-line;"></p>
-                                        </div>
-                                    </div>
-                                    <!-- Card Rekomendasi Medis -->
-                                    <div class="card">
-                                        <div class="card-header bg-success text-white">
-                                        <i class="fas fa-heartbeat"></i> Rekomendasi Medis
-                                        </div>
-                                        <div class="card-body">
-                                        <!-- Menggunakan white-space: pre-line untuk memunculkan enter -->
-                                        <p class="card-text" id="detailRekomendasi" style="font-size: 1.1em; white-space: pre-line;"></p>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <!-- Footer Modal -->
-                                    <div class="modal-footer border-top-0">
-                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
-                                        <i class="fas fa-times-circle"></i> Tutup
-                                    </button>
-                                    </div>
-                                </div>
                                 </div>
                             </div>
 
@@ -568,57 +594,58 @@
                                 </thead>
                                 <tbody>
                                     @foreach($hasilPemeriksaan as $hasil)
-                                        <tr>
-                                            <td>{{ $hasil->id }}</td>
-                                            <td>{{ $hasil->patient->id_pasien ?? 'Not available' }}</td>
-                                            <td>{{ $hasil->patient->nama_panjang ?? 'Not available' }}</td>
-                                            <td>{{ $hasil->prediksi->hasil_pemeriksaan ?? 'Not available' }}</td>
-                                            <td>{{ $hasil->statusPemeriksaan->status ?? 'Not available' }}</td>
-                                            <td>
-                                                @if($hasil->rekomMedis)
-                                                  <!-- Opsional: Pastikan kedua field tidak kosong -->
-                                                  @if($hasil->rekomMedis->diagnosis && $hasil->rekomMedis->rekomendasi)
-                                                    <span class="badge badge-success">Sudah Diisi</span>
-                                                  @else
-                                                    <span class="badge badge-warning">Data Tidak Lengkap</span>
-                                                  @endif
+                                    <tr>
+                                        <td>{{ $hasil->id }}</td>
+                                        <td>{{ $hasil->patient->id_pasien ?? 'Not available' }}</td>
+                                        <td>{{ $hasil->patient->nama_panjang ?? 'Not available' }}</td>
+                                        <td>{{ $hasil->prediksi->hasil_pemeriksaan ?? 'Not available' }}</td>
+                                        <td>{{ $hasil->statusPemeriksaan->status ?? 'Not available' }}</td>
+                                        <td>
+                                            @if($hasil->rekomMedis)
+                                                @if($hasil->rekomMedis->diagnosis && $hasil->rekomMedis->rekomendasi)
+                                                    <span class="badge badge-success" style="border-radius: 25px; padding: .375rem 1rem;">Sudah Diisi</span>
                                                 @else
-                                                  <span class="badge badge-warning">Belum Diisi</span>
+                                                    <span class="badge badge-warning" style="border-radius: 25px; padding: .375rem 1rem;">Data Tidak Lengkap</span>
                                                 @endif
-                                            </td>
-                                            <td>
-                                                <!-- Tombol Generate Rekom Medis -->
-                                                <a href="{{ route('rekomendasimedis.view', $hasil->id) }}"
-                                                    class="cool-generate-btn btn-icon-text"
-                                                    style="margin-bottom: 7px; width: 100%;">
-                                                   Generate Rekom Medis
-                                                   <i class="typcn typcn-edit"></i>
-                                                 </a>
+                                            @else
+                                                <span class="badge badge-warning" style="border-radius: 25px; padding: .375rem 1rem;">Belum Diisi</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <!-- Tombol Generate Rekom Medis -->
+                                            <a href="{{ route('rekomendasimedis.view', $hasil->id) }}"
+                                                class="cool-generate-btn btn-icon-text"
+                                                style="margin-bottom: 7px; width: 100%;">
+                                                Generate Rekom Medis
+                                                <i class="typcn typcn-edit"></i>
+                                            </a>
 
-                                                <!-- Tombol View Detail -->
+                                            <!-- Tombol View Detail (Hanya muncul jika diagnosis dan rekomendasi ada) -->
+                                            @if($hasil->rekomMedis && $hasil->rekomMedis->diagnosis && $hasil->rekomMedis->rekomendasi)
                                                 <button type="button"
                                                         class="cool-btn btn-info btn-icon-text"
-                                                        style="margin-bottom: 7px; padding: 10px 25px;"
+                                                        style="margin-bottom: 7px; padding: 10px 25px; width: 100%;"
                                                         onclick="viewDetail({{ $hasil->id }})">
-                                                  View Detail
-                                                  <i class="typcn typcn-eye"></i>
+                                                    View Detail
+                                                    <i class="typcn typcn-eye"></i>
                                                 </button>
+                                            @endif
 
-                                                <!-- Tombol Delete -->
-                                                <form action="{{ route('rekomendasimedis.destroy', $hasil->id) }}" method="POST" style="display:inline;">
-                                                  @csrf
-                                                  @method('DELETE')
-                                                  <button type="submit"
-                                                          class="cool-btn btn-danger btn-icon-text"
-                                                          style="margin-bottom: 7px; padding: 10px 25px;"
-                                                          onclick="return confirm('Apakah Anda yakin ingin menghapus data rekomendasi medis ini?')">
+                                            <!-- Tombol Delete -->
+                                            <form action="{{ route('rekomendasimedis.destroy', $hasil->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                        class="cool-btn btn-danger btn-icon-text"
+                                                        style="margin-bottom: 7px; padding: 10px 25px; width: 100%;"
+                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data rekomendasi medis ini?')">
                                                     Delete
                                                     <i class="typcn typcn-delete-outline"></i>
-                                                  </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
 
@@ -672,13 +699,9 @@
             });
         }
     </script>
-    <!-- container-scroller -->
-    <!-- base:js -->
+
     <script src="vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page-->
-    <!-- End plugin js for this page-->
-    <!-- inject:js -->
+
     <script>
         function filterTable() {
             const input = document.getElementById('searchInput');
@@ -704,6 +727,7 @@
             }
         }
     </script>
+
     <script>
     function viewDetail(id) {
         // Reset konten modal sebelum diisi ulang
@@ -720,8 +744,8 @@
                     $('#detailDiagnosis').text(response.data.diagnosis);
                     $('#detailRekomendasi').text(response.data.rekomendasi);
                 } else {
-                    $('#detailDiagnosis').text('Data tidak ditemukan');
-                    $('#detailRekomendasi').text('Data tidak ditemukan');
+                    $('#detailDiagnosis').text('Diagosa Belum Dibuat');
+                    $('#detailRekomendasi').text('Rekomendasi Medis Belum Dibuat');
                 }
                 $('#detailModal').modal('show');
             },
@@ -734,6 +758,7 @@
         });
     }
     </script>
+
     <script>
         // Tambahkan ripple effect pada setiap tombol dengan kelas .cool-btn
         document.querySelectorAll('.cool-btn').forEach(btn => {
@@ -758,7 +783,107 @@
             }, 600);
           });
         });
-      </script>
+    </script>
+
+    <script>
+    let currentEditingId = null; // Untuk menyimpan ID yang sedang diedit
+
+    function viewDetail(id) {
+        currentEditingId = id; // Simpan ID untuk digunakan saat edit
+
+        // Reset konten modal sebelum diisi ulang
+        $('#detailDiagnosis').text('');
+        $('#detailRekomendasi').text('');
+
+        $.ajax({
+            url: '/rekomendasimedis/detail/' + id,
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    // Isi data ke dalam textarea
+                    $('#detailDiagnosis').val(response.data.diagnosis || 'Diagnosa Belum Dibuat');
+                    $('#detailRekomendasi').val(response.data.rekomendasi || 'Rekomendasi Medis Belum Dibuat');
+
+                    // Set action form untuk update
+                    $('#editForm').attr('action', `/rekomendasimedis/${id}`);
+                } else {
+                    $('#detailDiagnosis').val('Diagnosa Belum Dibuat');
+                    $('#detailRekomendasi').val('Rekomendasi Medis Belum Dibuat');
+                }
+                $('#detailModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching detail:', error);
+                $('#detailDiagnosis').val('Error fetching data');
+                $('#detailRekomendasi').val('Error fetching data');
+                $('#detailModal').modal('show');
+            }
+        });
+    }
+
+    // Toggle Edit Mode
+    function toggleEditMode(isEdit) {
+        const diagnosisField = $('#detailDiagnosis');
+        const rekomendasiField = $('#detailRekomendasi');
+        const editBtn = $('#editToggleBtn');
+        const saveBtn = $('#saveBtn');
+        const cancelBtn = $('#cancelBtn');
+        const title = $('#modalTitle');
+
+        if (isEdit) {
+            diagnosisField.prop('readonly', false);
+            rekomendasiField.prop('readonly', false);
+            editBtn.hide();
+            saveBtn.show();
+            cancelBtn.show();
+            title.html('<i class="fas fa-edit"></i> Edit Rekomendasi Medis');
+        } else {
+            diagnosisField.prop('readonly', true);
+            rekomendasiField.prop('readonly', true);
+            editBtn.show();
+            saveBtn.hide();
+            cancelBtn.hide();
+            title.html('<i class="fas fa-notes-medical"></i> Detail Rekomendasi Medis');
+        }
+    }
+
+    // Event Listeners
+    $('#editToggleBtn').on('click', function() {
+        toggleEditMode(true);
+    });
+
+    $('#cancelBtn').on('click', function() {
+        toggleEditMode(false);
+        viewDetail(currentEditingId); // Reload data asal
+    });
+
+    // Handle form submission
+    $('#editForm').on('submit', function(e) {
+        e.preventDefault();
+
+        const formData = $(this).serialize();
+
+        $.ajax({
+            url: $(this).attr('action'),
+            method: 'POST',
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if (response.success) {
+                    $('#detailModal').modal('hide');
+                    window.location.reload(); // Refresh data table
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+    </script>
+
     <script src="js/off-canvas.js"></script>
     <script src="js/hoverable-collapse.js"></script>
     <script src="js/template.js"></script>
